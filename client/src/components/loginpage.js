@@ -1,6 +1,7 @@
 // Login.jsx
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function Login() {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -17,8 +18,27 @@ function Login() {
     e.preventDefault();
   };
 
-  const handleSignupSubmit = (e) => {
+  // const handleSignupSubmit = (e) => {
+  //   e.preventDefault();
+  // };
+
+  const handleSignupSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await axios.post("http://localhost:9000/signup", {
+        username,
+        email,
+        password,
+        role,
+      });
+
+      console.log("Signup successful:", response.data);
+
+      // Optionally, redirect to a new page or perform other actions upon successful signup
+    } catch (error) {
+      console.error("Signup failed:", error);
+    }
   };
 
   return (
