@@ -14,8 +14,21 @@ function Login() {
     setIsLoginMode(!isLoginMode);
   };
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await axios.post("http://localhost:9000/login", {
+        username,
+        password,
+      });
+
+      console.log("login successful:", response.data);
+
+      // Optionally, redirect to a new page or perform other actions upon successful signup
+    } catch (error) {
+      console.error("login failed:", error);
+    }
   };
 
   // const handleSignupSubmit = (e) => {
