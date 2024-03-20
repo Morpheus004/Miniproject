@@ -46,7 +46,7 @@ function Login() {
         role,
       });
 
-      console.log("Signup successful:", response.data);
+      console.log(response.data);
 
       // Optionally, redirect to a new page or perform other actions upon successful signup
     } catch (error) {
