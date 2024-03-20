@@ -29,18 +29,25 @@ app.post("/signup", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const username=req.body.username;
-
+  console.log(req.body); //not necessary remove
   try {
     const checkResult = await db.query("SELECT * FROM student WHERE email = $1", [
       email,
     ]);
-
+    const checkResult_u=await db.query("SELECT * FROM student WHERE username = $1", [
+      username,
+    ]);// to prevent same usernames to exist
     if (checkResult.rows.length > 0) {
       // res.send("Email already exists. Try logging in.");
       res.send({
         message:"Email already exists. Try logging in.",
       });
       console.log("Email already exists. Try logging in.");
+    } else if(checkResult_u.rows.length > 0){
+      res.send({
+        message:"Username already exists.Try another name",
+      })
+      console.log("Username already exists.Try another name");
     } else {
       bcrypt.hash(password,saltRounds,async(err,hash)=>{
         if (err){
