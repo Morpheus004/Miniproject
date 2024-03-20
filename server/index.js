@@ -36,7 +36,10 @@ app.post("/signup", async (req, res) => {
     ]);
 
     if (checkResult.rows.length > 0) {
-      res.send("Email already exists. Try logging in.");
+      // res.send("Email already exists. Try logging in.");
+      res.send({
+        message:"Email already exists. Try logging in.",
+      });
       console.log("Email already exists. Try logging in.");
     } else {
       bcrypt.hash(password,saltRounds,async(err,hash)=>{
@@ -48,7 +51,10 @@ app.post("/signup", async (req, res) => {
         [username,email, hash]
       );
       console.log(result);
-      res.sendStatus(200);
+      res.send({
+        message:"successfully inserted into database",
+      });
+      // res.sendStatus(200);
       console.log("successfully inserted into database");
         }
     })
@@ -77,8 +83,14 @@ app.post("/login", async (req, res) => {
         } else {
           if (result) {
             console.log("Login succesful")
+            res.send({
+              message:"Login succesful",
+            });
           } else {
-            res.send("Incorrect Password");
+            // res.send("Incorrect Password");
+            res.send({
+              message:"Incorrect password",
+            });
             console.log("incorrect password");
           }
         }
@@ -95,4 +107,3 @@ app.post("/login", async (req, res) => {
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
   });
-  
