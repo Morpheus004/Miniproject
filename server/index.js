@@ -4,6 +4,9 @@ import cors from "cors";
 import pg from "pg";
 import bcrypt from "bcrypt";
 import env from "dotenv";
+import jwt from "jsonwebtoken";
+import { auth } from "./auth.js";
+
 
 const app = express();
 const port = 9000;
@@ -25,6 +28,13 @@ app.use(bodyParser.json());
 // app.get("/signup",(req,res)=>{
 //   res.send(pratham);
 // })
+
+// authentication endpoint
+app.get("/auth-endpoint", auth, (req, res) => {
+  res.json({ message: "You are authorized to access me" });
+});
+
+
 app.post("/signup", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -90,8 +100,23 @@ app.post("/login", async (req, res) => {
         } else {
           if (result) {
             console.log("Login succesful")
-            res.send({
-              message:"Login succesful",
+            // res.send({
+            //   message:"Login succesful",
+            // });
+            // implementation of token
+            const token = jwt.sign(
+              {
+                userId: user._id,
+                userEmail: user.email,
+              },
+              "RANDOM-TOKEN",
+              { expiresIn: "24h" }
+            );
+             //   return success response
+             res.status(200).send({
+              message: "Login Successful",
+              email: user.email,
+              token,
             });
           } else {
             // res.send("Incorrect Password");

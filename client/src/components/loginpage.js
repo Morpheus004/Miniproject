@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 function Login() {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -22,7 +24,11 @@ function Login() {
         username,
         password,
       });
-
+      cookies.set("TOKEN",response.data.token,{
+        path:"/",
+      });
+      // redirect user to the auth page
+      window.location.href = "/auth";
       console.log("login successful:", response.data);
 
       // Optionally, redirect to a new page or perform other actions upon successful signup
