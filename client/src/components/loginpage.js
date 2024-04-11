@@ -1,6 +1,8 @@
 // Login.jsx
 
 import React, { useState } from "react";
+import axios from "axios";
+import classes from './CSS/login.module.css';
 
 function Login() {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -13,27 +15,60 @@ function Login() {
     setIsLoginMode(!isLoginMode);
   };
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await axios.post("http://localhost:9000/login", {
+        username,
+        password,
+      });
+
+      console.log("login successful:", response.data);
+
+      // Optionally, redirect to a new page or perform other actions upon successful signup
+    } catch (error) {
+      console.error("login failed:", error);
+    }
   };
 
-  const handleSignupSubmit = (e) => {
-    e.preventDefault();
-  };
+  // const handleSignupSubmit = (e) => {
+  //   e.preventDefault();
+  // };
 
+  const handleSignupSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post("http://localhost:9000/signup", {
+        username,
+        email,
+        password,
+        role,
+      });
+
+      console.log("Signup successful:", response.data);
+
+      // Optionally, redirect to a new page or perform other actions upon successful signup
+    } catch (error) {
+      console.error("Signup failed:", error);
+    }
+  };
   return (
-    <div className="screen">
-      <div className="screen__content">
+    <div className={classes['LOGINPAGE']} style={{ height: "100vh" }}>   
+      <div className={classes['container']}>
+      <div className={classes['screen']}>
+      <div className={classes['screen__content']}>
         <form
-          className="login"
+          className={classes['login']}
           onSubmit={isLoginMode ? handleLoginSubmit : handleSignupSubmit}
         >
           {!isLoginMode && (
-            <div className="login__field">
-              <i className="login__icon fas fa-user"></i>
+            <div className={classes['login__field']}>
+              <i className={classes['login__icon fas fa-user']}></i>
               <input
                 type="text"
-                className="login__input"
+                className={classes['login__input']}
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -41,11 +76,11 @@ function Login() {
             </div>
           )}
           {!isLoginMode && (
-            <div className="login__field">
-              <i className="login__icon fas fa-envelope"></i>
+            <div className={classes['login__field']}>
+              <i className={classes['login__icon fas fa-envelope']}></i>
               <input
                 type="email"
-                className="login__input"
+                className={classes['login__input']}
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -53,32 +88,32 @@ function Login() {
             </div>
           )}
           {isLoginMode && (
-            <div className="login__field">
-              <i className="login__icon fas fa-user"></i>
+            <div className={classes['login__field']}>
+              <i className={classes['login__icon fas fa-user']}></i>
               <input
                 type="text"
-                className="login__input"
+                className={classes['login__input']}
                 placeholder="Username or Email"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
           )}
-          <div className="login__field">
-            <i className="login__icon fas fa-lock"></i>
+          <div className={classes['login__field']}>
+            <i className={classes['login__icon fas fa-lock']}></i>
             <input
               type="password"
-              className="login__input"
+              className={classes['login__input']}
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           {!isLoginMode && (
-            <div className="login__field">
-              <i className="login__icon fas fa-user-graduate"></i>
+            <div className={classes['login__field']}>
+              <i className={classes['login__icon fas fa-user-graduate']}></i>
               <select
-                className="login__input"
+                className={classes['login__input']}
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
               >
@@ -87,15 +122,15 @@ function Login() {
               </select>
             </div>
           )}
-          <button className="button login__submit">
-            <span className="button__text">
+          <button className={`${classes['button']} ${classes['login__submit']}`}>
+            <span className={classes['button__text']}>
               {isLoginMode ? "Log In" : "Sign Up"} Now
             </span>
-            <i className="button__icon fas fa-chevron-right"></i>
+            <i className={classes['button__icon fas fa-chevron-right']}></i>
           </button>
         </form>
-        <div className="login-option">
-          <p className="login-opt">
+        <div className={classes['login-option']}>
+          <p className={classes['login-opt']}>
             {isLoginMode
               ? "Don't have an account?"
               : "Already have an account?"}
@@ -105,13 +140,16 @@ function Login() {
           </button>
         </div>
       </div>
-      <div className="screen__background">
-        <span className="screen__background__shape screen__background__shape4"></span>
-        <span className="screen__background__shape screen__background__shape3"></span>
-        <span className="screen__background__shape screen__background__shape2"></span>
-        <span className="screen__background__shape screen__background__shape1"></span>
+      <div className={classes['screen__background']}>
+        <span className={`${classes['screen__background__shape']} ${classes['screen__background__shape4']}`}></span>
+        <span className={`${classes['screen__background__shape']} ${classes['screen__background__shape3']}`}></span>
+        <span className={`${classes['screen__background__shape']} ${classes['screen__background__shape2']}`}></span>
+        <span className={`${classes['screen__background__shape']} ${classes['screen__background__shape1']}`}></span>
       </div>
     </div>
+      </div>
+    </div>
+
   );
 }
 
