@@ -157,7 +157,7 @@ function EventPage() {
                   <button onClick={handleCancelRegistration}>Cancel Registration</button>
                 </>
               )}
-              <button onClick={() => handleCancelEvent(event.id)}>Cancel Event</button>
+              <button onClick={() => handleCancelEvent(event.eid)}>Cancel Event</button>
             </div>
           ))}
         </div>
