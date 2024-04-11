@@ -10,8 +10,8 @@ import eventsRoute from "./routes/event.js";
 
 const app = express();
 const port = 9000;
-const saltRounds=10;
-env.config();
+// const saltRounds=10;
+// env.config();
 
 
 app.use(cors());
