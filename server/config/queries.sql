@@ -85,3 +85,8 @@ create table alumni_expertise(
 	IOT boolean
 )
 alter table alumni_expertise add FOREIGN KEY(aid) references alumnus(aid)
+alter table events add column location varchar (20);
+alter table internship add column location varchar (20);
+ALTER TABLE events ADD COLUMN registeredStudents INTEGER DEFAULT 0;
+alter table internship drop column applicants;
+ALTER TABLE internship ADD COLUMN applications INTEGER DEFAULT 0;
