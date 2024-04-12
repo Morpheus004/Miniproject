@@ -4,29 +4,29 @@ import {Outlet} from 'react-router-dom';
 import classes from './CSS/eventcard.module.css';
 
 
-function Navbar() {
+function NavbarAlumni() {
   return (
     <div>
     <nav className="navbar">
       <div className={classes.container}>
         <ul className="navbar-nav">
           <li className="nav-item">
-            <NavLink to="/" className="nav-link">
+            <NavLink to="/alumni/home" className="nav-link">
               Home
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/event" className="nav-link">
+            <NavLink to="/alumni/event" className="nav-link">
               Events
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/internship" className="nav-link">
+            <NavLink to="/alumni/internship" className="nav-link">
               Internships
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/profile" className="nav-link">
+            <NavLink to="/alumni/profile" className="nav-link">
               Profile
             </NavLink>
           </li>
@@ -38,4 +38,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default NavbarAlumni;
