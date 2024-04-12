@@ -23,7 +23,7 @@ function EventCard({ event, onRegister, onCancel }) {
     onCancel(event.eid);
   };
 
-
+  const registrations = `${event.registeredstudents}/${event.seats}`;
   return (
     <div className="event-card">
       <h3>{event.title}</h3>
@@ -31,6 +31,7 @@ function EventCard({ event, onRegister, onCancel }) {
       <p>Location: {event.location}</p>
       <p>Description: {event.description}</p>
       <p>Seats : {event.seats}</p>
+      <p>Registrations: {registrations}</p>
       <button onClick={handleRegister}>Register</button>
       <button onClick={handleCancel}>Cancel Event</button>
     </div>
@@ -41,18 +42,16 @@ function EventCard({ event, onRegister, onCancel }) {
 function EventPage() {
   const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
-
-  useEffect( ()=>{
-    async function updateData(){
-      try {
-        const res=await axios.get("http://localhost:9000/event/api/events");
-        const upcomingEvents = res.data.filter((event) => new Date(event.date) > new Date());
-        setEvents(upcomingEvents);
-  
-      } catch (error) {
-        console.error("Error in useEffect inside EventPage:",error);
-      }
+  const updateData = async () => {
+    try {
+      const res = await axios.get("http://localhost:9000/event/api/events");
+      const upcomingEvents = res.data.filter((event) => new Date(event.date) > new Date());
+      setEvents(upcomingEvents);
+    } catch (error) {
+      console.error("Error updating eventsData:", error);
     }
+  };
+  useEffect( ()=>{
     updateData();
   },[]);
 
@@ -61,21 +60,28 @@ function EventPage() {
     date: "",
     location: "",
     description:"",
-    seats:""
+    seats:"",
+    registeredStudents:""
   });
   const [registrationMessage, setRegistrationMessage] = useState("");
   const [registrationEventId, setRegistrationEventId] = useState(null);
 
-  const handleRegisterEvent = (eventId) => {
-    // Logic to register for event
-    setRegistrationEventId(eventId);
-    setRegistrationMessage("Registered successfully!");
+  const handleRegisterEvent = async(eventId) => {
+    try {
+      // Send a request to the server to increment the registered students count
+      setRegistrationEventId(eventId);
+      setRegistrationMessage("Registered successfully!");
+      const res=await axios.put(`http://localhost:9000/event/api/events/${eventId}/register`);
+      console.log(res);
+      updateData(); 
+    } catch (error) {
+      console.error("Error registering for event:", error);
+    }
   };
 
   const handleCancelRegistration = () => {
-    // setRegistrationEventId(null);
-    // setRegistrationMessage(""); Did not work as db was not implemented
-    console.log("Did not work as db was not implemented");
+    setRegistrationEventId(null);
+    setRegistrationMessage(""); //Did not work as db was not implemented
   };
 
   const handleCancelEvent = async (eventId) => {
@@ -84,7 +90,8 @@ function EventPage() {
     try {
       const res = await axios.delete(`http://localhost:9000/event/api/events/${eventId}`);
       console.log(res);
-    } catch (error) {
+      updateData();
+      } catch (error) {
       console.error("Error removing from the database:", error);
 
       // setEvents(events.filter((event) => event.eid === eventId)); 
@@ -112,7 +119,8 @@ function EventPage() {
       date: "",
       location: "",
       description:"",
-      seats:""
+      seats:"",
+      registeredStudents:""
     });
   };
 
@@ -123,7 +131,8 @@ function EventPage() {
       date: "",
       location: "",
       description: "",
-      seats: ""
+      seats: "",
+      registeredStudents:""
     });
   };
 
@@ -143,13 +152,14 @@ function EventPage() {
         <h2>Upcoming Events</h2>
         <div className="event-cards">
         {events.map((event) => (
-            <div className={"event-card" + (registrationEventId === event.id ? " registered" : "")} key={event.eid}>
+            <div className={"event-card" + (registrationEventId === event.eid ? " registered" : "")} key={event.eid}>
               <h3>{event.title}</h3>
               <p>Date: {formatDate(event.date)}</p>
               <p>Location: {event.location}</p>
               <p>Description: {event.description}</p>
               <p>Seats : {event.seats}</p>
-              {registrationEventId !== event.id ? (
+              <p>Registered Students: {event.registeredstudents}</p>
+              {registrationEventId !== event.eid ? (
                 <button onClick={() => handleRegisterEvent(event.eid)}>Register</button>
               ) : (
                 <>
