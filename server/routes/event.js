@@ -29,16 +29,16 @@ router.post("/api/events", async (req, res) => {
     }
   });
   
-router.delete("/api/events/:id", async (req, res) => {
-    const eventId = req.params.id;
-    try {
-      await db.query("DELETE FROM events WHERE eid = $1", [eventId]);
-      res.sendStatus(204);
-    } catch (error) {
-      console.error("Error deleting event:", error);
-      res.status(500).json({ error: "An unexpected error occurred" });
-    }
-  });
+// router.delete("/api/events/:id", async (req, res) => {
+//     const eventId = req.params.id;
+//     try {
+//       await db.query("DELETE FROM events WHERE eid = $1", [eventId]);
+//       res.sendStatus(204);
+//     } catch (error) {
+//       console.error("Error deleting event:", error);
+//       res.status(500).json({ error: "An unexpected error occurred" });
+//     }
+//   });
   router.put("/api/events/:eventId/register", async (req, res) => {
     const eventId = req.params.eventId;
     try {

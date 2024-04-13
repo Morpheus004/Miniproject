@@ -1,3 +1,14 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+#root{
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
 .navbar {
     background-color: #007bff; /* Blue color */
     padding: 10px 0;

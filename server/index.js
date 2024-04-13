@@ -7,6 +7,7 @@ import signupRoute from "./routes/signup.js";
 import loginRoute from "./routes/login.js";
 import eventsRoute from "./routes/event.js";
 import internshipsRoute from "./routes/internship.js"
+import alumniinternshipRoute from "./routes/alumniinternship.js"
 
 const app = express();
 const port = 9000;
@@ -22,6 +23,7 @@ app.use("/signup", signupRoute);
 app.use("/login", loginRoute);
 app.use("/event", eventsRoute);
 app.use("/internship",internshipsRoute);
+app.use("/alumniinternship",alumniinternshipRoute);
 
 
 app.listen(port, () => {

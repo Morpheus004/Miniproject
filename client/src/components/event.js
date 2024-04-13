@@ -19,9 +19,9 @@ function EventCard({ event, onRegister, onCancel }) {
     onRegister(event.eid);
   };
 
-  const handleCancel = () => {
-    onCancel(event.eid);
-  };
+  // const handleCancel = () => {
+  //   onCancel(event.eid);
+  // };
 
   const registrations = `${event.registeredstudents}/${event.seats}`;
   return (
@@ -33,7 +33,7 @@ function EventCard({ event, onRegister, onCancel }) {
       <p>Seats : {event.seats}</p>
       <p>Registrations: {registrations}</p>
       <button onClick={handleRegister}>Register</button>
-      <button onClick={handleCancel}>Cancel Event</button>
+      {/* <button onClick={handleCancel}>Cancel Event</button> */}
     </div>
   );
 }
@@ -74,29 +74,30 @@ function EventPage() {
       const res=await axios.put(`http://localhost:9000/event/api/events/${eventId}/register`);
       console.log(res);
       updateData(); 
+      
     } catch (error) {
       console.error("Error registering for event:", error);
     }
   };
 
-  const handleCancelRegistration = () => {
-    setRegistrationEventId(null);
-    setRegistrationMessage(""); //Did not work as db was not implemented
-  };
+  // const handleCancelRegistration = () => {
+  //   setRegistrationEventId(null);
+  //   setRegistrationMessage(""); //Did not work as db was not implemented
+  // };
 
-  const handleCancelEvent = async (eventId) => {
-    setEvents(events.filter((event) => event.eid !== eventId)); // Update UI first (optimistic)
+  // const handleCancelEvent = async (eventId) => {
+  //   setEvents(events.filter((event) => event.eid !== eventId)); // Update UI first (optimistic)
   
-    try {
-      const res = await axios.delete(`http://localhost:9000/event/api/events/${eventId}`);
-      console.log(res);
-      updateData();
-      } catch (error) {
-      console.error("Error removing from the database:", error);
+  //   try {
+  //     const res = await axios.delete(`http://localhost:9000/event/api/events/${eventId}`);
+  //     console.log(res);
+  //     updateData();
+  //     } catch (error) {
+  //     console.error("Error removing from the database:", error);
 
-      // setEvents(events.filter((event) => event.eid === eventId)); 
-    }
-  };
+  //     // setEvents(events.filter((event) => event.eid === eventId)); 
+  //   }
+  // };
   
   const handleAddEvent = () => {
     setShowModal(true);
@@ -158,16 +159,16 @@ function EventPage() {
               <p>Location: {event.location}</p>
               <p>Description: {event.description}</p>
               <p>Seats : {event.seats}</p>
-              <p>Registered Students: {event.registeredstudents}</p>
+              <p>egistrations:{`${event.registeredstudents}/${event.seats}`}</p>
               {registrationEventId !== event.eid ? (
                 <button onClick={() => handleRegisterEvent(event.eid)}>Register</button>
               ) : (
                 <>
                   <p>{registrationMessage}</p>
-                  <button onClick={handleCancelRegistration}>Cancel Registration</button>
+                  {/* <button onClick={handleCancelRegistration}>Cancel Registration</button> */}
                 </>
               )}
-              <button onClick={() => handleCancelEvent(event.eid)}>Cancel Event</button>
+              {/* <button onClick={() => handleCancelEvent(event.eid)}>Cancel Event</button> */}
             </div>
           ))}
         </div>
