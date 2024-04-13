@@ -7,7 +7,7 @@ import InternshipPage from './InternshipPage';
 import ProfilePages from './ProfilePages';
 import Login from './loginpage';
 import AlumniEvent from './AlumniEvent';
-import AlumniInternship from './internshippagealumni';
+import AlumniInternship from './finalalumniinternishippage';
 import AlumniPage from './AlumniPage';
 import AlumniProfile from './AlumniProfile';
 import NavbarStudent from './NavbarStudent';
