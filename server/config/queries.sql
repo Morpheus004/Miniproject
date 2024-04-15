@@ -90,3 +90,23 @@ alter table internship add column location varchar (20);
 ALTER TABLE events ADD COLUMN registeredStudents INTEGER DEFAULT 0;
 alter table internship drop column applicants;
 ALTER TABLE internship ADD COLUMN applications INTEGER DEFAULT 0;
+
+-- updated version for multiple logins
+create table users (
+	uid serial primary key,
+	username varchar (20),
+	password varchar (200),
+	email varchar (50)
+)
+ALTER TABLE student DROP COLUMN username, DROP COLUMN password, DROP COLUMN email;
+ALTER TABLE alumnus DROP COLUMN username, DROP COLUMN password, DROP COLUMN email;
+alter table student add column uid int;
+alter table student add FOREIGN KEY(uid) references users(uid)
+alter table alumnus add column uid int;
+alter table alumnus add FOREIGN KEY(uid) references users(uid)
+drop table student_interests;
+alter table alumni_expertise RENAME TO user_preference
+alter table user_preference drop column aid
+alter table user_preference add column uid serial primary key
+alter table user_preference add FOREIGN KEY(uid) references users(uid)
+
