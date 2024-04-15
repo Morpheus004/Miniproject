@@ -159,12 +159,12 @@ function EventPage() {
               <p>Location: {event.location}</p>
               <p>Description: {event.description}</p>
               <p>Seats : {event.seats}</p>
-              <p>egistrations:{`${event.registeredstudents}/${event.seats}`}</p>
+              <p>Registrations:{`${event.registeredstudents}/${event.seats}`}</p>
               {registrationEventId !== event.eid ? (
                 <button onClick={() => handleRegisterEvent(event.eid)}>Register</button>
               ) : (
                 <>
-                  <p>{registrationMessage}</p>
+                  <p>{registrationMessage}</p> 
                   {/* <button onClick={handleCancelRegistration}>Cancel Registration</button> */}
                 </>
               )}

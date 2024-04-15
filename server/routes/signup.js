@@ -9,7 +9,7 @@ router.post("/", async (req, res) => {
   const { email, password, username } = req.body;
 
   try {
-    const checkResult = await db.query("SELECT * FROM student WHERE email = $1", [email]);
+    const checkResult = await db.query("SELECT * FROM users WHERE email = $1", [email]);
 
     if (checkResult.rows.length > 0) {
       res.send("Email already exists. Try logging in.");
@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
           console.log(err);
         } else {
           const result = await db.query(
-            "INSERT INTO student (username, email, password) VALUES ($1, $2, $3)",
+            "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)",
             [username, email, hash]
           );
           console.log(result);

@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
   const { email, username, password } = req.body;
 
   try {
-    const result = await db.query("SELECT * FROM student WHERE email = $1 OR username = $2", [email, username]);
+    const result = await db.query("SELECT * FROM users WHERE email = $1 OR username = $2", [email, username]);
     if (result.rows.length > 0) {
       const user = result.rows[0];
       const storedHashedPassword = user.password;
