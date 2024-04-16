@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import classes from './CSS/login.module.css';
+import {jwtDecode} from "jwt-decode";
+import {redirect, useNavigate} from "react-router-dom";
 
 function Login() {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -10,6 +12,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("student");
+  const navigate=useNavigate();
 
   const toggleMode = () => {
     setIsLoginMode(!isLoginMode);
@@ -35,6 +38,7 @@ function Login() {
   // const handleSignupSubmit = (e) => {
   //   e.preventDefault();
   // };
+  const [token,setToken]=useState("");
 
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
@@ -48,6 +52,12 @@ function Login() {
       });
 
       console.log("Signup successful:", response.data);
+      setToken(response.data.token);
+      const decodedToken = jwtDecode(response.data.token);
+      if(token!="undefined"){
+        localStorage.setItem('token',response.data.token);
+        navigate(`/${decodedToken.role}`);
+      }
 
       // Optionally, redirect to a new page or perform other actions upon successful signup
     } catch (error) {

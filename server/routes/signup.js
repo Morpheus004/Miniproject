@@ -1,6 +1,7 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import db from "../config/database.js";
+import {createJSONToken} from "../util/auth.js";
 
 const router = express.Router();
 const saltRounds = 10;
@@ -23,8 +24,13 @@ router.post("/", async (req, res) => {
             "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)",
             [username, email, hash]
           );
+          const user={
+            email:email,
+            role:req.body.role,
+          };
+          const authToken=createJSONToken(user)
           console.log(result);
-          res.sendStatus(200);
+          res.status(201).json({ message: 'User created.', user: user, token: authToken });
           console.log("Successfully inserted into database");
         }
       });
