@@ -7,7 +7,7 @@ const router = express.Router();
 const saltRounds = 10;
 
 router.post("/", async (req, res) => {
-  const { email, password, username } = req.body;
+  const { email, password, username ,role} = req.body;
 
   try {
     const checkResult = await db.query("SELECT * FROM users WHERE email = $1", [email]);
@@ -21,14 +21,14 @@ router.post("/", async (req, res) => {
           console.log(err);
         } else {
           const result = await db.query(
-            "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)",
-            [username, email, hash]
+            "INSERT INTO users (username, email, password, role) VALUES ($1, $2, $3, $4)",
+            [username, email, hash, role]
           );
           const user={
             email:email,
-            role:req.body.role,
+            role:role,
           };
-          const authToken=createJSONToken(user)
+          const authToken=createJSONToken(user);
           console.log(result);
           res.status(201).json({ message: 'User created.', user: user, token: authToken });
           console.log("Successfully inserted into database");

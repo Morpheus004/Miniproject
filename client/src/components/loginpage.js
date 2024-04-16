@@ -12,6 +12,8 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("student");
+  const [token,setToken]=useState("");
+
   const navigate=useNavigate();
 
   const toggleMode = () => {
@@ -20,25 +22,36 @@ function Login() {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await axios.post("http://localhost:9000/login", {
         username,
         password,
       });
-
+  
       console.log("login successful:", response.data);
-
-      // Optionally, redirect to a new page or perform other actions upon successful signup
+  
+      try {
+        const decodedToken = jwtDecode(response.data.token);
+        console.log("Printing role through Token:", decodedToken.role);
+  
+        if (response.data.token !== "undefined") {
+          localStorage.setItem("token", response.data.token);
+          navigate(`/${decodedToken.role}/home`);
+        }
+      } catch (error) {
+        console.error("Error decoding token:", error);
+        // Handle the error, e.g., display an error message to the user
+      }
     } catch (error) {
       console.error("login failed:", error);
     }
   };
+  
 
   // const handleSignupSubmit = (e) => {
   //   e.preventDefault();
   // };
-  const [token,setToken]=useState("");
 
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
@@ -54,9 +67,11 @@ function Login() {
       console.log("Signup successful:", response.data);
       setToken(response.data.token);
       const decodedToken = jwtDecode(response.data.token);
+      console.log("Printing role through Token:",decodedToken.role);
+
       if(token!="undefined"){
         localStorage.setItem('token',response.data.token);
-        navigate(`/${decodedToken.role}`);
+        navigate(`/${decodedToken.role}/home`);
       }
 
       // Optionally, redirect to a new page or perform other actions upon successful signup

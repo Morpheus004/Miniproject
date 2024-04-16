@@ -10,4 +10,4 @@ export function createJSONToken(user) {
 
 function validateJSONToken(token) {
   return verify(token, KEY);
-}
+} 

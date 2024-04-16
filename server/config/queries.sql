@@ -110,3 +110,5 @@ alter table user_preference drop column aid
 alter table user_preference add column uid serial primary key
 alter table user_preference add FOREIGN KEY(uid) references users(uid)
 
+-- updated version for multiple logins(by pratham)
+alter table users add role varchar(10);

@@ -143,8 +143,8 @@ function InternshipPage() {
             />
           ))}
         </div>
-        <div className="add-internship">
-          <button id="addInternshipatn" onClick={handleAddInternship}>
+        <div className="add-event">
+          <button id="addEventBtn" onClick={handleAddInternship}>
             Add Internship
           </button>
         </div>
