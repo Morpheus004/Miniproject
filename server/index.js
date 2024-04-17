@@ -7,6 +7,7 @@ import signupRoute from "./routes/signup.js";
 import loginRoute from "./routes/login.js";
 import eventsRoute from "./routes/event.js";
 import internshipsRoute from "./routes/internship.js"
+import profileRoute from "./routes/profile.js"
 import alumniinternshipRoute from "./routes/alumniinternship.js"
 
 const app = express();
@@ -24,7 +25,7 @@ app.use("/login", loginRoute);
 app.use("/event", eventsRoute);
 app.use("/internship",internshipsRoute);
 app.use("/alumniinternship",alumniinternshipRoute);
-
+app.use("/profile",profileRoute);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

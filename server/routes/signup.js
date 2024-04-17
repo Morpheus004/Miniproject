@@ -24,6 +24,27 @@ router.post("/", async (req, res) => {
             "INSERT INTO users (username, email, password, role) VALUES ($1, $2, $3, $4)",
             [username, email, hash, role]
           );
+          // console.log(role);
+          const uidGenerated=await db.query(
+            "SELECT uid from users where email=($1)",[email]
+          );
+          const uid = uidGenerated.rows[0].uid;
+          // console.log(uid);
+          let table;
+          if (role === 'student') {
+            table = 'student';
+          } else if (role === 'alumni') {
+            table = 'alumnus';
+          }
+
+          // Insert user into corresponding role table (students or alumni)
+         if(table){
+          const roleInsertResult = await db.query(
+              `INSERT INTO ${table} (uid) VALUES ($1)`,
+              [uid]
+            );
+            console.log(roleInsertResult);
+          }
           const user={
             email:email,
             role:role,
