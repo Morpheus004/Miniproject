@@ -9,6 +9,8 @@ import eventsRoute from "./routes/event.js";
 import internshipsRoute from "./routes/internship.js"
 import profileRoute from "./routes/profile.js"
 import alumniinternshipRoute from "./routes/alumniinternship.js"
+import alumniprofileRoute from "./routes/alumniprofile.js"
+
 
 const app = express();
 const port = 9000;
@@ -26,6 +28,7 @@ app.use("/event", eventsRoute);
 app.use("/internship",internshipsRoute);
 app.use("/alumniinternship",alumniinternshipRoute);
 app.use("/profile",profileRoute);
+app.use("/alumniprofile",alumniprofileRoute);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

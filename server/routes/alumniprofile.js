@@ -7,7 +7,7 @@ router.get("/api/:email", async (req, res) => {
   const userEmail = req.params.email;
   try {
     const { rows } = await db.query(
-      "SELECT * FROM users JOIN student ON student.uid = users.uid WHERE users.email = $1", [userEmail]
+      "SELECT * FROM users JOIN alumnus ON alumnus.uid = users.uid WHERE users.email = $1", [userEmail]
     );
     if (rows.length === 0) {
       return res.status(404).json({ message: "User not found" });
