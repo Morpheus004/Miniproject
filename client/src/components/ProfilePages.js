@@ -35,11 +35,13 @@ function ProfilePages() {
       <h1>Profile Page</h1>
       {userInfo && (
         <div>
+    
           <p>Email: {userInfo.email}</p>
           <p>Username: {userInfo.username}</p>
           <p>Role: {userInfo.role}</p>
           <p>UID: {userInfo.uid}</p>
           <p>SID: {userInfo.sid}</p>
+
         </div>
       )}
     </div>
