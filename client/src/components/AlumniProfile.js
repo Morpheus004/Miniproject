@@ -1,19 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getAuthToken } from "../utils/auth";
 import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
 function AlumniProfile() {
-    const token=getAuthToken();
-    const decodedToken=jwtDecode(token);
-
-    let email=decodedToken.email;
-    console.log(email);
+    const [userInfo, setUserInfo] = useState(null);
+  
+    useEffect(() => {
+      const fetchUserInfo = async () => {
+        try {
+          const token = getAuthToken();
+          const decodedToken = jwtDecode(token);
+          const email = decodedToken.email;
+  
+          const response = await axios.get(
+            `http://localhost:9000/alumniprofile/api/${email}`
+          );
+          setUserInfo(response.data);
+        } catch (error) {
+          console.error("Error fetching user information:", error);
+          if (error.response) {
+            console.error("Error response:", error.response.data);
+          }
+        }
+      };
+  
+      fetchUserInfo();
+    }, []);
+  
+    console.log("userInfo:", userInfo);
     return (
         <div>
-            <h1>Alumni Profile Page</h1>
-            {/* You can include alumni profile-related content here */}
+          <h1>Profile Page</h1>
+          {userInfo && (
+            <div>
+              <p>Email: {userInfo.email}</p>
+              <p>Username: {userInfo.username}</p>
+              <p>Role: {userInfo.role}</p>
+              <p>UID: {userInfo.uid}</p>
+              <p>AID: {userInfo.aid}</p>
+            </div>
+          )}
         </div>
-    );
-}
+      );
+    }
 
 export default AlumniProfile;
