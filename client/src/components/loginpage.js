@@ -37,6 +37,9 @@ function Login() {
   
         if (response.data.token !== "undefined") {
           localStorage.setItem("token", response.data.token);
+          const expiration = new Date();
+          expiration.setHours(expiration.getHours() + 1);
+          localStorage.setItem('expiration', expiration.toISOString());
           navigate(`/${decodedToken.role}/home`);
         }
       } catch (error) {
@@ -71,6 +74,9 @@ function Login() {
 
       if(token!="undefined"){
         localStorage.setItem('token',response.data.token);
+        const expiration = new Date();
+        expiration.setHours(expiration.getHours() + 1);
+        localStorage.setItem('expiration', expiration.toISOString());
         navigate(`/${decodedToken.role}/home`);
       }
 
