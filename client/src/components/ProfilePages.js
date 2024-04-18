@@ -30,7 +30,7 @@ function ProfilePages() {
             <div>
               <p>Name: {userInfo.name}</p>
               <p>Email: {userInfo.email}</p>
-              
+
             </div>
           )}
         </div>
