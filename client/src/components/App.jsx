@@ -1,6 +1,6 @@
 import React from 'react';
 import { RouterProvider, createBrowserRouter, useRoutes } from 'react-router-dom';
-import NavbarAlumni from './NavbarAlumni';
+import NavbarAlumni, { alumniDataLoader } from './NavbarAlumni';
 import StudentPage from './studenthomepage';
 import EventPage from './event';
 import InternshipPage from './InternshipPage';
@@ -10,15 +10,20 @@ import AlumniEvent from './AlumniEvent';
 import AlumniInternship from './finalalumniinternishippage';
 import AlumniPage from './AlumniPage';
 import AlumniProfile from './AlumniProfile';
-import NavbarStudent from './NavbarStudent';
+import NavbarStudent, { studentDataLoader } from './NavbarStudent';
 import { checkAuthLoader } from '../utils/auth';
 import PrivateRoutesStudent from '../utils/PrivateRoutesStudent.js';
 import PrivateRoutesAlumni from '../utils/PrivateRoutesAlumni.js';
+import Logout from './Logout.js';
 
 const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />
+  },
+  {
+    path:'/logout',
+    element:<Logout/>
   },
   {
     path:'/alumni',
@@ -28,7 +33,8 @@ const router = createBrowserRouter([
       {
         path: '/alumni',
         element: <NavbarAlumni />,
-        // loader:checkAuthLoader,
+        id:'alumniData',
+        loader:alumniDataLoader,
         children: [
           { path: 'home', element: <AlumniPage /> },
           { path: 'event', element: <AlumniEvent /> },
@@ -46,7 +52,8 @@ const router = createBrowserRouter([
       {
         path: '/student',
         element: <NavbarStudent />,
-        // loader:checkAuthLoader,
+        id:'studentData',
+        loader:studentDataLoader,
         children: [
           { path: 'home', element: <StudentPage /> },
           { path: 'event', element: <EventPage /> },
@@ -54,7 +61,6 @@ const router = createBrowserRouter([
           { path: 'profile', element: <ProfilePages /> }
         ]
       }
-
     ]
   },
 ]

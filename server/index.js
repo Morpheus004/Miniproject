@@ -10,8 +10,7 @@ import internshipsRoute from "./routes/internship.js"
 import profileRoute from "./routes/profile.js"
 import alumniinternshipRoute from "./routes/alumniinternship.js"
 import alumniprofileRoute from "./routes/alumniprofile.js"
-
-
+import dataRoute from "./routes/data.js";
 const app = express();
 const port = 9000;
 // const saltRounds=10;
@@ -29,6 +28,8 @@ app.use("/internship",internshipsRoute);
 app.use("/alumniinternship",alumniinternshipRoute);
 app.use("/profile",profileRoute);
 app.use("/alumniprofile",alumniprofileRoute);
+app.use("/data",dataRoute);
+
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

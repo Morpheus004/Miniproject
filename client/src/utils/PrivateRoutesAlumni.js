@@ -3,7 +3,7 @@ import {jwtDecode} from "jwt-decode";
 import { getAuthToken } from "./auth";
 
 
-const PrivateRoutesAlumni = ({children}) => {
+const PrivateRoutesAlumni = () => {
     const token = getAuthToken();
     const decodedToken = jwtDecode(token);
     const role = decodedToken.role;

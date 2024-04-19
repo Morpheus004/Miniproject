@@ -72,7 +72,7 @@ function Login() {
       const decodedToken = jwtDecode(response.data.token);
       console.log("Printing role through Token:",decodedToken.role);
 
-      if(token!="undefined"){
+      if(token!=="undefined"){
         localStorage.setItem('token',response.data.token);
         const expiration = new Date();
         expiration.setHours(expiration.getHours() + 1);
