@@ -41,10 +41,21 @@ router.post("/api/events", async (req, res) => {
 //   });
   router.put("/api/events/:eventId/register", async (req, res) => {
     const eventId = req.params.eventId;
+    const {sid} =req.body
     try {
-      console.log("Received request to register for event with ID:", eventId);
-      const result = await db.query("UPDATE events SET registeredstudents = registeredstudents + 1 WHERE eid = $1", [eventId]);
-      console.log("Database update result:", result);
+      // Check if user is already registered for the event
+    const existingRegistration = await db.query("SELECT * FROM register WHERE eid_fk = $1 AND sid_fk = $2", [eventId, sid]);
+    if (existingRegistration.rows.length > 0) {
+      console.log("user is already registered for the event");
+      return res.status(400).json({ error: "User is already registered for this event." });
+    }
+
+    // If user is not registered, update registeredStudents count and add entry in register table
+    console.log("Received request to register for event with ID:", eventId);
+    const result=await db.query("UPDATE events SET registeredstudents = registeredstudents + 1 WHERE eid = $1", [eventId]);
+    await db.query("INSERT INTO register (eid_fk, sid_fk) VALUES ($1, $2)", [eventId, sid]);
+    console.log("Database update result:", result);
+    res.sendStatus(200);
     } catch (error) {
       console.error("Error registering for event:", error);
       res.status(500).send('Error registering for event');
