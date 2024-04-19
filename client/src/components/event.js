@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./CSS/all.css"; // Import CSS for styling
 import classes from './CSS/eventcard.module.css';
 import axios from "axios";
+import { useRouteLoaderData } from "react-router-dom";
 
 
 function EventCard({ event, onRegister, onCancel }) {
@@ -42,6 +43,7 @@ function EventCard({ event, onRegister, onCancel }) {
 function EventPage() {
   const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const userInfo = useRouteLoaderData('studentData');
   const updateData = async () => {
     try {
       const res = await axios.get("http://localhost:9000/event/api/events");
@@ -49,6 +51,22 @@ function EventPage() {
       setEvents(upcomingEvents);
     } catch (error) {
       console.error("Error updating eventsData:", error);
+    }
+  };
+  const checkUserRegistrations = async () => {
+    try {
+      const response = await axios.get("http://localhost:9000/register/api/userregistrations");
+      const userRegistrations = response.data;
+      
+      // Check if user is registered for each event and update state accordingly
+      const updatedEvents = events.map(event => {
+        const isRegistered = userRegistrations.some(registration => registration.eid === event.eid);
+        return { ...event, registered: isRegistered };
+      });
+      const registrationMessage = "";
+      return { events: updatedEvents, userRegistrations };
+    } catch (error) {
+      console.error("Error checking user registrations:", error);
     }
   };
   useEffect( ()=>{
@@ -65,16 +83,20 @@ function EventPage() {
   });
   const [registrationMessage, setRegistrationMessage] = useState("");
   const [registrationEventId, setRegistrationEventId] = useState(null);
-
+  const sid=userInfo.data.sid;
   const handleRegisterEvent = async(eventId) => {
     try {
-      // Send a request to the server to increment the registered students count
-      setRegistrationEventId(eventId);
-      setRegistrationMessage("Registered successfully!");
-      const res=await axios.put(`http://localhost:9000/event/api/events/${eventId}/register`);
+      const { events } = await checkUserRegistrations();
+      const event = events.find(event => event.eid === eventId);
+      if (event.registered) {
+        setRegistrationMessage("You have already registered for this event.");
+        return;
+      }
+      const res=await axios.put(`http://localhost:9000/event/api/events/${eventId}/register`,{sid:sid});
       console.log(res);
       updateData(); 
-      
+      setRegistrationMessage("Registered successfully!");
+      console.log("Registration message:", registrationMessage);
     } catch (error) {
       console.error("Error registering for event:", error);
     }
