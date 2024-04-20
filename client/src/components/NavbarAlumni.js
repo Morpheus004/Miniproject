@@ -1,16 +1,10 @@
 import React from 'react';
-<<<<<<< Updated upstream
 import { NavLink, useLoaderData } from 'react-router-dom';
 import {Outlet} from 'react-router-dom';
 import classes from './CSS/eventcard.module.css';
 import axios from 'axios';
 import { getAuthToken } from "../utils/auth";
 import { jwtDecode } from "jwt-decode";
-=======
-import { NavLink } from 'react-router-dom';
-import { Outlet } from 'react-router-dom';
-import classes from './CSS/eventcard.module.css';
->>>>>>> Stashed changes
 
 function NavbarAlumni() {
   return (
