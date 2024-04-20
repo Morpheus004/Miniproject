@@ -109,7 +109,7 @@
   }
   
   .login__field {
-    padding: 20px 0px;
+    padding: 12px 0px;
     position: relative;
   }
   
@@ -217,4 +217,14 @@
   .login-option button:hover {
     text-decoration: none;
   }
-  
+  /* Assuming you have these classes defined in your CSS file */
+.logout__button {
+  background-color: red; /* Change color as needed */
+  color: white;
+  margin-right: 10px; /* Adjust spacing between buttons */
+}
+
+.stay__button {
+  background-color: green; /* Change color as needed */
+  color: white;
+}

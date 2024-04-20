@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./CSS/all.css"; // Import CSS for styling
 import classes from "./CSS/eventcard.module.css";
 import axios from "axios";
+
 import { useRouteLoaderData } from "react-router-dom";
 
 function InternshipCard({ internship, onApply, formatDate, applied }) {
@@ -18,6 +19,7 @@ function InternshipCard({ internship, onApply, formatDate, applied }) {
     }
   }, [applied]);
 
+
   const handleApply = () => {
     onApply(internship.iid);
     setRegistrationMessage("You have already applied for this internship.");
@@ -25,7 +27,9 @@ function InternshipCard({ internship, onApply, formatDate, applied }) {
   };
 
   return (
+
     <div className={`event-card ${apply ? "apply" : ""}`}>
+
       <h3>{internship.title}</h3>
       <p>Role: {internship.roles}</p>
       <p>Domain: {internship.domain_t}</p>
@@ -116,7 +120,7 @@ function InternshipPage() {
   };
 
   return (
-    <div>
+   <div className="page-container" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "cover", minHeight: "100vh" }}>
       <div className={classes.container}>
         <h2>Internships</h2>
         <div className="event-cards">

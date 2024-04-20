@@ -138,7 +138,6 @@ function NavbarAlumni() {
 }
 
 export default NavbarAlumni;
-
 export async function alumniDataLoader() {
   try {
     const token = getAuthToken();

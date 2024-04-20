@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./CSS/all.css"; // Import CSS for styling
 import classes from './CSS/eventcard.module.css';
-
+import backgroundImage from './bg.jpg';
 function EventCard({ event }) {
   return (
     <div className="event-card">
@@ -37,6 +37,7 @@ function StudentPage() {
   }, []);
 
   return (
+    <div className="page-container" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "cover", minHeight: "100vh" }}>
     <div className={classes.container}>
       <h2>Student Page</h2>
       <div className="event-cards" id="eventCards">
@@ -48,16 +49,18 @@ function StudentPage() {
         <button id="addEventBtn">Add Event</button>
       </div>
     </div>
+    </div>
   );
 }
 
 function App() {
   return (
-    <div style={{ backgroundImage: "url(https://i.pinimg.com/564x/26/79/31/2679318cea36a51288bc13b436000b55.jpg)", backgroundSize: "cover", minHeight: "100vh" }}>
+    <div>
       {/* <Navbar /> */}
       <StudentPage />
     </div>
   );
 }
+
 
 export default App;

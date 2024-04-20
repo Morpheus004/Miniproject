@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./CSS/all.css"; // Import CSS for styling
 import classes from './CSS/eventcard.module.css';
 import axios from "axios";
-
+import backgroundImage from './bg.jpg';
 function InternshipCard({ internship, onCancel, formatDate }) {
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -131,7 +131,7 @@ function InternshipPage() {
   };
 
   return (
-    <div>
+    <div className="page-container" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "cover", minHeight: "100vh" }}>
       <div className={classes.container}>
         <h2>Upcoming Internships</h2>
         <div className="event-cards">
