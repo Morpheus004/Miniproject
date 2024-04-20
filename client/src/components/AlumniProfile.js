@@ -15,7 +15,7 @@ function AlumniProfile() {
           <p>Username: {userInfo.data.username}</p>
           <p>Role: {userInfo.data.role}</p>
           <p>UID: {userInfo.data.uid}</p>
-          <p>SID: {userInfo.data.aid}</p>
+          <p>AID: {userInfo.data.aid}</p>
         </div>
       )}
     </div>

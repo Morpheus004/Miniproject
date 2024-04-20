@@ -10,6 +10,7 @@ import internshipsRoute from "./routes/internship.js"
 import alumniinternshipRoute from "./routes/alumniinternship.js"
 import dataRoute from "./routes/data.js";
 import registerRoute from "./routes/register.js"
+import applyRoute from "./routes/apply.js"
 
 const app = express();
 const port = 9000;
@@ -28,6 +29,7 @@ app.use("/internship",internshipsRoute);
 app.use("/alumniinternship",alumniinternshipRoute);
 app.use("/data",dataRoute);
 app.use("/register",registerRoute);
+app.use("/apply",applyRoute);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

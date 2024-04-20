@@ -41,9 +41,7 @@ router.post("/api/events", async (req, res) => {
 //   });
   router.put("/api/events/:eventId/register", async (req, res) => {
     const eventId = req.params.eventId;
-    const {sid} =req.body
-
-    console.log(sid);
+    const {sid} =req.body;
     try {
       // Check if user is already registered for the event
     const existingRegistration = await db.query("SELECT * FROM register WHERE eid_fk = $1 AND sid_fk = $2", [eventId, sid]);
