@@ -42,8 +42,35 @@ function EventCard({ event, onRegister, onCancel }) {
 
 function EventPage() {
   const [events, setEvents] = useState([]);
+  const [newEvent, setNewEvent] = useState({
+    title: "",
+    date: "",
+    location: "",
+    description:"",
+    seats:"",
+    registeredstudents:""
+  });
   const [showModal, setShowModal] = useState(false);
   const userInfo = useRouteLoaderData('studentData');
+  const sid=userInfo.data.sid;
+  const checkUserRegistrations = async (eevents) => {
+    try {
+      const response = await axios.get("http://localhost:9000/register/api/userregistrations");
+      const userRegistrations = response.data;
+      // console.log(userRegistrations);
+      // Check if user is registered for each event and update state accordingly
+      const updatedEvents = eevents.map(event => {
+        //Yahape mostly registration.eid_fk hai check once
+        const isRegistered = userRegistrations.some(registration => (registration.eid_fk === event.eid )&&registration.sid_fk===sid);
+        // console.log(isRegistered);
+        return { ...event, registered: isRegistered };
+      });
+      const registrationMessage = "";
+      return updatedEvents;
+    } catch (error) {
+      console.error("Error checking user registrations:", error);
+    }
+  };
   const updateData = async () => {
     try {
       const res = await axios.get("http://localhost:9000/event/api/events");
@@ -54,40 +81,16 @@ function EventPage() {
       console.error("Error updating eventsData:", error);
     }
   };
-  const checkUserRegistrations = async (eevents) => {
-    try {
-      const response = await axios.get("http://localhost:9000/register/api/userregistrations");
-      const userRegistrations = response.data;
-      // console.log(userRegistrations);
-      // Check if user is registered for each event and update state accordingly
-      const updatedEvents = eevents.map(event => {
-        //Yahape mostly registration.eid_fk hai check once
-        const isRegistered = userRegistrations.some(registration => registration.eid_fk === event.eid);
-        // console.log(isRegistered);
-        return { ...event, registered: isRegistered };
-      });
-      const registrationMessage = "";
-      return updatedEvents;
-    } catch (error) {
-      console.error("Error checking user registrations:", error);
-    }
-  };
+
   useEffect( ()=>{
     updateData();
   },[]);
 
-  const [newEvent, setNewEvent] = useState({
-    title: "",
-    date: "",
-    location: "",
-    description:"",
-    seats:"",
-    registeredstudents:""
-  });
+
   const [registrationMessage, setRegistrationMessage] = useState("");
   // fill registrationEventId with an array instead of null
   const [registrationEventId, setRegistrationEventId] = useState("");
-  const sid=userInfo.data.sid;
+
   const handleRegisterEvent = async(eventId) => {
     try {
       const eventss = await checkUserRegistrations(events);
