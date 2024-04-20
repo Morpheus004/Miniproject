@@ -48,23 +48,26 @@ function EventPage() {
     try {
       const res = await axios.get("http://localhost:9000/event/api/events");
       const upcomingEvents = res.data.filter((event) => new Date(event.date) > new Date());
-      setEvents(upcomingEvents);
+      const fupcomingEvents=await checkUserRegistrations(upcomingEvents);
+      setEvents(fupcomingEvents);
     } catch (error) {
       console.error("Error updating eventsData:", error);
     }
   };
-  const checkUserRegistrations = async () => {
+  const checkUserRegistrations = async (eevents) => {
     try {
       const response = await axios.get("http://localhost:9000/register/api/userregistrations");
       const userRegistrations = response.data;
-      
+      // console.log(userRegistrations);
       // Check if user is registered for each event and update state accordingly
-      const updatedEvents = events.map(event => {
-        const isRegistered = userRegistrations.some(registration => registration.eid === event.eid);
+      const updatedEvents = eevents.map(event => {
+        //Yahape mostly registration.eid_fk hai check once
+        const isRegistered = userRegistrations.some(registration => registration.eid_fk === event.eid);
+        // console.log(isRegistered);
         return { ...event, registered: isRegistered };
       });
       const registrationMessage = "";
-      return { events: updatedEvents, userRegistrations };
+      return updatedEvents;
     } catch (error) {
       console.error("Error checking user registrations:", error);
     }
@@ -79,15 +82,16 @@ function EventPage() {
     location: "",
     description:"",
     seats:"",
-    registeredStudents:""
+    registeredstudents:""
   });
   const [registrationMessage, setRegistrationMessage] = useState("");
-  const [registrationEventId, setRegistrationEventId] = useState(null);
+  // fill registrationEventId with an array instead of null
+  const [registrationEventId, setRegistrationEventId] = useState("");
   const sid=userInfo.data.sid;
   const handleRegisterEvent = async(eventId) => {
     try {
-      const { events } = await checkUserRegistrations();
-      const event = events.find(event => event.eid === eventId);
+      const eventss = await checkUserRegistrations(events);
+      const event = eventss.find(event => event.eid === eventId);
       if (event.registered) {
         setRegistrationMessage("You have already registered for this event.");
         return;
@@ -175,14 +179,14 @@ function EventPage() {
         <h2>Upcoming Events</h2>
         <div className="event-cards">
         {events.map((event) => (
-            <div className={"event-card" + (registrationEventId === event.eid ? " registered" : "")} key={event.eid}>
+            <div className={"event-card" + (event.registered===true ? " registered" : "")} key={event.eid}>
               <h3>{event.title}</h3>
               <p>Date: {formatDate(event.date)}</p>
               <p>Location: {event.location}</p>
               <p>Description: {event.description}</p>
               <p>Seats : {event.seats}</p>
               <p>Registrations:{`${event.registeredstudents}/${event.seats}`}</p>
-              {registrationEventId !== event.eid ? (
+              {event.registered===false ? (
                 <button onClick={() => handleRegisterEvent(event.eid)}>Register</button>
               ) : (
                 <>
@@ -208,7 +212,7 @@ function EventPage() {
               <input type="date" placeholder="Date" value={newEvent.date} onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })} />
               <input type="text" placeholder="Location" value={newEvent.location} onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })} />
               <input type="text" placeholder="Description" value={newEvent.description} onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })} />
-              <input type="number" placeholder="Seats" value={newEvent.seats} onChange={(e) => setNewEvent({ ...newEvent, seats: e.target.value })} />
+              <input type="number" placeholder="Seats" value={newEvent.seats} onChange={(e) => setNewEvent({ ...newEvent, seats: e.target.value,registeredstudents:0 })} />
               <button onClick={handleSaveEvent}>Save</button>
               <button onClick={handleCancelModal}>Cancel</button>
             </div>
