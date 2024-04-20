@@ -190,7 +190,7 @@ function EventPage() {
                 <button onClick={() => handleRegisterEvent(event.eid)}>Register</button>
               ) : (
                 <>
-                  <p>{registrationMessage}</p> 
+                  <p>You have successfully registered</p> 
                   {/* <button onClick={handleCancelRegistration}>Cancel Registration</button> */}
                 </>
               )}
@@ -212,7 +212,7 @@ function EventPage() {
               <input type="date" placeholder="Date" value={newEvent.date} onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })} />
               <input type="text" placeholder="Location" value={newEvent.location} onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })} />
               <input type="text" placeholder="Description" value={newEvent.description} onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })} />
-              <input type="number" placeholder="Seats" value={newEvent.seats} onChange={(e) => setNewEvent({ ...newEvent, seats: e.target.value,registeredstudents:0 })} />
+              <input type="number" placeholder="Seats" value={newEvent.seats} onChange={(e) => setNewEvent({ ...newEvent, seats: e.target.value,registeredstudents:0,registered:false })} />
               <button onClick={handleSaveEvent}>Save</button>
               <button onClick={handleCancelModal}>Cancel</button>
             </div>
