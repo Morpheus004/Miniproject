@@ -249,4 +249,7 @@ body {
   .event-card.registered {
     background-color: #f0f0f0; /* Lighter background color */
   }
+  .event-card.apply {
+    background-color: #f0f0f0; /* Lighter background color */
+  }
   

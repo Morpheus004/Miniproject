@@ -6,7 +6,6 @@ import axios from 'axios';
 import { getAuthToken } from "../utils/auth";
 import { jwtDecode } from "jwt-decode";
 
-
 function NavbarAlumni() {
   return (
     <div>

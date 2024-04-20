@@ -6,7 +6,6 @@ import axios from 'axios';
 import { getAuthToken } from "../utils/auth";
 import { jwtDecode } from "jwt-decode";
 
-
 function NavbarStudent() {
   const data=useLoaderData();
   console.log(data);

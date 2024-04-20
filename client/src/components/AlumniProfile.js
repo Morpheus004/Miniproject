@@ -60,6 +60,7 @@ function AlumniProfile()  {
             </ul>
           </div>
           {/* Additional columns */}
+
         </div>
       </div>
     </div>

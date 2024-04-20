@@ -2,7 +2,9 @@ import React from "react";
 import { useRouteLoaderData } from "react-router-dom";
 import backgroundImage from './bg.jpg';
 
+
 function ProfilePage() {
+
   const userInfo = useRouteLoaderData('studentData');
 
   console.log("userInfo:", userInfo);
