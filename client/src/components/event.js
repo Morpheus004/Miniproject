@@ -3,7 +3,7 @@ import "./CSS/all.css"; // Import CSS for styling
 import classes from './CSS/eventcard.module.css';
 import axios from "axios";
 import { useRouteLoaderData } from "react-router-dom";
-
+import backgroundImage from './bg.jpg';
 
 function EventCard({ event, onRegister, onCancel }) {
   function formatDate(dateString) {
@@ -170,7 +170,7 @@ function EventPage() {
   };
 
   return (
-    <div>
+    <div className="page-container" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "cover", minHeight: "100vh" }}>
       <div className={classes.container}>
         <h2>Upcoming Events</h2>
         <div className="event-cards">

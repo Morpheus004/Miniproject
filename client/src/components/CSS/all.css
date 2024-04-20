@@ -10,9 +10,18 @@ body {
 }
 
 .navbar {
-  background-color: #1b095a; /* Blue color */
+  background-color: #1b095a;
   padding: 10px 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1000; /* Ensure the navbar stays on top of other content */
 }
+
+.page-container {
+  padding-top: 90px; /* Adjust this value according to the height of your navbar */
+}
+
+
 
 .navbar-nav {
   list-style: none;
