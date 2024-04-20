@@ -53,7 +53,7 @@ function StudentPage() {
 
 function App() {
   return (
-    <div>
+    <div style={{ backgroundImage: "url(https://i.pinimg.com/564x/26/79/31/2679318cea36a51288bc13b436000b55.jpg)", backgroundSize: "cover", minHeight: "100vh" }}>
       {/* <Navbar /> */}
       <StudentPage />
     </div>

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
+
+
 function ProfilePages() {
+<<<<<<< Updated upstream
   const userInfo = useRouteLoaderData('studentData');
 
   console.log("userInfo:", userInfo);
@@ -18,6 +21,11 @@ function ProfilePages() {
           <p>SID: {userInfo.data.sid}</p>
         </div>
       )}
+=======
+  return (
+    <div>
+      <h1>Profile Page</h1>
+>>>>>>> Stashed changes
     </div>
   );
 }
