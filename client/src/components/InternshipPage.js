@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./CSS/all.css"; // Import CSS for styling
 import classes from "./CSS/eventcard.module.css";
 import axios from "axios";
+import { useRouteLoaderData } from "react-router-dom";
 
 function InternshipCard({
   internship,
@@ -42,6 +43,22 @@ function InternshipCard({
 function InternshipPage() {
   const [internships, setInternships] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const userInfo = useRouteLoaderData('studentData');
+  const sid=userInfo.data.sid;
+  const checkUserApplications = async (iinternships) => {
+    try {
+      const response = await axios.get("http://localhost:9000/apply/api/userapplications");
+      const userApplications = response.data;
+      // Check if user has applied for each internship and update state accordingly
+      const updatedInternships = iinternships.map(internship => {
+        const hasApplied = userApplications.some(application => (application.iid_fk === internship.iid )&&application.sid_fk===sid);
+        return { ...internship, applied:hasApplied };
+      });
+      return updatedInternships;
+    } catch (error) {
+      console.error("Error checking user applications:", error);
+    }
+  };
   const fetchData = async () => {
     try {
       const res = await axios.get(
@@ -69,17 +86,23 @@ function InternshipPage() {
     return formatter.format(date);
   };
   const [registrationMessage, setRegistrationMessage] = useState("");
-  const [registrationInternshipId, setRegistrationInternshipId] =
-    useState(null);
+  const [registrationInternshipId, setRegistrationInternshipId] =useState("");
 
   const handleApplyInternship = async (internshipId) => {
     try {
-      setRegistrationInternshipId(internshipId);
-      setRegistrationMessage("Applied successfully!");
+      const internshipss = await checkUserApplications(internships);
+      const internship = internshipss.find(internship => internship.iid === internshipId);
+      if (internship.registered) {
+        setRegistrationMessage("You have already applied for this internship.");
+        return;
+      }
       const res = await axios.put(
-        `http://localhost:9000/internship/api/internships/${internshipId}`
+        `http://localhost:9000/internship/api/internships/${internshipId}`,{sid:sid}
       );
       console.log(res);
+      fetchData();
+      setRegistrationMessage("Applied successfully!");
+      console.log("Application message:", registrationMessage);
       fetchData();
     } catch (error) {
       console.error("Error applying for internship:", error);
