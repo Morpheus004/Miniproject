@@ -62,6 +62,16 @@ router.post("/api/events", async (req, res) => {
     }
   });
 
+  router.get("/api/events/alumni", async (req, res) => {
+    try {
+      const { rows } = await db.query("SELECT users.uid,username,email,role,aid,experience_years FROM alumnus join users on alumnus.uid=users.uid");
+      console.log(rows);
+      res.json(rows);
+    } catch (error) {
+      console.error("Error fetching alumni:", error);
+      res.status(500).json({ error: "An unexpected error occurred" });
+    }
+  });
   
 
   export default router;
