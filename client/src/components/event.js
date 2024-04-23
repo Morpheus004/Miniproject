@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./CSS/all.css"; // Import CSS for styling
 import classes from "./CSS/eventcard.module.css";
 import axios from "axios";
-import { useRouteLoaderData } from "react-router-dom";
+import { redirect, useNavigate, useRouteLoaderData } from "react-router-dom";
 import backgroundImage from "./bg.jpg";
 import profileIcon from "./profile-icon.jpg"; // Adjust the path to match the location of your image
 
@@ -261,9 +261,10 @@ function EventPage() {
     });
     return formatter.format(date);
   };
-
+  const navigate=useNavigate();
   const viewAlumniProfile = (alumni) => {
     console.log(`Viewing profile of ${alumni.name}`);
+    window.open(`/alumni/profile/${alumni.aid}`, '_blank');
   };
 
   // const handleInvite = () => {
@@ -388,7 +389,7 @@ function EventPage() {
               </span>
               <h2 className="modal-container-title">Select Alumni to Invite</h2>
               {alumniList.map((alumni) => (
-                <div key={alumni.id}>
+                <div key={alumni.aid}>
                   <div className="alumni-info">
                     <input
                       type="checkbox"
