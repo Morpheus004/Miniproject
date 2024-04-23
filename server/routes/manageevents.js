@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/api/requests/a/:aid", async (req, res) => {
     const aid = req.params.aid;
     try {
-      const { rows } = await db.query("SELECT * FROM manageevents join student ON manageevents.sid_fk=student.sid join events ON manageevents.eid_fk=events.eid where manageevents.aid_fk=$1",[aid]);
+      const { rows } = await db.query('SELECT * FROM manageevents join student ON manageevents.sid_fk=student.sid join events ON manageevents.eid_fk=events.eid where manageevents.aid_fk=$1',[aid]);
       console.log(rows);
       res.json(rows);
     } catch (error) {
@@ -70,5 +70,22 @@ router.post("/api/requests/:eid",async (req, res) => {
       res.status(500).json({ error: "An unexpected error occurred" });
     }
 })
+
+router.put("/api/requests/:eventId", async (req, res) => {
+  try {
+    const eventId = req.params.eventId;
+    const acceptance = req.body.acceptance; // true for accepting, false for cancelling
+    const aid=req.body.aid;
+
+    // Update the acceptance status of the event in the database
+    const updatedEvent = await db.query("UPDATE manageevents set acceptance=$1 where eid_fk=$2 and aid_fk=$3",[acceptance,eventId,aid]);
+
+    // Send response
+    res.json(updatedEvent);
+  } catch (error) {
+    console.error("Error accepting/cancelling invitation:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 export default router;

@@ -7,8 +7,14 @@ const router = express.Router();
 router.get("/api/events", async (req, res) => {
     try {
       const { rows } = await db.query("SELECT * FROM events");
-      console.log(rows);
-      res.json(rows);
+      const updatedEvents = await Promise.all(
+        rows.map(async (event) => {
+          const acceptedAlumniResult = await db.query(`SELECT users.username FROM manageevents JOIN alumnus ON manageevents.aid_fk = alumnus.aid JOIN users ON alumnus.uid=users.uid WHERE eid_fk = $1 AND acceptance = true`, [event.eid]);
+          const acceptedAlumni = acceptedAlumniResult.rows.map(row => row.username);
+          return { ...event, acceptedAlumni };
+        })
+      );
+      res.json(updatedEvents);
     } catch (error) {
       console.error("Error fetching events:", error);
       res.status(500).json({ error: "An unexpected error occurred" });
