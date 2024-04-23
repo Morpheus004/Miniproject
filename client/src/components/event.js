@@ -59,9 +59,9 @@ function EventPage() {
   const [showModal, setShowModal] = useState(false);
   const [showAlumniModal, setShowAlumniModal] = useState(false);
   const [alumniList, setAlumniList] = useState([
-    { id: 1, name: "John Doe" },
-    { id: 2, name: "Jane Smith" },
-    { id: 3, name: "Alice Johnson" }
+    { aid: 1, name: "John Doe" },
+    { aid: 2, name: "Jane Smith" },
+    { aid: 3, name: "Alice Johnson" }
   ]);
   const [selectedAlumni, setSelectedAlumni] = useState([]);
   const [invitingEventId, setInvitingEventId] = useState(null); // Track which event's alumni are being invited
@@ -79,7 +79,7 @@ function EventPage() {
         // console.log(isRegistered);
         return { ...event, registered: isRegistered };
       });
-      const registrationMessage = "";
+      // const registrationMessage = "";
       return updatedEvents;
     } catch (error) {
       console.error("Error checking user registrations:", error);
@@ -90,16 +90,41 @@ function EventPage() {
       const res = await axios.get("http://localhost:9000/event/api/events");
       const upcomingEvents = res.data.filter((event) => new Date(event.date) > new Date());
       const fupcomingEvents=await checkUserRegistrations(upcomingEvents);
+
+      try {
+        const res = await axios.get(`http://localhost:9000/manageevents/api/allalumni`);
+        setAlumniList(res.data);
+        console.log(res.data);
+      } catch (error) {
+        console.error("Error in fetching alumni list",error)
+      }
       setEvents(fupcomingEvents);
     } catch (error) {
       console.error("Error updating eventsData:", error);
     }
   };
 
-  useEffect( ()=>{
+  useEffect(()=>{
     updateData();
   },[]);
 
+  useEffect(()=>{
+    try {
+      async function getRequestSentAlumni(invitingEventId){
+        if(invitingEventId===null)
+        return;
+        else{
+          const res= await axios.get("http://localhost:9000/manageevents/api/requests/e/"+invitingEventId);
+          //from the above step we will get the alumni to whom request has already been sent
+          console.log(res);
+          setSelectedAlumni(res.data)
+        }
+      }
+      getRequestSentAlumni(invitingEventId);
+    } catch (error) {
+      console.error("Can't get alumni that have already been checked",error);
+    }
+  },[invitingEventId])
 
   const [registrationMessage, setRegistrationMessage] = useState("");
   // fill registrationEventId with an array instead of null
@@ -187,9 +212,9 @@ function EventPage() {
   };
 
   const handleAlumniSelection = (alumni) => {
-    const isSelected = selectedAlumni.some((a) => a.id === alumni.id);
+    const isSelected = selectedAlumni.some((a) => a.aid === alumni.aid);
     if (isSelected) {
-      setSelectedAlumni(selectedAlumni.filter((a) => a.id !== alumni.id));
+      setSelectedAlumni(selectedAlumni.filter((a) => a.aid !== alumni.aid));
     } else {
       setSelectedAlumni([...selectedAlumni, alumni]);
     }
@@ -197,14 +222,16 @@ function EventPage() {
 
   const sendInvitations = async () => {
     try {
-      // Simulate sending invitations
+      const selectedAlumniIds = selectedAlumni.map((alumni) => alumni.aid);
+      const res = await axios.post(`http://localhost:9000/manageevents/api/requests/${invitingEventId}`, { alumniIds: selectedAlumniIds,sid:sid });
+      console.log(res);
       setShowAlumniModal(false);
       setSelectedAlumni([]);
       console.log("Invitations sent successfully!");
     } catch (error) {
       console.error("Error sending invitations:", error);
     }
-  }
+  };
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const formatter = new Intl.DateTimeFormat('en-US', {
@@ -280,11 +307,11 @@ function EventPage() {
                 <div key={alumni.id}>
                   <input
                     type="checkbox"
-                    id={`alumni_${alumni.id}`}
-                    checked={selectedAlumni.some((a) => a.id === alumni.id)}
+                    id={`alumni_${alumni.aid}`}
+                    checked={selectedAlumni.some((a) => a.aid === alumni.aid)}
                     onChange={() => handleAlumniSelection(alumni)}
                   />
-                  <label htmlFor={`alumni_${alumni.id}`}>{alumni.name}</label>
+                  <label htmlFor={`alumni_${alumni.id}`}>{alumni.username}</label>
                 </div>
               ))}
               <button className="button is-primary" onClick={sendInvitations}>Send Invites</button>
