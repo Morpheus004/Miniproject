@@ -4,6 +4,7 @@ import classes from './CSS/eventcard.module.css';
 import axios from "axios";
 import { useRouteLoaderData } from "react-router-dom";
 import backgroundImage from './bg.jpg';
+import profileIcon from './profile-icon.jpg'; // Adjust the path to match the location of your image
 
 // function EventCard({ event, onRegister, onCancel}) {
 //   function formatDate(dateString) {
@@ -242,6 +243,10 @@ function EventPage() {
     return formatter.format(date);
   };
 
+  const viewAlumniProfile = (alumni) => {
+    console.log(`Viewing profile of ${alumni.name}`);
+  };
+
   // const handleInvite = () => {
   //   console.log("Invite button clicked");
   //   handleInviteAlumni(event.eid);
@@ -305,6 +310,7 @@ function EventPage() {
               <h2 className="modal-container-title">Select Alumni to Invite</h2>
               {alumniList.map((alumni) => (
                 <div key={alumni.id}>
+                  <div className="alumni-info">
                   <input
                     type="checkbox"
                     id={`alumni_${alumni.aid}`}
@@ -312,10 +318,14 @@ function EventPage() {
                     onChange={() => handleAlumniSelection(alumni)}
                   />
                   <label htmlFor={`alumni_${alumni.id}`}>{alumni.username}</label>
+                  <button className="profile-button" onClick={() => viewAlumniProfile(alumni)}>
+              <img src={profileIcon} alt="Profile" className="profile-icon" />
+            </button>
+          </div>
                 </div>
               ))}
-              <button className="button is-primary" onClick={sendInvitations}>Send Invites</button>
-            </div>
+      <button className="button is-primary" onClick={() => setShowAlumniModal(false)}>Cancel</button>
+              <button className="button is-primary" onClick={sendInvitations}>Send Invites</button>            </div>
           </div>
         )}
       </div>

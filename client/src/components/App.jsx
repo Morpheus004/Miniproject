@@ -15,6 +15,7 @@ import { checkAuthLoader } from '../utils/auth';
 import PrivateRoutesStudent from '../utils/PrivateRoutesStudent.js';
 import PrivateRoutesAlumni from '../utils/PrivateRoutesAlumni.js';
 import Logout from './Logout.js';
+import AlumniInvites from './AlumniInvites.js';
 
 const router = createBrowserRouter([
   {
@@ -39,7 +40,8 @@ const router = createBrowserRouter([
           { path: 'home', element: <AlumniPage /> },
           { path: 'event', element: <AlumniEvent /> },
           { path: 'internship', element: <AlumniInternship /> },
-          { path: 'profile', element: <AlumniProfile /> }
+          { path: 'profile', element: <AlumniProfile /> },
+          { path: 'invites', element: <AlumniInvites /> }
         ]
       },
     ]
