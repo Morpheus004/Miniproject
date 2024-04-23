@@ -2,22 +2,34 @@ import React, { useState, useEffect } from "react";
 import "./CSS/all.css"; // Import CSS for styling
 import classes from "./CSS/eventcard.module.css";
 import axios from "axios";
+import backgroundImage from './bg.jpg'
+import { useRouteLoaderData } from "react-router-dom";
 
-function InternshipCard({
-  internship,
-  onApply,
-  formatDate,
-  registrationMessage,
-}) {
-  const [applied, setApplied] = useState(false);
+function InternshipCard({ internship, onApply, formatDate, applied }) {
+  const [registrationMessage, setRegistrationMessage] = useState("");
+  const [apply, setApply] = useState(false);
+
+  useEffect(() => {
+    if (applied === true) {
+      setRegistrationMessage("You have already applied for this internship.");
+      setApply(true);
+    } else {
+      setRegistrationMessage("");
+      setApply(false);
+    }
+  }, [applied]);
+
 
   const handleApply = () => {
     onApply(internship.iid);
-    setApplied(true);
+    setRegistrationMessage("You have already applied for this internship.");
+    setApply(true);
   };
 
   return (
-    <div className={`event-card ${applied ? "applied" : ""}`}>
+
+    <div className={`event-card ${apply ? "apply" : ""}`}>
+
       <h3>{internship.title}</h3>
       <p>Role: {internship.roles}</p>
       <p>Domain: {internship.domain_t}</p>
@@ -26,10 +38,8 @@ function InternshipCard({
       <p>Location: {internship.location}</p>
       <p>Description: {internship.description}</p>
       <p>Duration(months): {internship.duration_months}</p>
-      {!applied ? (
-        <button onClick={() => handleApply(internship.iid)}>
-          Apply
-        </button>
+      {!apply ? (
+        <button onClick={() => handleApply(internship.iid)}>Apply</button>
       ) : (
         <>
           <p>{registrationMessage}</p>
@@ -42,6 +52,23 @@ function InternshipCard({
 function InternshipPage() {
   const [internships, setInternships] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const userInfo = useRouteLoaderData('studentData');
+  const sid=userInfo.data.sid;
+  const checkUserApplications = async (iinternships) => {
+    try {
+      const response = await axios.get("http://localhost:9000/apply/api/userapplications");
+      const userApplications = response.data;
+      console.log(userApplications);
+      // Check if user has applied for each internship and update state accordingly
+      const updatedInternships = iinternships.map(internship => {
+        const hasApplied = userApplications.some(application => (application.iid_fk === internship.iid )&&(application.sid_fk===sid));
+        return { ...internship, applied:hasApplied };
+      });
+      return updatedInternships;
+    } catch (error) {
+      console.error("Error checking user applications:", error);
+    }
+  };
   const fetchData = async () => {
     try {
       const res = await axios.get(
@@ -50,7 +77,8 @@ function InternshipPage() {
       const upcomingInternships = res.data.filter(
         (internship) => new Date(internship.date) > new Date()
       );
-      setInternships(upcomingInternships);
+      const upcomingInternshipss=await checkUserApplications(upcomingInternships)
+      setInternships(upcomingInternshipss);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -68,18 +96,23 @@ function InternshipPage() {
     });
     return formatter.format(date);
   };
-  const [registrationMessage, setRegistrationMessage] = useState("");
-  const [registrationInternshipId, setRegistrationInternshipId] =
-    useState(null);
+  const [registrationInternshipId, setRegistrationInternshipId] =useState("");
 
   const handleApplyInternship = async (internshipId) => {
     try {
-      setRegistrationInternshipId(internshipId);
-      setRegistrationMessage("Applied successfully!");
+      const internshipss = await checkUserApplications(internships);
+      const internship = internshipss.find(internship => internship.iid === internshipId);
+      // if (internship.registered) {
+      //   setRegistrationMessage("You have already applied for this internship.");
+      //   return;
+      // }
       const res = await axios.put(
-        `http://localhost:9000/internship/api/internships/${internshipId}`
+        `http://localhost:9000/internship/api/internships/${internshipId}`,{sid:sid}
       );
       console.log(res);
+      // fetchData();
+      // setRegistrationMessage("Applied successfully!");
+      // console.log("Application message:", registrationMessage);
       fetchData();
     } catch (error) {
       console.error("Error applying for internship:", error);
@@ -87,7 +120,7 @@ function InternshipPage() {
   };
 
   return (
-    <div>
+   <div className="page-container" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "cover", minHeight: "100vh" }}>
       <div className={classes.container}>
         <h2>Internships</h2>
         <div className="event-cards">
@@ -97,7 +130,7 @@ function InternshipPage() {
               internship={internship}
               onApply={handleApplyInternship}
               formatDate={formatDate}
-              registrationMessage={registrationMessage}
+              applied={internship.applied}
             />
           ))}
         </div>

@@ -1,0 +1,45 @@
+.logoutContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .logoutContent {
+    text-align: center;
+  }
+  
+  .logoutHeading {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .button {
+    font-size: 16px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logoutButton {
+    background-color: #f44336; /* Red color for logout button */
+    color: #fff;
+  }
+  
+  .stayButton {
+    background-color: #4caf50; /* Green color for stay button */
+    color: #fff;
+  }
+  
+  .button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  

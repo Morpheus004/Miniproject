@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./EventPage.css"; // Import CSS for styling
+import "./CSS/all.css"; // Import CSS for styling
+import classes from './CSS/eventcard.module.css';
 import axios from "axios";
-
+import backgroundImage from './bg.jpg';
 function InternshipCard({ internship, onCancel, formatDate }) {
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -24,7 +25,7 @@ function InternshipCard({ internship, onCancel, formatDate }) {
       <h3>{internship.title}</h3>
       <p>Role: {internship.roles}</p>
       <p>Domain: {internship.domain_t}</p>
-      <p>Applicants: {internship.applicants}</p>
+      <p>Applications: {internship.applications}</p>
       <p>Date: {formatDate(internship.date)}</p>
       <p>Location: {internship.location}</p>
       <p>Description: {internship.description}</p>
@@ -63,7 +64,7 @@ function InternshipPage() {
     duration: "",
     role: "",
     domain: "",
-    applicants: "",
+    applications: "",
   });
 
   
@@ -104,7 +105,7 @@ function InternshipPage() {
         duration: "",
         role: "",
         domain: "",
-        applicants: "",
+        applications: "",
       });
     } catch (error) {
       console.error("Error saving internship:", error);
@@ -125,13 +126,13 @@ function InternshipPage() {
       duration: "",
       role: "",
       domain: "",
-      applicants: "",
+      applications: "",
     });
   };
 
   return (
-    <div>
-      <div className="container">
+    <div className="page-container" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "cover", minHeight: "100vh" }}>
+      <div className={classes.container}>
         <h2>Upcoming Internships</h2>
         <div className="event-cards">
           {internships.map((internship) => (
@@ -142,8 +143,8 @@ function InternshipPage() {
             />
           ))}
         </div>
-        <div className="add-internship">
-          <button id="addInternshipatn" onClick={handleAddInternship}>
+        <div className="add-event">
+          <button id="addEventBtn" onClick={handleAddInternship}>
             Add Internship
           </button>
         </div>
@@ -217,17 +218,6 @@ function InternshipPage() {
                 value={newInternship.domain}
                 onChange={(e) =>
                   setNewInternship({ ...newInternship, domain: e.target.value })
-                }
-              />
-              <input
-                type="number"
-                placeholder="Number of Applicants"
-                value={newInternship.applicants}
-                onChange={(e) =>
-                  setNewInternship({
-                    ...newInternship,
-                    applicants: e.target.value,
-                  })
                 }
               />
               <button onClick={handleSaveInternship}>Save</button>

@@ -90,3 +90,49 @@ alter table internship add column location varchar (20);
 ALTER TABLE events ADD COLUMN registeredStudents INTEGER DEFAULT 0;
 alter table internship drop column applicants;
 ALTER TABLE internship ADD COLUMN applications INTEGER DEFAULT 0;
+
+-- updated version for multiple logins
+create table users (
+	uid serial primary key,
+	username varchar (20),
+	password varchar (200),
+	email varchar (50)
+)
+ALTER TABLE student DROP COLUMN username, DROP COLUMN password, DROP COLUMN email;
+ALTER TABLE alumnus DROP COLUMN username, DROP COLUMN password, DROP COLUMN email;
+alter table student add column uid int;
+alter table student add FOREIGN KEY(uid) references users(uid)
+alter table alumnus add column uid int;
+alter table alumnus add FOREIGN KEY(uid) references users(uid)
+drop table student_interests;
+alter table alumni_expertise RENAME TO user_preference
+alter table user_preference drop column aid
+alter table user_preference add column uid serial primary key
+alter table user_preference add FOREIGN KEY(uid) references users(uid)
+
+-- updated version for multiple logins(by pratham)
+alter table users add role varchar(10);
+
+-- queries for manage events table
+alter table manageevents add column eid_fk int;
+ALTER TABLE manageevents ADD FOREIGN KEY (eid_fk) REFERENCES events(eid);
+
+-- Latest queries
+SELECT constraint_name
+FROM information_schema.table_constraints
+WHERE table_name = 'manageevents'
+  AND constraint_type = 'PRIMARY KEY';
+
+alter table manageevents drop constraint manageevents_pkey;
+alter table manageevents add primary key(sid_fk,eid_fk,aid_fk);
+
+create table manageinternships(
+ aid_fk int,
+ iid_fk int,
+ sid_fk int,
+ PRIMARY KEY (aid_fk,iid_fk,sid_fk)
+)
+
+alter table manageinternships add FOREIGN KEY (sid_fk) references student(sid);
+alter table manageinternships add FOREIGN KEY (aid_fk) references alumnus(aid);
+alter table manageinternships add FOREIGN KEY (iid_fk) references internship(iid);

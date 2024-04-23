@@ -10,41 +10,87 @@ body {
 }
 
 .navbar {
-    background-color: #007bff; /* Blue color */
-    padding: 10px 0;
-  }
-  
-  /* .container {
-    max-width: 1200px;
-    margin: 20px auto; 
-  } */
-  /* Added margin for better spacing */
-  /* This container is removed and placed in eventcard.module.css as it was conflicting with css of */
-  .navbar-nav {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-  }
-  
-  .nav-item {
-    margin-right: 20px;
-  }
-  
-  .nav-link {
-    text-decoration: none;
-    color: #fff; /* White color */
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .nav-link:hover {
-    background-color: #0056b3; /* Darker shade of blue */
-  }
-  .nav-link.active{
-    background-color: #0056b3; /* Darker shade of blue */
-  }
+  background-color: #1b095a;
+  padding: 10px 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1000; /* Ensure the navbar stays on top of other content */
+}
+
+.page-container {
+  padding-top: 90px; /* Adjust this value according to the height of your navbar */
+}
+
+
+
+.navbar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.nav-item {
+  margin-right: 20px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #fff; /* White color */
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: #13021d; /* Darker shade of blue */
+}
+
+.nav-link.active {
+  background-color: #13021d; /* Darker shade of blue */
+}
+
+/* Additional styling for logout button */
+.navbar-nav.ml-auto {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-nav.ml-auto .nav-item {
+  margin-left: 10px; /* Adjust margin between logout button and other navbar items */
+}
+
+/* Push the logout button to the extreme right */
+.navbar-nav.ml-auto .nav-item:last-child {
+  margin-left: auto;
+}
+
+/* Highlighted text links */
+.highlightTextOut a {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.highlightTextOut a:before,
+.highlightTextIn a:before {
+  position: absolute;
+  color: #fff;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  overflow: hidden;
+  content: attr(alt);
+  transition: all 0.3s;
+  transform: scale(0.8);
+  opacity: 0;
+}
+
+.highlightTextOut a:hover:before,
+.highlightTextIn a:hover:before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+
   h2 {
     color: #333;
   }
@@ -89,7 +135,7 @@ body {
   /* Register button */
   .event-card button {
     padding: 10px 20px;
-    background-color: #28a745; /* Green color */
+    background-color: #1b095a; /* Dark Blue color */
     color: #fff; /* White color */
     border: none;
     border-radius: 5px;
@@ -99,7 +145,7 @@ body {
   }
   
   .event-card button:hover {
-    background-color: #218838; /* Darker shade of green */
+    background-color: #13021d; /* Darker shade of green */
   }
   
   /* Cancel Registration button */
@@ -203,4 +249,24 @@ body {
   .event-card.registered {
     background-color: #f0f0f0; /* Lighter background color */
   }
+  .event-card.apply {
+    background-color: #f0f0f0; /* Lighter background color */
+  }
+  .profile-button-container {
+    margin-left: 30px; /* Adjust the value as needed */
+  }
   
+ 
+  .alumni-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .alumni-name {
+    margin-right: 10px; /* Adjust the margin as needed */
+  }
+  
+  .profile-icon {
+    width: 24px;
+    height: 24px;
+  }

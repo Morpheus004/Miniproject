@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./CSS/all.css"; // Import CSS for styling
 import classes from './CSS/eventcard.module.css';
 import axios from "axios";
-
+import backgroundImage from './bg.jpg';
 
 function EventCard({ event, onRegister, onCancel }) {
   function formatDate(dateString) {
@@ -15,13 +15,13 @@ function EventCard({ event, onRegister, onCancel }) {
     return formatter.format(date);
   }
 
-  const handleRegister = () => {
-    onRegister(event.eid);
-  };
+  // const handleRegister = () => {
+  //   onRegister(event.eid);
+  // };
 
-  const handleCancel = () => {
-    onCancel(event.eid);
-  };
+  // const handleCancel = () => {
+  //   onCancel(event.eid);
+  // };
 
 
   return (
@@ -31,8 +31,9 @@ function EventCard({ event, onRegister, onCancel }) {
       <p>Location: {event.location}</p>
       <p>Description: {event.description}</p>
       <p>Seats : {event.seats}</p>
-      <button onClick={handleRegister}>Register</button>
-      <button onClick={handleCancel}>Cancel Event</button>
+      <p>Registrations:{`${event.registeredstudents}/${event.seats}`}</p>
+      {/* <button onClick={handleRegister}>Register</button>
+      <button onClick={handleCancel}>Cancel Event</button> */}
     </div>
   );
 }
@@ -57,28 +58,28 @@ function AlumniEvent() {
     fetchData();
   }, []);
 
-  const handleRegisterEvent = (eventId) => {
-    // Logic to register for event
-    setRegistrationEventId(eventId);
-    setRegistrationMessage("Registered successfully!");
-  };
+  // const handleRegisterEvent = (eventId) => {
+  //   // Logic to register for event
+  //   setRegistrationEventId(eventId);
+  //   setRegistrationMessage("Registered successfully!");
+  // };
 
-  const handleCancelRegistration = () => {
-    // Logic to cancel registration for event
-    console.log("Cancel registration logic here");
-  };
+  // const handleCancelRegistration = () => {
+  //   // Logic to cancel registration for event
+  //   console.log("Cancel registration logic here");
+  // };
 
-  const handleCancelEvent = async (eventId) => {
-    // Logic to cancel the event
-    setEvents(events.filter((event) => event.eid !== eventId)); // Update UI first (optimistic)
+  // const handleCancelEvent = async (eventId) => {
+  //   // Logic to cancel the event
+  //   setEvents(events.filter((event) => event.eid !== eventId)); // Update UI first (optimistic)
 
-    try {
-      const res = await axios.delete(`http://localhost:9000/event/api/events/${eventId}`);
-      console.log(res);
-    } catch (error) {
-      console.error("Error removing from the database:", error);
-    }
-  };
+  //   try {
+  //     const res = await axios.delete(`http://localhost:9000/event/api/events/${eventId}`);
+  //     console.log(res);
+  //   } catch (error) {
+  //     console.error("Error removing from the database:", error);
+  //   }
+  // };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -91,7 +92,7 @@ function AlumniEvent() {
   };
 
   return (
-    <div>
+    <div className="page-container" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "cover", minHeight: "100vh" }}>
       <div className={classes.container}>
         <h2>Upcoming Events</h2>
         <div className="event-cards">
@@ -102,7 +103,8 @@ function AlumniEvent() {
               <p>Location: {event.location}</p>
               <p>Description: {event.description}</p>
               <p>Seats : {event.seats}</p>
-              {registrationEventId !== event.id ? (
+              <p>Registrations:{`${event.registeredstudents}/${event.seats}`}</p>
+              {/* {registrationEventId !== event.id ? (
                 <button onClick={() => handleRegisterEvent(event.eid)}>Register</button>
               ) : (
                 <>
@@ -110,7 +112,7 @@ function AlumniEvent() {
                   <button onClick={handleCancelRegistration}>Cancel Registration</button>
                 </>
               )}
-              <button onClick={() => handleCancelEvent(event.eid)}>Cancel Event</button>
+              <button onClick={() => handleCancelEvent(event.eid)}>Cancel Event</button> */}
             </div>
           ))}
         </div>

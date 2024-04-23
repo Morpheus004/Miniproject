@@ -19,8 +19,8 @@ router.post("/api/alumni/internship", async (req, res) => {
     const { title,role,domain,applicants, date, location, description,duration } = req.body;
     try {
       const { rows } = await db.query(
-        "INSERT INTO internship (title,roles,domain_t,applicants, date, location, description,duration_months) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;",
-        [title,role,domain,applicants, date, location, description,duration]
+        "INSERT INTO internship (title,roles,domain_t,applications, date, location, description,duration_months) VALUES ($1, $2, $3, $4, $5, $6, $7,$8) RETURNING *;",
+        [title,role,domain,0, date, location, description,duration]
       );
       res.status(201).json(rows[0]);
     } catch (error) {
