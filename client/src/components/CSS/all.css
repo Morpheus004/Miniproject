@@ -135,7 +135,7 @@ body {
   /* Register button */
   .event-card button {
     padding: 10px 20px;
-    background-color: #28a745; /* Green color */
+    background-color: #1b095a; /* Green color */
     color: #fff; /* White color */
     border: none;
     border-radius: 5px;
@@ -145,7 +145,7 @@ body {
   }
   
   .event-card button:hover {
-    background-color: #218838; /* Darker shade of green */
+    background-color: #13021d; /* Darker shade of green */
   }
   
   /* Cancel Registration button */
@@ -252,4 +252,24 @@ body {
   .event-card.apply {
     background-color: #f0f0f0; /* Lighter background color */
   }
+  .profile-button-container {
+    margin-left: 30px; /* Adjust the value as needed */
+  }
+  
+ 
+  .alumni-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .alumni-name {
+    margin-right: 10px; /* Adjust the margin as needed */
+  }
+  
+  .profile-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  
   
