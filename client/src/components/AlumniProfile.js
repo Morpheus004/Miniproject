@@ -24,7 +24,7 @@ function AlumniProfile()  {
                 <p style={{ color: '#868e96', fontSize: '14px' }}>Email: {userInfo.data.email}</p>
                 <p style={{ color: '#868e96', fontSize: '14px' }}>Role: {userInfo.data.role}</p>
                 <p style={{ color: '#868e96', fontSize: '14px' }}>UID: {userInfo.data.uid}</p>
-                <p style={{ color: '#868e96', fontSize: '14px' }}>SID: {userInfo.data.sid}</p>
+                <p style={{ color: '#868e96', fontSize: '14px' }}>AID: {userInfo.data.aid}</p>
               </div>
             </div>
             <hr style={{ margin: '20px 0' }} />

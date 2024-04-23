@@ -265,6 +265,7 @@ function EventPage() {
               <p>Description: {event.description}</p>
               <p>Seats : {event.seats}</p>
               <p>Registrations:{`${event.registeredstudents}/${event.seats}`}</p>
+              <p>Chief Guests: {event.acceptedAlumni!="" ? event.acceptedAlumni.join(", ") : "Will let you know soon!"}</p> 
               {event.registered===false ? (
                 <button onClick={() => handleRegisterEvent(event.eid)}>Register</button>
               ) : (
