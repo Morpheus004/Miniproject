@@ -104,7 +104,7 @@ function AlumniEvent() {
               <p>Description: {event.description}</p>
               <p>Seats : {event.seats}</p>
               <p>Registrations:{`${event.registeredstudents}/${event.seats}`}</p>
-              <p>Chief Guests: {event.acceptedAlumni!="" ? event.acceptedAlumni.join(", ") : "Will let you know soon!"}</p> 
+              <p>Chief Guests: {event.acceptedAlumni &&event.acceptedAlumni.length > 0 ? event.acceptedAlumni.join(", ") : "Will let you know soon!"}</p>
               {/* {registrationEventId !== event.id ? (
                 <button onClick={() => handleRegisterEvent(event.eid)}>Register</button>
               ) : (
