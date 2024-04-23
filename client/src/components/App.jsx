@@ -16,7 +16,8 @@ import PrivateRoutesStudent from '../utils/PrivateRoutesStudent.js';
 import PrivateRoutesAlumni from '../utils/PrivateRoutesAlumni.js';
 import Logout from './Logout.js';
 import AlumniInvites from './AlumniInvites.js';
-
+import AlumniProfilePublic,{publicAlumniLoader} from './AlumniProfilePublic.js'
+import StudentProfilePublic,{publicStudentLoader} from './StudentProfilePublic.js'
 const router = createBrowserRouter([
   {
     path: '/login',
@@ -45,6 +46,16 @@ const router = createBrowserRouter([
         ]
       },
     ]
+  },
+  {
+    path: '/alumni/profile/:aid',
+    element: <AlumniProfilePublic/>,
+    loader :publicAlumniLoader
+  },
+  {
+    path: '/student/profile/:sid',
+    element: <StudentProfilePublic/>,
+    loader :publicStudentLoader
   },
   {
     path:'/student',
