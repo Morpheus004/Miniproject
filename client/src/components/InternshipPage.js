@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./CSS/all.css"; // Import CSS for styling
 import classes from "./CSS/eventcard.module.css";
 import axios from "axios";
-import backgroundImage from "./bg.jpg";
+import backgroundImage from './bg.jpg'
 import { useRouteLoaderData } from "react-router-dom";
 
 function InternshipCard({ internship, onApply, formatDate, applied }) {
@@ -25,7 +25,7 @@ function InternshipCard({ internship, onApply, formatDate, applied }) {
     setRegistrationMessage("You have already applied for this internship.");
     setApply(true);
   };
-
+ 
   return (
 
     <div className={`event-card ${apply ? "apply" : ""}`}>
