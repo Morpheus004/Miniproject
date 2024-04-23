@@ -4,6 +4,18 @@ import classes from './CSS/eventcard.module.css';
 import axios from "axios";
 import { useRouteLoaderData } from "react-router-dom";
 import backgroundImage from './bg.jpg';
+import profileIcon from './profile-icon.jpg'; // Adjust the path to match the location of your image
+// import "./CSS/modalcss.css";
+// function EventCard({ event, onRegister, onCancel}) {
+//   function formatDate(dateString) {
+//     const date = new Date(dateString);
+//     const formatter = new Intl.DateTimeFormat('en-US', {
+//       month: 'long',
+//       day: 'numeric',
+//       year: 'numeric',
+//     });
+//     return formatter.format(date);
+//   }
 
 // function EventCard({ event, onRegister, onCancel}) {
 //   function formatDate(dateString) {
@@ -59,9 +71,11 @@ function EventPage() {
   const [showModal, setShowModal] = useState(false);
   const [showAlumniModal, setShowAlumniModal] = useState(false);
   const [alumniList, setAlumniList] = useState([
+
     { aid: 1, name: "John Doe" },
     { aid: 2, name: "Jane Smith" },
     { aid: 3, name: "Alice Johnson" }
+
   ]);
   const [selectedAlumni, setSelectedAlumni] = useState([]);
   const [invitingEventId, setInvitingEventId] = useState(null); // Track which event's alumni are being invited
@@ -138,7 +152,7 @@ function EventPage() {
         setRegistrationMessage("You have already registered for this event.");
         return;
       }
-      const res=await axios.put(`http://localhost:9000/event/api/events/${eventId}/register`,{sid:sid});
+      const res=await axios.put("http://localhost:9000/event/api/events/${eventId}/register",{sid:sid});
       console.log(res);
       updateData(); 
       setRegistrationMessage("Registered successfully!");
@@ -157,7 +171,7 @@ function EventPage() {
   //   setEvents(events.filter((event) => event.eid !== eventId)); // Update UI first (optimistic)
   
   //   try {
-  //     const res = await axios.delete(`http://localhost:9000/event/api/events/${eventId}`);
+  //     const res = await axios.delete(http://localhost:9000/event/api/events/${eventId});
   //     console.log(res);
   //     updateData();
   //     } catch (error) {
@@ -173,6 +187,11 @@ function EventPage() {
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+  const viewAlumniProfile = (alumni) => {
+    // Logic to open the profile of the selected alumni
+    console.log(`Viewing profile of ${alumni.name}`);
+    // You can implement further logic to open the profile modal or navigate to the profile page
   };
 
   const handleSaveEvent = async () => {
@@ -212,6 +231,7 @@ function EventPage() {
   };
 
   const handleAlumniSelection = (alumni) => {
+
     const isSelected = selectedAlumni.some((a) => a.aid === alumni.aid);
     if (isSelected) {
       setSelectedAlumni(selectedAlumni.filter((a) => a.aid !== alumni.aid));
@@ -318,11 +338,35 @@ function EventPage() {
             </div>
           </div>
         )}
+        {showAlumniModal && (
+  <div id="alumniModal" className="modal">
+    <div className="modal-content modal-container">
+      <span className="close" onClick={() => setShowAlumniModal(false)}>&times;</span>
+      <h2 className="modal-container-title">Select Alumni to Invite</h2>
+      {alumniList.map((alumni) => (
+        <div key={alumni.id} className="alumni-item">
+          <div className="alumni-info">
+            <input
+              type="checkbox"
+              id={`alumni_${alumni.id}`}
+              checked={selectedAlumni.some((a) => a.id === alumni.id)}
+              onChange={() => handleAlumniSelection(alumni)}
+            />
+            <label htmlFor={`alumni_${alumni.id}`} className="alumni-name">{alumni.name}</label>
+            <button className="profile-button" onClick={() => viewAlumniProfile(alumni)}>
+              <img src={profileIcon} alt="Profile" className="profile-icon" />
+            </button>
+          </div>
+        </div>
+      ))}
+      <button className="button is-primary" onClick={sendInvitations}>Send Invites</button>
+      <button className="button is-primary" onClick={() => setShowAlumniModal(false)}>Cancel</button>
+    </div>
+  </div>
+)}
       </div>
     </div>
   );
 }
 
 export default EventPage;
-
-

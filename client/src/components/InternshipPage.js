@@ -25,7 +25,7 @@ function InternshipCard({ internship, onApply, formatDate, applied }) {
     setRegistrationMessage("You have already applied for this internship.");
     setApply(true);
   };
-
+ 
   return (
 
     <div className={`event-card ${apply ? "apply" : ""}`}>
