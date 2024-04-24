@@ -136,3 +136,16 @@ create table manageinternships(
 alter table manageinternships add FOREIGN KEY (sid_fk) references student(sid);
 alter table manageinternships add FOREIGN KEY (aid_fk) references alumnus(aid);
 alter table manageinternships add FOREIGN KEY (iid_fk) references internship(iid);
+
+--updated for internship handling
+drop table manageinternships;
+alter table apply add column aid_fk int;
+
+SELECT constraint_name
+FROM information_schema.table_constraints
+WHERE table_name = 'apply'
+  AND constraint_type = 'PRIMARY KEY';
+
+alter table apply drop constraint apply_pkey;
+alter table apply add primary key(sid_fk,iid_fk,aid_fk);
+
