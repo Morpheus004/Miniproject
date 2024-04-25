@@ -12,6 +12,7 @@ import dataRoute from "./routes/data.js";
 import registerRoute from "./routes/register.js"
 import applyRoute from "./routes/apply.js"
 import manageeventsRoute from "./routes/manageevents.js"
+import fileuploadsRoute from "./routes/fileuploads.js"
 
 const app = express();
 const port = 9000;
@@ -20,6 +21,7 @@ const port = 9000;
 
 
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Mounting signup and login routes
@@ -32,7 +34,7 @@ app.use("/data",dataRoute);
 app.use("/register",registerRoute);
 app.use("/apply",applyRoute);
 app.use("/manageevents",manageeventsRoute);
-
+app.use("/file",fileuploadsRoute)
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });

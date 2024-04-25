@@ -2,6 +2,7 @@ import React from "react";
 import backgroundImage from "./bg.jpg";
 import { useParams,useLoaderData} from "react-router-dom";
 import axios from "axios";
+import FileUpload from "./FileUpload";
 function AlumniProfile() {
   const userInfo = useLoaderData();
 
@@ -156,6 +157,7 @@ function AlumniProfile() {
                 <span style={{ color: "#e4405f" }}>Instagram: bootdey</span>
               </li>
             </ul>
+          <FileUpload userInfo={userInfo} all={true}/>
           </div>
           {/* Additional columns */}
         </div>

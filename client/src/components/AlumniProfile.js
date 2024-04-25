@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouteLoaderData } from "react-router-dom";
 import backgroundImage from './bg.jpg';
+import FileUpload from "./FileUpload";
 
 function AlumniProfile()  {
   const userInfo = useRouteLoaderData('alumniData');
@@ -58,6 +59,7 @@ function AlumniProfile()  {
                 <span style={{ color: '#e4405f' }}>Instagram: bootdey</span>
               </li>
             </ul>
+            <FileUpload userInfo={userInfo}/>
           </div>
           {/* Additional columns */}
 

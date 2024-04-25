@@ -2,6 +2,7 @@ import React from "react";
 import { useLoaderData } from "react-router-dom";
 import backgroundImage from "./bg.jpg";
 import axios from "axios";
+import FileUpload from "./FileUpload";
 
 function ProfilePage() {
     const userInfo = useLoaderData();
@@ -157,6 +158,7 @@ function ProfilePage() {
                 <span style={{ color: "#e4405f" }}>Instagram: bootdey</span>
               </li>
             </ul>
+            <FileUpload userInfo={userInfo} all={true}/>
           </div>
           {/* Additional columns */}
         </div>
