@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./CSS/all.css"; // Import CSS for styling
 import classes from "./CSS/eventcard.module.css";
 import axios from "axios";
-import { redirect, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { Link, redirect, useNavigate, useRouteLoaderData } from "react-router-dom";
 import backgroundImage from "./bg.jpg";
 import profileIcon from "./profile-icon.jpg"; // Adjust the path to match the location of your image
 
@@ -297,7 +297,11 @@ function EventPage() {
               <p>Description: {event.description}</p>
               <p>Seats : {event.seats}</p>
               <p>Registrations:{`${event.registeredstudents}/${event.seats}`}</p>
-              <p>Chief Guests: {event.acceptedAlumni &&event.acceptedAlumni.length > 0 ? event.acceptedAlumni.join(", ") : "Will let you know soon!"}</p>
+              <p>Chief Guests: {event.acceptedAlumni &&event.acceptedAlumni.length > 0 ? event.acceptedAlumni.map((alumni)=>{
+                return(
+                  <Link to={`http://localhost:3000/alumni/profile/${alumni.aid}`} target="_blank" rel="noopener noreferrer">{alumni.username},</Link>
+                )
+              }) : "Will let you know soon!"}</p>
               {event.registered===false ? (
                 <button onClick={() => handleRegisterEvent(event.eid)}>Register</button>
               ) : (
