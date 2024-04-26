@@ -39,11 +39,31 @@ function InternshipCard({ internship, onApply, formatDate, applied }) {
     getAlumniUsername(internship.iid);
   }, [internship.iid]);
 
+  const userInfo = useRouteLoaderData('studentData');
+  const sid=userInfo.data.sid;
   const handleApply = () => {
     onApply(internship.iid,alumniId);
     setRegistrationMessage("You have already applied for this internship.");
     setApply(true);
-  };
+  }
+    useEffect(() => {
+      const getStudentApplicationStatus = async () => {
+        try {
+          const res = await axios.get(
+            `http://localhost:9000/apply/api/student/application/${internship.iid}?sid=${sid}`
+          );
+          const { acceptance } = res.data;
+          if (acceptance === true) {
+            setRegistrationMessage("Application accepted");
+          } else if (acceptance === false) {
+            setRegistrationMessage("Application rejected");
+          }
+        } catch (error) {
+          console.error("Error fetching student application status:", error);
+        }
+      };      
+      getStudentApplicationStatus();
+    }, [internship.iid]);
 
   return (
 
