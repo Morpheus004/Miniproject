@@ -301,7 +301,7 @@ function EventPage() {
                 return(
                   <Link to={`http://localhost:3000/alumni/profile/${alumni.aid}`} target="_blank" rel="noopener noreferrer">{alumni.username},</Link>
                 )
-              }) : "Will let you know soon!"}</p>
+              }) : "Will let you know soon!"}</p>
               {event.registered===false ? (
                 <button onClick={() => handleRegisterEvent(event.eid)}>Register</button>
               ) : (

@@ -24,7 +24,7 @@ router.get("/api/alumni/internship", async (req, res) => {
       );
       console.log(rows);
       if (rows.length > 0) {
-        res.json({ username: rows[0].username });
+        res.json({ username: rows[0].username,aid_fk:rows[0].aid_fk });
       } else {
         res.status(404).json({ error: "Username not found for the specified internship ID" });
       }

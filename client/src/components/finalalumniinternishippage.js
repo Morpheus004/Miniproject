@@ -23,6 +23,9 @@ function InternshipCard({ internship, onCancel, formatDate }) {
 
   const [showModal, setShowModal] = useState(false);
   const[username,setusername]=useState(false);
+  const [internshipToAccept, setInternshipToAccept] = useState(null);
+  const [internshipToCancel, setInternshipToCancel] = useState(null);
+  const [internships, setInternships] = useState([]);
   const [appliedStudents,setAppliedStudents] = useState([
     { id: 1, name: 'John Doe' },
     { id: 2, name: 'Jane Smith' },
@@ -75,12 +78,38 @@ useEffect(() => {
     console.log(`Viewing profile of ${student.name}`);
     window.open(`/student/profile/${student.sid}`, '_blank');
   };
-  const handleAcceptInvitation = (studentId) => {
-    console.log(`Accepted invitation for student ${studentId}`);
-  };
 
-  const handleDeclineInvitation = (studentId) => {
-    console.log(`Declined invitation for student ${studentId}`);
+  const handleAcceptApplication = async (studentId) => {
+    console.log("Accepting application for student:", studentId);
+    try {
+      await axios.put(`http://localhost:9000/apply/api/internshipapplications/${internship.iid}`, { acceptance: true, sid: studentId });
+      
+      setInternships(internships.map(iinternship => {
+        if (internship.iid === internship.iid) {
+          return { ...internship, acceptance: true }; // Update the acceptance status
+        }
+        return internship;
+      }));
+    } catch (error) {
+      console.error("Error accepting application:", error);
+    }
+  };
+  
+
+  const handleDeclineApplication = async(studentId) => {
+    console.log(`Declined application for student ${studentId}`);
+    try {
+      await axios.put(`http://localhost:9000/apply/api/internshipapplications/${internship.iid}`, { acceptance: false, sid: studentId });
+      
+      setInternships(internships.map(iinternship => {
+        if (internship.iid === internship.iid) {
+          return { ...internship, acceptance: true }; // Update the acceptance status
+        }
+        return internship;
+      }));
+    } catch (error) {
+      console.error("Error accepting application:", error);
+    }
   };
 
   return (
@@ -130,10 +159,10 @@ useEffect(() => {
                     </button>
                     {/* {student.status === 'pending' && ( */}
                 <div>
-                  <button onClick={() => handleAcceptInvitation(student.id)}>
+                  <button onClick={() => handleAcceptApplication(student.sid)}>
                     Accept
                   </button>
-                  <button onClick={() => handleDeclineInvitation(student.id)}>
+                  <button onClick={() => handleDeclineApplication(student.sid)}>
                     Decline
                   </button>
                 </div>

@@ -149,3 +149,18 @@ WHERE table_name = 'apply'
 alter table apply drop constraint apply_pkey;
 alter table apply add primary key(sid_fk,iid_fk,aid_fk);
 
+
+--ON DELETE CASCADE
+SELECT constraint_name
+FROM information_schema.table_constraints
+WHERE table_name = 'apply'
+  AND constraint_type ='FOREIGN KEY';
+
+  ALTER TABLE apply
+DROP CONSTRAINT apply_iid_fk_fkey,
+ADD CONSTRAINT apply_iid_fk_fkey
+FOREIGN KEY (iid_fk)
+REFERENCES internship (iid)
+ON DELETE CASCADE;
+
+
