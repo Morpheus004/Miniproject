@@ -9,7 +9,7 @@ function InternshipCard({ internship, onApply, formatDate, applied }) {
   const [registrationMessage, setRegistrationMessage] = useState("");
   const[username,setusername]=useState(false);
   const [apply, setApply] = useState(false);
-
+  let alumniId=0;
   useEffect(() => {
     if (applied === true) {
       setRegistrationMessage("You have already applied for this internship.");
@@ -28,7 +28,7 @@ function InternshipCard({ internship, onApply, formatDate, applied }) {
       );
       console.log(res.data);
       const username = res.data.username;
-      const alumniId=res.data.aid_fk;
+      alumniId=res.data.aid_fk;
       setusername(username);
     } catch (error) {
       console.error("Error in fetching alumni username", error);
@@ -38,8 +38,9 @@ function InternshipCard({ internship, onApply, formatDate, applied }) {
   useEffect(() => {
     getAlumniUsername(internship.iid);
   }, [internship.iid]);
+
   const handleApply = () => {
-    onApply(internship.iid);
+    onApply(internship.iid,alumniId);
     setRegistrationMessage("You have already applied for this internship.");
     setApply(true);
   };
@@ -118,7 +119,7 @@ function InternshipPage() {
   };
   const [registrationInternshipId, setRegistrationInternshipId] =useState("");
 
-  const handleApplyInternship = async (internshipId) => {
+  const handleApplyInternship = async (internshipId,aid) => {
     try {
       const internshipss = await checkUserApplications(internships);
       const internship = internshipss.find(internship => internship.iid === internshipId);
@@ -126,8 +127,9 @@ function InternshipPage() {
       //   setRegistrationMessage("You have already applied for this internship.");
       //   return;
       // }
+      const aidd=aid;
       const res = await axios.put(
-        `http://localhost:9000/internship/api/internships/${internshipId}`,{sid:sid}
+        `http://localhost:9000/internship/api/internships/${internshipId}`,{sid:sid,aid:aidd}
       );
       console.log(res);
       // fetchData();
