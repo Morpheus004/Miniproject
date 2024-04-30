@@ -37,6 +37,7 @@ function AlumniProfile() {
                   borderRadius: "50%",
                   padding: "10px",
                   backgroundColor: "#007bff",
+                  width:"110px"
                 }}
                 width="110"
               />

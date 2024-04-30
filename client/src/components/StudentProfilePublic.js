@@ -38,8 +38,9 @@ function ProfilePage() {
                   borderRadius: "50%",
                   padding: "10px",
                   backgroundColor: "#007bff",
+                  width:"110px"
                 }}
-                width="110"
+                
               />
               <div style={{ marginTop: "15px" }}>
                 <h4>Username: {userInfo.data.username}</h4>

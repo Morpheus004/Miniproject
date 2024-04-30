@@ -28,11 +28,11 @@ router.get("/api/events", async (req, res) => {
   });
   
 router.post("/api/events", async (req, res) => {
-    const { title, date, location, description, seats } = req.body;
+    const { title, date, location, description, seats,location_link} = req.body;
     try {
       const { rows } = await db.query(
-        "INSERT INTO events (title, date,location, description, seats,registeredStudents) VALUES ($1, $2, $3, $4,$5,0) RETURNING *;",
-        [title, date,location, description, seats]
+        "INSERT INTO events (title, date,location, description, seats,registeredStudents,location_link) VALUES ($1, $2, $3, $4,$5,0,$6) RETURNING *;",
+        [title, date,location, description, seats,location_link]
       );
       res.status(201).json(rows[0]);
     } catch (error) {

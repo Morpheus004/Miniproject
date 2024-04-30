@@ -1,11 +1,66 @@
-import React from "react";
+import React ,{useState}from "react";
 import { useRouteLoaderData } from "react-router-dom";
 import backgroundImage from './bg.jpg';
 import FileUpload from "./FileUpload";
+import { Modal, Button } from "react-bootstrap";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 function AlumniProfile()  {
   const userInfo = useRouteLoaderData('alumniData');
-
+  const [showModal, setShowModal] = useState(false);
+  const [editField, setEditField] = useState("");
+  const [editedLink, setEditedLink] = useState(""); // State 
+  const handleEdit = (field) => {
+    setShowModal(true);
+    setEditField(field);
+    // Set the initial value of editedLink based on the field being edited
+    switch(field) {
+      case "LinkedIn":
+        setEditedLink(userInfo.data.website);
+        break;
+      case "Github":
+        setEditedLink(userInfo.data.github);
+        break;
+      case "X":
+        setEditedLink(userInfo.data.twitter);
+        break;
+      case "instagram":
+        setEditedLink(userInfo.data.instagram);
+        break;
+      default:
+        setEditedLink(""); // Set empty string if field not recognized
+    }
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setEditField("");
+    setEditedLink(""); // Clear edited link when modal is closed
+  };
+  const handleSaveChanges = () => {
+    // Update userInfo with the edited link based on the editField
+    const updatedUserInfo = { ...userInfo.data };
+    switch(editField) {
+      case "website":
+        updatedUserInfo.website = editedLink;
+        break;
+      case "github":
+        updatedUserInfo.github = editedLink;
+        break;
+      case "twitter":
+        updatedUserInfo.twitter = editedLink;
+        break;
+      case "instagram":
+        updatedUserInfo.instagram = editedLink;
+        break;
+      default:
+        break;
+    }
+    // Update userInfo data using set function
+    // Example: setUserInfo(updatedUserInfo);
+    console.log("Updated user info:", updatedUserInfo);
+    handleCloseModal(); // Close the modal after saving changes
+  };
   console.log("userInfo:", userInfo);
 
   return (
@@ -17,8 +72,7 @@ function AlumniProfile()  {
               <img
                 src="https://bootdey.com/img/Content/avatar/avatar6.png"
                 alt="Admin"
-                style={{ borderRadius: '50%', padding: '10px', backgroundColor: '#007bff' }}
-                width="110"
+                style={{ borderRadius: '50%', padding: '10px', backgroundColor: '#007bff' ,width:'100px'}}
               />
               <div style={{ marginTop: '15px' }}>
                 <h4>Username: {userInfo.data.username}</h4>
@@ -36,19 +90,28 @@ function AlumniProfile()  {
                   <line x1="2" y1="12" x2="22" y2="12"></line>
                   <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
                 </svg>
-                <span style={{ color: '#6c757d' }}>Website: https://bootdey.com</span>
+                <span style={{ color: '#6c757d' }}>LinkedIn: {userInfo.data.website}</span>
+                <Button variant="link" onClick={() => handleEdit("website")}>
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>
               </li>
               <li style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px', color: '#6c757d' }}>
                   <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
                 </svg>
-                <span style={{ color: '#6c757d' }}>Github: bootdey</span>
+                <span style={{ color: '#6c757d' }}>Github: {userInfo.data.github}</span>
+                <Button variant="link" onClick={() => handleEdit("github")}>
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>
               </li>
               <li style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px', color: '#1da1f2' }}>
                   <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
                 </svg>
-                <span style={{ color: '#1da1f2' }}>Twitter: @bootdey</span>
+                <span style={{ color: '#1da1f2' }}>X: {userInfo.data.twitter}</span>
+                <Button variant="link" onClick={() => handleEdit("twitter")}>
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>
               </li>
               <li style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px', color: '#e4405f' }}>
@@ -56,7 +119,10 @@ function AlumniProfile()  {
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                 </svg>
-                <span style={{ color: '#e4405f' }}>Instagram: bootdey</span>
+                <span style={{ color: '#e4405f' }}>Instagram: {userInfo.data.instagram}</span>
+                <Button variant="link" onClick={() => handleEdit("instagram")}>
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>
               </li>
             </ul>
             <FileUpload userInfo={userInfo}/>
