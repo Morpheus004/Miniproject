@@ -24,7 +24,7 @@ router.get("/alumni/:email", async (req, res) => {
   const userEmail = req.params.email;
   try {
     const { rows } = await db.query(
-      "SELECT users.uid,username,email,role,aid FROM users JOIN alumnus ON alumnus.uid = users.uid WHERE users.email = $1",
+      "SELECT users.uid,username,email,role,aid,users.github,users.linkedin,instagram,X FROM users JOIN alumnus ON alumnus.uid = users.uid WHERE users.email = $1",
       [userEmail]
     );
     if (rows.length === 0) {
