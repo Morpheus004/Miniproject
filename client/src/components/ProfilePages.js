@@ -5,7 +5,7 @@ import FileUpload from "./FileUpload";
 import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import { github, instagram } from "fontawesome";
+import { github, instagram, linkedin } from "fontawesome";
 import axios from "axios";
 
 function ProfilePage() {
@@ -13,9 +13,13 @@ function ProfilePage() {
   const [editField, setEditField] = useState("");
   const [editedLink, setEditedLink] = useState(""); // State to store edited link
   const userInfo = useRouteLoaderData('studentData');
+  console.log(userInfo);
   const uid=userInfo.data.uid;
   console.log(uid);
-  const [updatedUserInfo,setUdpatedUserInfo]=useState(userInfo);
+
+  const [updatedUserInfo,setUpdatedUserInfo]=useState({...userInfo,
+    linkedin:'',
+    github:"",instagram:"",X:""});
   // console.log(userInfo);
 
   const handleEdit = (field) => {
@@ -24,16 +28,16 @@ function ProfilePage() {
     // Set the initial value of editedLink based on the field being edited
     switch(field) {
       case "LinkedIn":
-        setEditedLink(userInfo.data.linkedin);
+        setEditedLink(updatedUserInfo.data.linkedin);
         break;
       case "Github":
-        setEditedLink(userInfo.data.github);
+        setEditedLink(updatedUserInfo.data.github);
         break;
       case "X":
-        setEditedLink(userInfo.data.twitter);
+        setEditedLink(updatedUserInfo.data.twitter);
         break;
       case "instagram":
-        setEditedLink(userInfo.data.instagram);
+        setEditedLink(updatedUserInfo.data.instagram);
         break;
       default:
         setEditedLink(""); // Set empty string if field not recognized
@@ -46,45 +50,39 @@ function ProfilePage() {
     setEditedLink(""); // Clear edited link when modal is closed
   };
 
-  const handleSaveChanges = async() => {
-    // Update userInfo with the edited link based on the editField
-    const updatedUserInfo = { ...userInfo.data };
-    switch(editField) {
+  const handleSaveChanges = async () => {
+    const updatedUserData = { ...updatedUserInfo }; // Make a copy of userInfo.data
+    switch (editField) {
       case "website":
-        updatedUserInfo.linkedin = editedLink;
+        updatedUserData.linkedin = editedLink;
         break;
       case "github":
-        updatedUserInfo.github = editedLink;
+        updatedUserData.github = editedLink;
         break;
       case "twitter":
-        updatedUserInfo.twitter = editedLink;
+        updatedUserData.X = editedLink;
         break;
       case "instagram":
-        updatedUserInfo.instagram = editedLink;
+        updatedUserData.instagram = editedLink;
         break;
       default:
         break;
     }
-    setUdpatedUserInfo(updatedUserInfo);
+    setUpdatedUserInfo(updatedUserData);
     try {
-      const response = await axios.put(`http://localhost:9000/links/api/${uid}`, {updatedUserInfo:updatedUserInfo});
+      const response = await axios.put(`http://localhost:9000/links/api/${uid}`, updatedUserData);
       if (response.status === 200) {
-        // setuUserInfo(response.data);
         setShowModal(false);
-        console.log(updatedUserInfo);
+        console.log(updatedUserData);
       } else {
         console.error('Error updating user data:', response.data);
       }
     } catch (error) {
       console.error('Error updating user data:', error);
     }
-  
-
-    // Update userInfo data using set function
-    // Example: setUserInfo(updatedUserInfo);
-    console.log("Updated user info:", updatedUserInfo);
-    handleCloseModal(); // Close the modal after saving changes
+    handleCloseModal();
   };
+  
 
   console.log("userInfo:", userInfo);
 
@@ -145,7 +143,7 @@ function ProfilePage() {
                   <line x1="2" y1="12" x2="22" y2="12"></line>
                   <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
                 </svg>
-                <span style={{ color: '#6c757d' }}>LinkedIn: {userInfo.data.website}</span>
+                <span style={{ color: '#6c757d' }}>LinkedIn: {userInfo.data.linkedin}</span>
                 <Button variant="link" onClick={() => handleEdit("website")}>
                   <FontAwesomeIcon icon={faEdit} />
                 </Button>
@@ -163,7 +161,7 @@ function ProfilePage() {
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px', color: '#1da1f2' }}>
                   <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
                 </svg>
-                <span style={{ color: '#1da1f2' }}>X: {userInfo.data.twitter}</span>
+                <span style={{ color: '#1da1f2' }}>X: {userInfo.data.x}</span>
                 <Button variant="link" onClick={() => handleEdit("twitter")}>
                   <FontAwesomeIcon icon={faEdit} />
                 </Button>

@@ -150,6 +150,7 @@ export async function studentDataLoader() {
     try {
       const response = await axios.get(`http://localhost:9000/data/student/${email}`);
       const data = response.data;
+      console.log(data);
       return { data };
     } catch (error) {
       console.error('Error fetching student data:', error);
