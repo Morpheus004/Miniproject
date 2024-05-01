@@ -4,7 +4,7 @@ import { useParams,useLoaderData} from "react-router-dom";
 import axios from "axios";
 import FileUpload from "./FileUpload";
 function AlumniProfile() {
-  const userInfo = useLoaderData();
+  const userInfo = useLoaderData('alumniData');
 
   console.log("userInfo:", userInfo);
 

@@ -5,7 +5,9 @@ import FileUpload from "./FileUpload";
 import { Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { github, instagram, linkedin } from "fontawesome";
 import axios from "axios";
+
 
 function AlumniProfile() {
   const [showModal, setShowModal] = useState(false);
