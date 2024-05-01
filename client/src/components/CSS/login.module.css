@@ -265,10 +265,12 @@
 
 .animated-text {
   animation: slideInFromLeft 2s ease forwards;
-  font-family: 'Montserrat', sans-serif; /* Example stylish font */
-  font-size: 26px; /* Increased font size */
+  font-family: 'Poppins', sans-serif; /* Example stylish font */
+  font-size: 24px; /* Increased font size */
   color: #363434;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px; /* Added letter spacing for better readability */
+  line-height: 1.4; /* Adjusted line height for better spacing */
 }
 
 

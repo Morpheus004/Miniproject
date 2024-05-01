@@ -1,169 +1,151 @@
-.page-container {
-    position: relative;
-    /* Add any additional styles for the page container */
-  }
-  
-  .carousel {
-    position: relative;
-    max-width: 600px; /* Adjust width as needed */
-    margin: auto;
-    overflow: hidden;
-    margin-top: 50px;
-  }
-  
-  .carousel-slide {
-    flex: 0 0 auto;
-    width: 100%;
-    display: none;
-  }
-  .carousel-slide.active {
-    display: block;
-  }
-  
-  img {
-    width: 150%;
-    height: auto;
-  }
-  
-  .prevBtn,
-  .nextBtn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-  }
-  
-  .prevBtn {
-    left: 10px;
-  }
-  
-  .nextBtn {
-    right: 10px;
-  }
-  /* StudentPage.css */
+/* StudentPage.css */
 
+/* Global styles */
 .page-container {
-    position: relative;
-  }
-  
-  .carousel {
-    display: flex;
-    overflow: hidden;
-  }
-  
-  .carousel-slide {
-    flex: 0 0 auto;
-    width: 100%;
-    transition: transform 0.5s ease-in-out;
-  }
-  
-  .carousel-slide.active {
-    transform: translateX(0);
-  }
-  
-  .content {
-    padding: 50px;
-  }
-  
-  .section-title {
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .section-description {
-    font-size: 18px;
-    margin-bottom: 30px;
-  }
-  
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
-  }
-  
-  .column {
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
-    padding-right: 15px;
-    padding-left: 15px;
-  }
-  
-  .card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 30px;
-  }
-  
-  .card-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 15px;
-  }
-  
-  .card-description {
-    font-size: 16px;
-    margin-bottom: 20px;
-  }
-  
-  .button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .button.primary {
-    background-color: #007bff;
-  }
-  
-  .footer {
-    background-color: #f8f9fa;
-    padding: 20px 0;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-  }
-  
-  .footer-text {
-    font-size: 14px;
-    text-align: center;
-  }
-  
-  .color-selector {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .color-btn {
-    margin: 0 5px;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .color-btn.black {
-    background-color: black;
-    color: white;
-  }
-  
-  .color-btn.blue {
-    background-color: blue;
-    color: white;
-  }
-  
-  .color-btn.red {
-    background-color: red;
-    color: white;
-  }
-  
+  font-family: 'Arial', sans-serif;
+}
+
+.content {
+  padding: 20px;
+}
+
+/* Main title */
+.main-title {
+  font-family: 'Montserrat', sans-serif; /* Use a Google Font for a modern look */
+  font-size: 48px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 4px; /* Increased letter spacing for emphasis */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle text shadow for depth */
+}
+
+/* Main description */
+.main-description {
+  font-size: 20px;
+  line-height: 1.6;
+  color: #555;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Features section */
+.feature {
+  flex: 1;
+  margin: 0 10px 20px;
+  padding: 20px;
+  border-radius: 20px; /* Rounded corners */
+  background: linear-gradient(to bottom right, #f0f0f0, #e0e0e0); /* Subtle gradient background */
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Add a soft shadow */
+  transition: transform 0.3s, box-shadow 0.3s; /* Add smooth transition */
+}
+
+.feature:hover {
+  transform: translateY(-5px); /* Move the card up on hover */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Increase shadow on hover */
+}
+
+.icon {
+  font-size: 48px; /* Increase icon size */
+  margin-bottom: 20px;
+  color: #6c63ff; /* Custom color for icons */
+}
+
+.feature-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333; /* Darker text color */
+}
+
+.feature-description {
+  font-size: 18px; /* Increase description font size */
+  color: #666; /* Subdued text color */
+}
+
+.button {
+  padding: 12px 24px; /* Increase button padding */
+  font-size: 18px; /* Increase button font size */
+  border-radius: 8px; /* Rounded button corners */
+  background-color: #6c63ff; /* Custom button background color */
+  color: #fff; /* White button text color */
+  border: none; /* Remove button border */
+  transition: background-color 0.3s, color 0.3s; /* Add smooth transition */
+}
+
+.button:hover {
+  background-color: #564bd8; /* Darker button color on hover */
+}
+
+
+/* Footer */
+.footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.footer-text {
+  margin: 0;
+}
+
+/* About Website section */
+.about-website {
+  margin-top: 50px;
+}
+
+.about-website h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.about-website p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666;
+}
+
+/* Highlights section */
+.highlights {
+  margin-top: 30px;
+}
+
+.highlight {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.highlight-icon {
+  font-size: 24px;
+  color: #FFC107; /* Yellow color for icons */
+  margin-right: 10px;
+}
+
+/* Follow Us section */
+.follow-us {
+  margin-top: 50px;
+}
+
+.follow-us h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.social-links {
+  display: flex;
+}
+
+.social-icon {
+  font-size: 24px;
+  color: #333;
+  margin-right: 10px;
+}
+
+.social-icon:last-child {
+  margin-right: 0;
+}

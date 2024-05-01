@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link,useRouteLoaderData } from "react-router-dom";
-import classes from "./CSS/all.css"; // Import CSS for styling
-import  './CSS/eventcard.module.css';
+import './CSS/all.css'; // Import CSS for styling
+import classes from  './CSS/eventcard.module.css';
 import axios from "axios";
 import backgroundImage from './bg.jpg';
 import Modal from 'react-modal'; 
