@@ -95,155 +95,207 @@ body {
     color: #333;
   }
   
-  .event-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: 20px;
+  .event-card {
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f0f0f0; /* Light grey background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow */
   }
   
-  .event-card {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  .event-card.registered {
+    border-color: #4caf50;
   }
   
   .event-card h3 {
     margin-top: 0;
-    color: #333;
+    font-size: 1.5rem;
   }
   
-  .add-event {
-    text-align: right;
-    margin-top: 20px;
+  .event-card p {
+    margin: 10px 0;
   }
   
-  #addEventBtn {
-    padding: 10px 20px;
-    background-color: #007bff; /* Blue color */
-    color: #fff; /* White color */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  /* Outer border */
+  .event-card {
+    border: 2px solid #3f51b5;
   }
   
-  #addEventBtn:hover {
-    background-color: #0056b3; /* Darker shade of blue */
+  /* Inner border */
+  .event-card .inner-border {
+    border: 2px solid #fff;
+    border-radius: 10px; /* Adjust as needed */
   }
   
-  /* Register button */
-  .event-card button {
-    padding: 10px 20px;
-    background-color: #1b095a; /* Dark Blue color */
-    color: #fff; /* White color */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-right: 10px; /* Add margin between buttons */
-  }
+ /* Primary button style */
+.event-card button {
+  padding: 10px 20px;
+  background-color: #4caf50; /* Green color */
+  color: #fff; /* White color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  margin-right: 10px; /* Add margin between buttons */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.event-card button:hover {
+  background-color: #45a049; /* Darker shade of green */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Secondary button style */
+.event-card button.secondary {
+  background-color: #3f51b5; /* Indigo color */
+}
+
+.event-card button.secondary:hover {
+  background-color: #303f9f; /* Darker shade of indigo */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Link style */
+.event-card a {
+  color: #3f51b5; /* Primary color for links */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.event-card a:hover {
+  text-decoration: underline;
+  color: #2c3e50; /* Darker color on hover */
+}
+
+/* Add event button */
+#addEventBtn {
+  padding: 10px 20px;
+  background-color: #11115e; /* Blue color */
+  color: #fff; /* White color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#addEventBtn:hover {
+  background-color: #1a0e3c; /* Darker shade of blue */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Cancel registration button */
+.event-card button.cancel-registration {
+  background-color: #dc3545; /* Red color */
+}
+
+.event-card button.cancel-registration:hover {
+  background-color: #c82333; /* Darker shade of red */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Modal styles */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+}
+
+.modal-content {
+  background-color: #fff; /* White color for modal content */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Subtle shadow effect */
+  width: 50%;
+  max-width: 600px; /* Limit maximum width */
+}
+
+.modal-header {
+  background-color: #cacbcc; /* Dark blue header */
+  color: #fff; /* White text color */
+  padding: 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.modal-title {
+  font-size: 24px;
+  margin: 0;
+}
+
+.close {
+  color: #fff; /* White close icon color */
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: #ccc; /* Light gray close icon color on hover */
+}
+
+.modal-body {
+  margin-bottom: 20px;
+}
+
+.modal-body input {
+  width: calc(100% - 24px);
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 2px solid #ddd; /* Light gray border */
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.modal-body input:focus {
+  outline: none;
+  border-color: #3498db; /* Blue border on focus */
+}
+
+.modal-footer {
+  background-color: #f9f9f9; /* Light gray footer */
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 20px;
+  text-align: right;
+}
+
+.modal-footer button {
+  padding: 12px 24px;
+  margin-left: 10px; /* Add space between buttons */
+  background-color: #3498db; /* Blue button color */
+  color: #fff; /* White text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-footer button:last-child {
+  margin-left: 0; /* Remove margin for the last button */
+}
+
+.modal-footer button:hover {
+  background-color: #071136; /* Darker shade of blue on hover */
+}
+
   
-  .event-card button:hover {
-    background-color: #13021d; /* Darker shade of green */
-  }
-  
-  /* Cancel Registration button */
-  .event-card button.cancel-registration {
-    background-color: #dc3545; /* Red color */
-  }
-  
-  .event-card button.cancel-registration:hover {
-    background-color: #c82333; /* Darker shade of red */
-  }
-  
-  /* Cancel Event button */
-  .event-card button.cancel-event {
-    background-color: #ffc107; /* Yellow color */
-  }
-  
-  .event-card button.cancel-event:hover {
-    background-color: #e0a800; /* Darker shade of yellow */
-  }
-  
-  /* Modal styles */
-  .modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent black */
-  }
-  
-  .modal-content {
-    background-color: #fefefe; /* White color */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow effect */
-    width: 40%;
-  }
-  
-  .modal-header {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    position: relative; /* Added */
-  }
-  
-  .modal-title {
-    font-size: 20px;
-    margin: 0;
-  }
-  
-  .close {
-    color: #aaa;
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    cursor: pointer; /* Added */
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-  }
-  
-  .modal-body {
-    margin-bottom: 20px;
-  }
-  
-  .modal-body input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .modal-footer {
-    text-align: right;
-  }
-  
-  .modal-footer button {
-    padding: 10px 20px;
-    background-color: #007bff; /* Blue color */
-    color: #fff; /* White color */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .modal-footer button:hover {
-    background-color: #0056b3; /* Darker shade of blue */
-  }
   
   /* Styles for registered event */
   .event-card.registered {
@@ -270,3 +322,5 @@ body {
     width: 24px;
     height: 24px;
   }
+
+  

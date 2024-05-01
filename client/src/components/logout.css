@@ -1,0 +1,59 @@
+/* Apply gradient background to the entire page */
+bodylogout {
+    background-image: linear-gradient(135deg,  #5d54a4, #6a679e); /* Gradient background */
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Ensure full height of the viewport */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Container styling */
+  .logout-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white container background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Subtle shadow effect */
+  }
+  
+  /* Content styling */
+  .logout-content {
+    text-align: center;
+  }
+  
+  .logout-heading {
+    margin-bottom: 20px;
+  }
+  
+  /* Button styling */
+  .button-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logout-button {
+    background-color: #dc3545; /* Red logout button */
+    color: #fff; /* White text color */
+    border: none;
+  }
+  
+  .stay-button {
+    margin-left: 10px;
+    background-color: #007bff; /* Blue stay button */
+    color: #fff; /* White text color */
+    border: none;
+  }
+  
+  /* Button hover effect */
+  .button:hover {
+    opacity: 0.8;
+  }
+  

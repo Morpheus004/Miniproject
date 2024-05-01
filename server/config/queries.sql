@@ -163,4 +163,13 @@ FOREIGN KEY (iid_fk)
 REFERENCES internship (iid)
 ON DELETE CASCADE;
 
+ALTER TABLE events ALTER COLUMN location TYPE TEXT;
+ALTER TABLE events add column location_link TEXT;
+
+alter table users add column github text;
+alter table users add column linkedIn text;
+alter table users add column instagram text;
+alter table users add column X text;
+
+
 

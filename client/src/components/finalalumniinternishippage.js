@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link,useRouteLoaderData } from "react-router-dom";
-import "./CSS/all.css"; // Import CSS for styling
-import classes from './CSS/eventcard.module.css';
+import classes from "./CSS/all.css"; // Import CSS for styling
+import  './CSS/eventcard.module.css';
 import axios from "axios";
 import backgroundImage from './bg.jpg';
 import Modal from 'react-modal'; 
@@ -295,7 +295,8 @@ function InternshipPage() {
               <span className="close" onClick={handleCloseModal}>
                 &times;
               </span>
-              <h2>Add Internship</h2>
+              <h2 className="modal-header">Add Internship</h2>
+              <div className="modal-body">
               <input
                 type="text"
                 placeholder="Title"
@@ -361,8 +362,10 @@ function InternshipPage() {
                   setNewInternship({ ...newInternship, domain: e.target.value })
                 }
               />
-              <button onClick={handleSaveInternship}>Save</button>
-              <button onClick={handleCancelModal}>Cancel</button>
+              </div>
+              <div className="modal-footer"><button onClick={handleSaveInternship}>Save</button>
+              <button onClick={handleCancelModal}>Cancel</button></div>
+              
             </div>
           </div>
         )}

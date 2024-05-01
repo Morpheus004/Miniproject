@@ -1,9 +1,90 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 import backgroundImage from "./bg.jpg";
 import FileUpload from "./FileUpload";
+import { Modal, Button } from "react-bootstrap";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { github, instagram, linkedin } from "fontawesome";
+import axios from "axios";
+
 function ProfilePage() {
-  const userInfo = useRouteLoaderData("studentData");
+  const [showModal, setShowModal] = useState(false);
+  const [editField, setEditField] = useState("");
+  const [editedLink, setEditedLink] = useState(""); // State to store edited link
+  const userInfo = useRouteLoaderData('studentData');
+  console.log(userInfo);
+  const uid=userInfo.data.uid;
+  console.log(uid);
+
+  const [updatedUserInfo,setUpdatedUserInfo]=useState({...userInfo,
+    linkedin:'',
+    github:"",instagram:"",X:""});
+  // console.log(userInfo);
+
+  const handleEdit = (field) => {
+    setShowModal(true);
+    setEditField(field);
+    // Set the initial value of editedLink based on the field being edited
+    switch(field) {
+      case "LinkedIn":
+        setEditedLink(updatedUserInfo.data.linkedin);
+        break;
+      case "Github":
+        setEditedLink(updatedUserInfo.data.github);
+        break;
+      case "X":
+        setEditedLink(updatedUserInfo.data.X);
+        break;
+      case "instagram":
+        setEditedLink(updatedUserInfo.data.instagram);
+        break;
+      default:
+        setEditedLink(""); // Set empty string if field not recognized
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setEditField("");
+    setEditedLink(""); // Clear edited link when modal is closed
+  };
+
+  const handleSaveChanges = async () => {
+    const updatedUserData = { ...updatedUserInfo }; // Make a copy of userInfo.data
+    switch (editField) {
+      case "LinkedIn":
+        updatedUserData.linkedin = editedLink;
+        break;
+      case "github":
+        updatedUserData.github = editedLink;
+        break;
+      case "X":
+        updatedUserData.X = editedLink;
+        break;
+      case "instagram":
+        updatedUserData.instagram = editedLink;
+        break;
+      default:
+        break;
+    }
+    setUpdatedUserInfo(updatedUserData);
+    try {
+      const response = await axios.put(`http://localhost:9000/links/api/${uid}`, updatedUserData);
+      if (response.status === 200) {
+        setShowModal(false);
+        console.log(updatedUserData);
+      } else {
+        console.error('Error updating user data:', response.data);
+      }
+    } catch (error) {
+      console.error('Error updating user data:', error);
+    }
+    handleCloseModal();
+  };
+  
+
+  console.log("userInfo:", userInfo);
 
   return (
     <div
@@ -34,6 +115,7 @@ function ProfilePage() {
                   borderRadius: "50%",
                   padding: "10px",
                   backgroundColor: "#007bff",
+                  width:'100px'
                 }}
                 width="110"
               />
@@ -53,112 +135,75 @@ function ProfilePage() {
                 </p>
               </div>
             </div>
-            <hr style={{ margin: "20px 0" }} />
-            <ul style={{ listStyleType: "none", padding: "0" }}>
-              <li
-                style={{
-                  marginBottom: "10px",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ marginRight: "8px", color: "#007bff" }}
-                >
+            <hr style={{ margin: '20px 0' }} />
+            <ul style={{ listStyleType: 'none', padding: '0' }}>
+              <li style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px', color: '#007bff' }}>
                   <circle cx="12" cy="12" r="10"></circle>
                   <line x1="2" y1="12" x2="22" y2="12"></line>
                   <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
                 </svg>
-                <span style={{ color: "#6c757d" }}>
-                  Website: https://bootdey.com
-                </span>
+                <span style={{ color: '#6c757d' }}>LinkedIn: {userInfo.data.linkedin}</span>
+                <Button variant="link" onClick={() => handleEdit("LinkedIn")}>
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>
               </li>
-              <li
-                style={{
-                  marginBottom: "10px",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ marginRight: "8px", color: "#6c757d" }}
-                >
+              <li style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px', color: '#6c757d' }}>
                   <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
                 </svg>
-                <span style={{ color: "#6c757d" }}>Github: bootdey</span>
+                <span style={{ color: '#6c757d' }}>Github: {userInfo.data.github}</span>
+                <Button variant="link" onClick={() => handleEdit("Gsithub")}>
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>
               </li>
-              <li
-                style={{
-                  marginBottom: "10px",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ marginRight: "8px", color: "#1da1f2" }}
-                >
+              <li style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px', color: '#1da1f2' }}>
                   <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
                 </svg>
-                <span style={{ color: "#1da1f2" }}>Twitter: @bootdey</span>
+                <span style={{ color: '#1da1f2' }}>X: {userInfo.data.x}</span>
+                <Button variant="link" onClick={() => handleEdit("X")}>
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>
               </li>
-              <li
-                style={{
-                  marginBottom: "10px",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ marginRight: "8px", color: "#e4405f" }}
-                >
+              <li style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px', color: '#e4405f' }}>
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                 </svg>
-                <span style={{ color: "#e4405f" }}>Instagram: bootdey</span>
+                <span style={{ color: '#e4405f' }}>Instagram: {userInfo.data.instagram}</span>
+                <Button variant="link" onClick={() => handleEdit("instagram")}>
+                  <FontAwesomeIcon icon={faEdit} />
+                </Button>
               </li>
             </ul>
-          <FileUpload userInfo={userInfo}/>
+            <FileUpload userInfo={userInfo} />
           </div>
           {/* Additional columns */}
         </div>
       </div>
+      <Modal show={showModal} onHide={handleCloseModal} centered style={{ zIndex: '1050' }}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit {editField}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            type="text"
+            value={editedLink}
+            onChange={(e) => setEditedLink(e.target.value)}
+            className="form-control"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSaveChanges}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
