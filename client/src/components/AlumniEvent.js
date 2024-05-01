@@ -4,6 +4,8 @@ import classes from './CSS/eventcard.module.css';
 import axios from "axios";
 import backgroundImage from './bg.jpg';
 import {Link} from 'react-router-dom'
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 function EventCard({ event, onRegister, onCancel }) {
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -101,7 +103,6 @@ function AlumniEvent() {
               <p>Date: {formatDate(event.date)}</p>
               <p>Location: <a href={event.location_link} target="_blank">{event.location}</a></p>
               <p>Description: {event.description}</p>
-              <p>Registrations:{`${event.registeredstudents}/${event.seats}`}</p>
               <p>
                     Noted Alumni coming:{" "}
                     {event.acceptedAlumni && event.acceptedAlumni.length > 0
@@ -118,6 +119,16 @@ function AlumniEvent() {
                       })
                       : "Will let you know soon!"}
                   </p>
+                  <p>
+                Registrations:
+                <div style={{ width: 100, height: 100 }}>
+                  <CircularProgressbar
+                    value={(event.registeredstudents / event.seats) * 100}
+                    text={`${event.registeredstudents}/${event.seats}`}
+                  />
+                </div>
+              </p>
+              
               {/* {registrationEventId !== event.id ? (
                 <button onClick={() => handleRegisterEvent(event.eid)}>Register</button>
               ) : (

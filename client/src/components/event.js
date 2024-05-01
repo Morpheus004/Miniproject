@@ -2,9 +2,16 @@ import React, { useState, useEffect } from "react";
 import "./CSS/all.css"; // Import CSS for styling
 import classes from "./CSS/eventcard.module.css";
 import axios from "axios";
-import { Link, redirect, useNavigate, useRouteLoaderData } from "react-router-dom";
+import {
+  Link,
+  redirect,
+  useNavigate,
+  useRouteLoaderData,
+} from "react-router-dom";
 import backgroundImage from "./bg.jpg";
 import profileIcon from "./profile-icon.jpg"; // Adjust the path to match the location of your image
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 // function EventCard({ event, onRegister, onCancel}) {
 //   function formatDate(dateString) {
@@ -124,7 +131,7 @@ function EventPage() {
         else {
           const res = await axios.get(
             "http://localhost:9000/manageevents/api/requests/e/" +
-            invitingEventId
+              invitingEventId
           );
           //from the above step we will get the alumni to whom request has already been sent
           console.log(res);
@@ -207,7 +214,6 @@ function EventPage() {
       description: "",
       seats: "",
       registeredStudents: "",
-      location_link:""
     });
   };
 
@@ -220,7 +226,6 @@ function EventPage() {
       description: "",
       seats: "",
       registeredStudents: "",
-      location_link:""
     });
   };
 
@@ -266,14 +271,9 @@ function EventPage() {
   const navigate = useNavigate();
   const viewAlumniProfile = (alumni) => {
     console.log(`Viewing profile of ${alumni.name}`);
-    window.open(`/alumni/profile/${alumni.aid}`, '_blank');
+    window.open(`/alumni/profile/${alumni.aid}`, "_blank");
   };
-  const [expandedEvent, setExpandedEvent] = useState(null);
-  const handleReadMore = (eventId) => {
-    // If the clicked event's ID matches the expandedEvent state, collapse the details
-    // Otherwise, expand the details of the clicked event
-    setExpandedEvent(eventId === expandedEvent ? null : eventId);
-  };
+
   // const handleInvite = () => {
   //   console.log("Invite button clicked");
   //   handleInviteAlumni(event.eid);
@@ -298,72 +298,59 @@ function EventPage() {
               }
               key={event.eid}
             >
-              <div className="event-header">
-                <h3>{event.title}</h3>
-                <p>Date: {formatDate(event.date)}</p>
-                <p>
-                  Location: <a href={event.location_link} target="_blank">{event.location} </a> <span className="geotag">📍</span>
-                </p>
-                <div className="seats-bar">
-                  <div
-                    className="seats-fill"
-                    style={{
-                      width: `${(event.registeredstudents / event.seats) * 100}%`,
-                    }}
-                  ></div>
+              <h3>{event.title}</h3>
+              <p>Date: {formatDate(event.date)}</p>
+              <p>Location: {event.location}</p>
+              <p>Description: {event.description}</p>
+              <p>
+                Noted alumni coming:{" "}
+                {event.acceptedAlumni && event.acceptedAlumni.length > 0
+                  ? event.acceptedAlumni.map((alumni) => {
+                      return (
+                        <Link
+                          to={`http://localhost:3000/alumni/profile/${alumni.aid}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {alumni.username},
+                        </Link>
+                      );
+                    })
+                  : "Will let you know soon!"}
+              </p>
+              <p>
+                Registrations:
+                <div style={{ width: 100, height: 100 }}>
+                  <CircularProgressbar
+                    value={(event.registeredstudents / event.seats) * 100}
+                    text={`${event.registeredstudents}/${event.seats}`}
+                  />
                 </div>
-              </div>
-              {/* Render event details if expandedEvent matches current event's ID */}
-              {expandedEvent === event.eid && (
-                <div className="event-details">
-                  <p>Description: {event.description}</p>
-                  <p>
-                    Registrations: {event.registeredstudents}/{event.seats}
-                  </p>
-                  <p>
-                  Noted Alumni coming:{" "}
-                    {event.acceptedAlumni && event.acceptedAlumni.length > 0
-                      ? event.acceptedAlumni.map((alumni) => {
-                        return (
-                          <Link
-                            to={`http://localhost:3000/alumni/profile/${alumni.aid}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {alumni.username},
-                          </Link>
-                        );
-                      })
-                      : "Will let you know soon!"}
-                  </p>
-                  {event.registered === false ? (
-                    <button onClick={() => handleRegisterEvent(event.eid)}>
-                      Register
-                    </button>
-                  ) : (
-                    <>
-                      <p>You have successfully registered</p>
-                      {/* <button onClick={handleCancelRegistration}>Cancel Registration</button> */}
-                    </>
-                  )}
-                  <button
-                    onClick={() => {
-                      console.log("Invite button clicked");
-                      handleInviteAlumni(event.eid);
-                    }}
-                  >
-                    Invite Alumni
-                  </button>
-                </div>
+              </p>
+
+              
+              {event.registered === false ? (
+                <button onClick={() => handleRegisterEvent(event.eid)}>
+                  Register
+                </button>
+              ) : (
+                <>
+                  <p>You have successfully registered</p>
+                  {/* <button onClick={handleCancelRegistration}>Cancel Registration</button> */}
+                </>
               )}
-              <button onClick={() => handleReadMore(event.eid)}>
-                  Read {event.eid===expandedEvent?"Less":"More"}
+              <button
+                onClick={() => {
+                  console.log("Invite button clicked");
+                  handleInviteAlumni(event.eid);
+                }}
+              >
+                Invite Alumni
               </button>
+
+              {/* <button onClick={() => handleCancelEvent(event.eid)}>Cancel Event</button> */}
             </div>
           ))}
-          {/* </div> */}
-
-
         </div>
         <div className="add-event">
           <button id="addEventBtn" onClick={handleAddEvent}>
@@ -371,157 +358,109 @@ function EventPage() {
           </button>
         </div>
         {showModal && (
-          <div className="modal">
+          <div id="myModal" className="modal">
             <div className="modal-content">
-              <span className="close" onClick={handleCloseModal}>&times;</span>
-              <div className="modal-header">
-                <h2 className="modal-title">Add Event</h2>
-              </div>
-              <div className="modal-body">
-                <form>
-                <div className="modal-group">
-              <label htmlFor="title">Title</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="title"
-                      placeholder="Title"
-                      value={newEvent.title}
-                      onChange={(e) =>
-                        setNewEvent({ ...newEvent, title: e.target.value })
-                      }
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="date">Date</label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      id="date"
-                      placeholder="Date"
-                      value={newEvent.date}
-                      onChange={(e) =>
-                        setNewEvent({ ...newEvent, date: e.target.value })
-                      }
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="location">Location</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="location"
-                      placeholder="Location"
-                      value={newEvent.location}
-                      onChange={(e) =>
-                        setNewEvent({ ...newEvent, location: e.target.value })
-                      }
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="location">Location Link</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="location"
-                      placeholder="Location"
-                      value={newEvent.location_link}
-                      onChange={(e) =>
-                        setNewEvent({ ...newEvent, location_link: e.target.value })
-                      }
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="description">Description</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="description"
-                      placeholder="Description"
-                      value={newEvent.description}
-                      onChange={(e) =>
-                        setNewEvent({ ...newEvent, description: e.target.value })
-                      }
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="seats">Seats</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="seats"
-                      placeholder="Seats"
-                      value={newEvent.seats}
-                      onChange={(e) =>
-                        setNewEvent({
-                          ...newEvent,
-                          seats: e.target.value,
-                          registeredstudents: 0,
-                          registered: false,
-                        })
-                      }
-                    />
-                  </div>
-                  <div className="modal-footer">
-                    <button className="modal-btn" onClick={handleCancelModal}>
-                      Cancel
-                    </button>
-                    <button className="btn btn-primary" onClick={handleSaveEvent}>
-                      Save
-                    </button>
-                  </div>
-                </form>
-              </div>
+              <span className="close" onClick={handleCloseModal}>
+                &times;
+              </span>
+              <h2>Add Event</h2>
+              <input
+                type="text"
+                placeholder="Title"
+                value={newEvent.title}
+                onChange={(e) =>
+                  setNewEvent({ ...newEvent, title: e.target.value })
+                }
+              />
+              <input
+                type="date"
+                placeholder="Date"
+                value={newEvent.date}
+                onChange={(e) =>
+                  setNewEvent({ ...newEvent, date: e.target.value })
+                }
+              />
+              <input
+                type="text"
+                placeholder="Location"
+                value={newEvent.location}
+                onChange={(e) =>
+                  setNewEvent({ ...newEvent, location: e.target.value })
+                }
+              />
+              <input
+                type="text"
+                placeholder="Description"
+                value={newEvent.description}
+                onChange={(e) =>
+                  setNewEvent({ ...newEvent, description: e.target.value })
+                }
+              />
+              <input
+                type="number"
+                placeholder="Seats"
+                value={newEvent.seats}
+                onChange={(e) =>
+                  setNewEvent({
+                    ...newEvent,
+                    seats: e.target.value,
+                    registeredstudents: 0,
+                    registered: false,
+                  })
+                }
+              />
+              <button onClick={handleSaveEvent}>Save</button>
+              <button onClick={handleCancelModal}>Cancel</button>
             </div>
-            </div>
-)}
-            {showAlumniModal && (
-              <div id="alumniModal" className="modal">
-                <div className="modal-content modal-container">
-                  <span className="close" onClick={() => setShowAlumniModal(false)}>
-                    &times;
-                  </span>
-                  <h2 className="modal-container-title">Select Alumni to Invite</h2>
-                  {alumniList.map((alumni) => (
-                    <div key={alumni.aid}>
-                      <div className="alumni-info">
-                        <input
-                          type="checkbox"
-                          id={`alumni_${alumni.aid}`}
-                          checked={selectedAlumni.some((a) => a.aid === alumni.aid)}
-                          onChange={() => handleAlumniSelection(alumni)}
-                        />
-                        <label htmlFor={`alumni_${alumni.id}`}>
-                          {alumni.username}
-                        </label>
-                        <button
-                          className="profile-button"
-                          onClick={() => viewAlumniProfile(alumni)}
-                        >
-                          <img
-                            src={profileIcon}
-                            alt="Profile"
-                            className="profile-icon"
-                          />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                  <button
-                    className="button is-primary"
-                    onClick={() => setShowAlumniModal(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button className="button is-primary" onClick={sendInvitations}>
-                    Send Invites
-                  </button>{" "}
-                </div>
-              </div>
-            )}
           </div>
+        )}
+        {showAlumniModal && (
+          <div id="alumniModal" className="modal">
+            <div className="modal-content modal-container">
+              <span className="close" onClick={() => setShowAlumniModal(false)}>
+                &times;
+              </span>
+              <h2 className="modal-container-title">Select Alumni to Invite</h2>
+              {alumniList.map((alumni) => (
+                <div key={alumni.aid}>
+                  <div className="alumni-info">
+                    <input
+                      type="checkbox"
+                      id={`alumni_${alumni.aid}`}
+                      checked={selectedAlumni.some((a) => a.aid === alumni.aid)}
+                      onChange={() => handleAlumniSelection(alumni)}
+                    />
+                    <label htmlFor={`alumni_${alumni.id}`}>
+                      {alumni.username}
+                    </label>
+                    <button
+                      className="profile-button"
+                      onClick={() => viewAlumniProfile(alumni)}
+                    >
+                      <img
+                        src={profileIcon}
+                        alt="Profile"
+                        className="profile-icon"
+                      />
+                    </button>
+                  </div>
+                </div>
+              ))}
+              <button
+                className="button is-primary"
+                onClick={() => setShowAlumniModal(false)}
+              >
+                Cancel
+              </button>
+              <button className="button is-primary" onClick={sendInvitations}>
+                Send Invites
+              </button>{" "}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
-      );
+  );
 }
 
-      export default EventPage;
+export default EventPage;
