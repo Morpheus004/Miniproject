@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link,useRouteLoaderData } from "react-router-dom";
-
 import './CSS/all.css'; // Import CSS for styling
 import classes from  './CSS/eventcard.module.css';
 import axios from "axios";
@@ -127,53 +126,50 @@ useEffect(() => {
       <button onClick={handleCancel}>Cancel Application</button>
       <button onClick={handleApplied}>Students Applied</button>
       <Modal
-        isOpen={showModal}
-        onRequestClose={() => setShowModal(false)}
-        contentLabel="Applied Students Modal"
-        className={classes.modal}
-        overlayClassName={classes.overlay}
-        style={{
-          content: {
-            width: '400px',
-            height: 'auto',
-            margin: 'auto',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-          },
-        }}
-      >
-        <h2>Students Applied</h2>
-        <div>
-          {appliedStudents.map((student) => (
-            <div key={student.sid}>
-              <p>Name: {student.username}</p>
-              <button
-                      className="profile-button"
-                      onClick={() => viewStudentProfile(student)}
-                    >
-                      <img
-                        src={profileIcon}
-                        alt="Profile"
-                        className="profile-icon"
-                      />
-                    </button>
-                    {/* {student.status === 'pending' && ( */}
-                <div>
-                  <button onClick={() => handleAcceptApplication(student.sid)}>
-                    Accept
-                  </button>
-                  <button onClick={() => handleDeclineApplication(student.sid)}>
-                    Decline
-                  </button>
-                </div>
-              {/* )} */}
-            </div>
-
-          ))}
-          <button onClick={handleCloseModal}>Close</button>
+  isOpen={showModal}
+  onRequestClose={() => setShowModal(false)}
+  contentLabel="Applied Students Modal"
+  className={`${classes.modal} modal`} // Add both classes
+  overlayClassName={classes.overlay}
+  style={{
+    content: {
+      width: '600px',
+      height: 'auto',
+      margin: 'auto',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  }}
+>
+  <div className="modal-content"> 
+    <div className="modal-header"> 
+      <h2 className="modal-title">Students Applied</h2>
+      <button className="close" onClick={handleCloseModal}>
+        &times;
+      </button>
+    </div>
+    <div className="modal-body"> 
+      {appliedStudents.map((student) => (
+        <div key={student.sid}>
+          <p>Name: {student.username}</p>
+          <button className="profile-button" onClick={() => viewStudentProfile(student)}>
+            <img src={profileIcon} alt="Profile" className="profile-icon" />
+          </button>
+          <div>
+            <button className="accept-button" onClick={() => handleAcceptApplication(student.sid)}>Accept</button> 
+            <button className="deny-button" onClick={() => handleDeclineApplication(student.sid)}>Decline</button> 
+          </div>
         </div>
-      </Modal>
+      ))}
+    </div>
+    <div className="modal-footer"> 
+      <button onClick={handleCloseModal}>Close</button>
+    </div>
+  </div>
+</Modal>
+
+
     </div>
   );
 }

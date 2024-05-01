@@ -210,7 +210,7 @@ body {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  background-color: transparent; /* Change to transparent */
 }
 
 .modal-content {
@@ -224,7 +224,7 @@ body {
 
 .modal-header {
   background-color: #cacbcc; /* Dark blue header */
-  color: #fff; /* White text color */
+  color: #000000; /* White text color */
   padding: 20px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -236,7 +236,7 @@ body {
 }
 
 .close {
-  color: #fff; /* White close icon color */
+  color: #000; /* Change to black */
   position: absolute;
   top: 20px;
   right: 20px;
@@ -249,8 +249,25 @@ body {
   color: #ccc; /* Light gray close icon color on hover */
 }
 
+/* Add this CSS to your existing stylesheet */
+
 .modal-body {
-  margin-bottom: 20px;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Add margin bottom for spacing */
+}
+.form-group {
+  display: flex;
+  align-items: center;
+}
+
+.alumni-name {
+  margin-right: 10px; /* Add spacing between alumni name and profile button */
+}
+
+.profile-button {
+  margin-left: 10px; /* Add margin between checkbox and profile button */
 }
 
 .modal-body input {
@@ -279,7 +296,7 @@ body {
 .modal-footer button {
   padding: 12px 24px;
   margin-left: 10px; /* Add space between buttons */
-  background-color: #3498db; /* Blue button color */
+  background-color: #2f185e; /* Blue button color */
   color: #fff; /* White text color */
   border: none;
   border-radius: 5px;
@@ -295,7 +312,22 @@ body {
   background-color: #071136; /* Darker shade of blue on hover */
 }
 
-  
+.accept-button,
+.deny-button {
+  padding: 12px 24px;
+  margin-right: 10px; /* Add space between buttons */
+  background-color: #482276; /* Blue button color */
+  color: #fff; /* White text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.accept-button:hover,
+.deny-button:hover {
+  background-color: #071136; /* Darker shade of blue on hover */
+}
   
   /* Styles for registered event */
   .event-card.registered {
@@ -322,5 +354,3 @@ body {
     width: 24px;
     height: 24px;
   }
-
-  

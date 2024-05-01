@@ -5,8 +5,6 @@ import axios from "axios";
 import { Link, redirect, useNavigate, useRouteLoaderData } from "react-router-dom";
 import backgroundImage from "./bg.jpg";
 import profileIcon from "./profile-icon.jpg"; // Adjust the path to match the location of your image
-import { CircularProgressbar } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
 
 // function EventCard({ event, onRegister, onCancel}) {
 //   function formatDate(dateString) {
@@ -320,6 +318,9 @@ function EventPage() {
                 <div className="event-details">
                   <p>Description: {event.description}</p>
                   <p>
+                    Registrations: {event.registeredstudents}/{event.seats}
+                  </p>
+                  <p>
                   Noted Alumni coming:{" "}
                     {event.acceptedAlumni && event.acceptedAlumni.length > 0
                       ? event.acceptedAlumni.map((alumni) => {
@@ -335,15 +336,6 @@ function EventPage() {
                       })
                       : "Will let you know soon!"}
                   </p>
-                  <p>
-                Registrations:
-                <div style={{ width: 100, height: 100 }}>
-                  <CircularProgressbar
-                    value={(event.registeredstudents / event.seats) * 100}
-                    text={`${event.registeredstudents}/${event.seats}`}
-                  />
-                </div>
-              </p>
                   {event.registered === false ? (
                     <button onClick={() => handleRegisterEvent(event.eid)}>
                       Register
@@ -388,7 +380,7 @@ function EventPage() {
               <div className="modal-body">
                 <form>
                 <div className="modal-group">
-              <label htmlFor="title">Title</label>
+                    <label htmlFor="title">Title</label>
                     <input
                       type="text"
                       className="form-control"
@@ -439,7 +431,6 @@ function EventPage() {
                       }
                     />
                   </div>
-
                   <div className="form-group">
                     <label htmlFor="description">Description</label>
                     <input
@@ -484,52 +475,56 @@ function EventPage() {
             </div>
             </div>
 )}
-            {showAlumniModal && (
-              <div id="alumniModal" className="modal">
-                <div className="modal-content modal-container">
-                  <span className="close" onClick={() => setShowAlumniModal(false)}>
-                    &times;
-                  </span>
-                  <h2 className="modal-container-title">Select Alumni to Invite</h2>
-                  {alumniList.map((alumni) => (
-                    <div key={alumni.aid}>
-                      <div className="alumni-info">
-                        <input
-                          type="checkbox"
-                          id={`alumni_${alumni.aid}`}
-                          checked={selectedAlumni.some((a) => a.aid === alumni.aid)}
-                          onChange={() => handleAlumniSelection(alumni)}
-                        />
-                        <label htmlFor={`alumni_${alumni.id}`}>
-                          {alumni.username}
-                        </label>
-                        <button
-                          className="profile-button"
-                          onClick={() => viewAlumniProfile(alumni)}
-                        >
-                          <img
-                            src={profileIcon}
-                            alt="Profile"
-                            className="profile-icon"
-                          />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                  <button
-                    className="button is-primary"
-                    onClick={() => setShowAlumniModal(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button className="button is-primary" onClick={sendInvitations}>
-                    Send Invites
-                  </button>{" "}
-                </div>
-              </div>
-            )}
+{showAlumniModal && (
+  <div id="alumniModal" className="modal">
+    <div className="modal-content">
+      <span className="close" onClick={() => setShowAlumniModal(false)}>
+        &times;
+      </span>
+      <h2 className="modal-header">Select Alumni to Invite</h2>
+      {alumniList.map((alumni) => (
+        <div key={alumni.aid} className="modal-body">
+          <div className="modal-group">
+            <div className="form-group">
+              <input
+                type="checkbox"
+                id={`alumni_${alumni.aid}`}
+                checked={selectedAlumni.some((a) => a.aid === alumni.aid)}
+                onChange={() => handleAlumniSelection(alumni)}
+              />
+              <label htmlFor={`alumni_${alumni.aid}`} className="alumni-name">
+                {alumni.username}
+              </label>
+              <button
+                className="profile-button"
+                onClick={() => viewAlumniProfile(alumni)}
+              >
+                <img
+                  src={profileIcon}
+                  alt="Profile"
+                  className="profile-icon"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+      <div className="modal-footer"> {/* Add modal-footer class */}
+        <button className="button is-primary" onClick={() => setShowAlumniModal(false)}>
+          Cancel
+        </button>
+        <button className="button is-primary" onClick={sendInvitations}>
+          Send Invites
+        </button>{" "}
+      </div>
+    </div>
+  </div>
+)}
+
+
           </div>
     </div>
       );
 }
-export default EventPage;
+
+      export default EventPage;
