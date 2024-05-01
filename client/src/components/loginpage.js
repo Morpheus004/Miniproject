@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import classes from './CSS/login.module.css';
+import classes from './CSS/login.module.css'; // Import CSS module for styling
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-
+import image1 from './nice.jpeg';
 function Login() {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [username, setUsername] = useState("");
@@ -11,7 +11,6 @@ function Login() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("student");
   const [token, setToken] = useState("");
-
   const navigate = useNavigate();
 
   const toggleMode = () => {
@@ -81,6 +80,16 @@ function Login() {
 
   return (
     <div className={classes['LOGINPAGE']} style={{ height: "100vh" }}>
+    <div className={classes['animated-text-container']}>
+        <div className={classes['animated-text']}>
+          Student-Alumni Connect
+          <div> Welcome to our Student-Alumni Network!</div>
+        </div>
+      </div>
+      <div className={classes['animated-image-container']}>
+  <img src={image1} alt="Student-Alumni Connect" className={classes['animated-image']} />
+</div>
+
       <div className={classes['container']}>
         <div className={classes['screen']}>
           <div className={classes['screen__content']}>
@@ -174,7 +183,6 @@ function Login() {
         </div>
       </div>
     </div>
-
   );
 }
 
