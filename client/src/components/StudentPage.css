@@ -1,0 +1,151 @@
+/* StudentPage.css */
+
+/* Global styles */
+.page-container {
+  font-family: 'Arial', sans-serif;
+}
+
+.content {
+  padding: 20px;
+}
+
+/* Main title */
+.main-title {
+  font-family: 'Montserrat', sans-serif; /* Use a Google Font for a modern look */
+  font-size: 48px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 4px; /* Increased letter spacing for emphasis */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle text shadow for depth */
+}
+
+/* Main description */
+.main-description {
+  font-size: 20px;
+  line-height: 1.6;
+  color: #555;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Features section */
+.feature {
+  flex: 1;
+  margin: 0 10px 20px;
+  padding: 20px;
+  border-radius: 20px; /* Rounded corners */
+  background: linear-gradient(to bottom right, #f0f0f0, #e0e0e0); /* Subtle gradient background */
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Add a soft shadow */
+  transition: transform 0.3s, box-shadow 0.3s; /* Add smooth transition */
+}
+
+.feature:hover {
+  transform: translateY(-5px); /* Move the card up on hover */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Increase shadow on hover */
+}
+
+.icon {
+  font-size: 48px; /* Increase icon size */
+  margin-bottom: 20px;
+  color: #6c63ff; /* Custom color for icons */
+}
+
+.feature-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333; /* Darker text color */
+}
+
+.feature-description {
+  font-size: 18px; /* Increase description font size */
+  color: #666; /* Subdued text color */
+}
+
+.button {
+  padding: 12px 24px; /* Increase button padding */
+  font-size: 18px; /* Increase button font size */
+  border-radius: 8px; /* Rounded button corners */
+  background-color: #6c63ff; /* Custom button background color */
+  color: #fff; /* White button text color */
+  border: none; /* Remove button border */
+  transition: background-color 0.3s, color 0.3s; /* Add smooth transition */
+}
+
+.button:hover {
+  background-color: #564bd8; /* Darker button color on hover */
+}
+
+
+/* Footer */
+.footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.footer-text {
+  margin: 0;
+}
+
+/* About Website section */
+.about-website {
+  margin-top: 50px;
+}
+
+.about-website h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.about-website p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666;
+}
+
+/* Highlights section */
+.highlights {
+  margin-top: 30px;
+}
+
+.highlight {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.highlight-icon {
+  font-size: 24px;
+  color: #FFC107; /* Yellow color for icons */
+  margin-right: 10px;
+}
+
+/* Follow Us section */
+.follow-us {
+  margin-top: 50px;
+}
+
+.follow-us h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.social-links {
+  display: flex;
+}
+
+.social-icon {
+  font-size: 24px;
+  color: #333;
+  margin-right: 10px;
+}
+
+.social-icon:last-child {
+  margin-right: 0;
+}

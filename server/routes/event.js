@@ -7,8 +7,20 @@ const router = express.Router();
 router.get("/api/events", async (req, res) => {
     try {
       const { rows } = await db.query("SELECT * FROM events");
-      console.log(rows);
-      res.json(rows);
+      const updatedEvents = await Promise.all(
+        rows.map(async (event) => {
+          const acceptedAlumniResult = await db.query(
+            `SELECT users.username, alumnus.aid FROM manageevents JOIN alumnus ON manageevents.aid_fk = alumnus.aid JOIN users ON alumnus.uid = users.uid WHERE eid_fk = $1 AND acceptance = true`,[event.eid]);
+  
+          // Destructuring for Conciseness
+          const { rows: acceptedAlumni } = acceptedAlumniResult;
+  
+          // Return event with acceptedAlumni (including aid for potential use)
+          return { ...event, acceptedAlumni };
+        })
+      );
+  
+      res.json(updatedEvents);
     } catch (error) {
       console.error("Error fetching events:", error);
       res.status(500).json({ error: "An unexpected error occurred" });
@@ -16,11 +28,11 @@ router.get("/api/events", async (req, res) => {
   });
   
 router.post("/api/events", async (req, res) => {
-    const { title, date, location, description, seats } = req.body;
+    const { title, date, location, description, seats,location_link} = req.body;
     try {
       const { rows } = await db.query(
-        "INSERT INTO events (title, date,location, description, seats,registeredStudents) VALUES ($1, $2, $3, $4,$5,0) RETURNING *;",
-        [title, date,location, description, seats]
+        "INSERT INTO events (title, date,location, description, seats,registeredStudents,location_link) VALUES ($1, $2, $3, $4,$5,0,$6) RETURNING *;",
+        [title, date,location, description, seats,location_link]
       );
       res.status(201).json(rows[0]);
     } catch (error) {
@@ -62,6 +74,16 @@ router.post("/api/events", async (req, res) => {
     }
   });
 
+  router.get("/api/events/alumni", async (req, res) => {
+    try {
+      const { rows } = await db.query("SELECT users.uid,username,email,role,aid,experience_years FROM alumnus join users on alumnus.uid=users.uid");
+      console.log(rows);
+      res.json(rows);
+    } catch (error) {
+      console.error("Error fetching alumni:", error);
+      res.status(500).json({ error: "An unexpected error occurred" });
+    }
+  });
   
 
   export default router;

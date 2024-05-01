@@ -112,3 +112,64 @@ alter table user_preference add FOREIGN KEY(uid) references users(uid)
 
 -- updated version for multiple logins(by pratham)
 alter table users add role varchar(10);
+
+-- queries for manage events table
+alter table manageevents add column eid_fk int;
+ALTER TABLE manageevents ADD FOREIGN KEY (eid_fk) REFERENCES events(eid);
+
+-- Latest queries
+SELECT constraint_name
+FROM information_schema.table_constraints
+WHERE table_name = 'manageevents'
+  AND constraint_type = 'PRIMARY KEY';
+
+alter table manageevents drop constraint manageevents_pkey;
+alter table manageevents add primary key(sid_fk,eid_fk,aid_fk);
+
+create table manageinternships(
+ aid_fk int,
+ iid_fk int,
+ sid_fk int,
+ PRIMARY KEY (aid_fk,iid_fk,sid_fk)
+)
+
+alter table manageinternships add FOREIGN KEY (sid_fk) references student(sid);
+alter table manageinternships add FOREIGN KEY (aid_fk) references alumnus(aid);
+alter table manageinternships add FOREIGN KEY (iid_fk) references internship(iid);
+
+--updated for internship handling
+drop table manageinternships;
+alter table apply add column aid_fk int;
+
+SELECT constraint_name
+FROM information_schema.table_constraints
+WHERE table_name = 'apply'
+  AND constraint_type = 'PRIMARY KEY';
+
+alter table apply drop constraint apply_pkey;
+alter table apply add primary key(sid_fk,iid_fk,aid_fk);
+
+
+--ON DELETE CASCADE
+SELECT constraint_name
+FROM information_schema.table_constraints
+WHERE table_name = 'apply'
+  AND constraint_type ='FOREIGN KEY';
+
+  ALTER TABLE apply
+DROP CONSTRAINT apply_iid_fk_fkey,
+ADD CONSTRAINT apply_iid_fk_fkey
+FOREIGN KEY (iid_fk)
+REFERENCES internship (iid)
+ON DELETE CASCADE;
+
+ALTER TABLE events ALTER COLUMN location TYPE TEXT;
+ALTER TABLE events add column location_link TEXT;
+
+alter table users add column github text;
+alter table users add column linkedIn text;
+alter table users add column instagram text;
+alter table users add column X text;
+
+
+

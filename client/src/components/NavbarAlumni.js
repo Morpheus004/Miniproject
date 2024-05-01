@@ -125,6 +125,11 @@ function NavbarAlumni() {
               </NavLink>
             </li>
             <li className="nav-item pullRight">
+              <NavLink to="/alumni/invites" className="nav-link">
+                Invites
+              </NavLink>
+            </li>
+            <li className="nav-item pullRight">
               <NavLink to="/logout" className="nav-link">
                 Logout
               </NavLink>
@@ -138,7 +143,6 @@ function NavbarAlumni() {
 }
 
 export default NavbarAlumni;
-
 export async function alumniDataLoader() {
   try {
     const token = getAuthToken();

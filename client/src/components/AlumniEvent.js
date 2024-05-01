@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import "./CSS/all.css"; // Import CSS for styling
 import classes from './CSS/eventcard.module.css';
 import axios from "axios";
-
-
+import backgroundImage from './bg.jpg';
+import {Link} from 'react-router-dom'
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 function EventCard({ event, onRegister, onCancel }) {
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -30,7 +32,6 @@ function EventCard({ event, onRegister, onCancel }) {
       <p>Date: {formatDate(event.date)}</p>
       <p>Location: {event.location}</p>
       <p>Description: {event.description}</p>
-      <p>Seats : {event.seats}</p>
       <p>Registrations:{`${event.registeredstudents}/${event.seats}`}</p>
       {/* <button onClick={handleRegister}>Register</button>
       <button onClick={handleCancel}>Cancel Event</button> */}
@@ -92,7 +93,7 @@ function AlumniEvent() {
   };
 
   return (
-    <div>
+    <div className="page-container" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "cover", minHeight: "100vh" }}>
       <div className={classes.container}>
         <h2>Upcoming Events</h2>
         <div className="event-cards">
@@ -100,10 +101,34 @@ function AlumniEvent() {
             <div className={"event-card" + (registrationEventId === event.id ? " registered" : "")} key={event.eid}>
               <h3>{event.title}</h3>
               <p>Date: {formatDate(event.date)}</p>
-              <p>Location: {event.location}</p>
+              <p>Location: <a href={event.location_link} target="_blank">{event.location}</a></p>
               <p>Description: {event.description}</p>
-              <p>Seats : {event.seats}</p>
-              <p>Registrations:{`${event.registeredstudents}/${event.seats}`}</p>
+              <p>
+                    Noted Alumni coming:{" "}
+                    {event.acceptedAlumni && event.acceptedAlumni.length > 0
+                      ? event.acceptedAlumni.map((alumni) => {
+                        return (
+                          <Link
+                            to={`http://localhost:3000/alumni/profile/${alumni.aid}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {alumni.username},
+                          </Link>
+                        );
+                      })
+                      : "Will let you know soon!"}
+                  </p>
+                  <p>
+                Registrations:
+                <div style={{ width: 100, height: 100 }}>
+                  <CircularProgressbar
+                    value={(event.registeredstudents / event.seats) * 100}
+                    text={`${event.registeredstudents}/${event.seats}`}
+                  />
+                </div>
+              </p>
+              
               {/* {registrationEventId !== event.id ? (
                 <button onClick={() => handleRegisterEvent(event.eid)}>Register</button>
               ) : (

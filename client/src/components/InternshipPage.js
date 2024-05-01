@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import "./CSS/all.css"; // Import CSS for styling
 import classes from "./CSS/eventcard.module.css";
 import axios from "axios";
+import backgroundImage from './bg.jpg'
 import { useRouteLoaderData } from "react-router-dom";
 
 function InternshipCard({ internship, onApply, formatDate, applied }) {
   const [registrationMessage, setRegistrationMessage] = useState("");
+  const[username,setusername]=useState(false);
   const [apply, setApply] = useState(false);
-
+  let alumniId=0;
   useEffect(() => {
     if (applied === true) {
       setRegistrationMessage("You have already applied for this internship.");
@@ -18,15 +20,57 @@ function InternshipCard({ internship, onApply, formatDate, applied }) {
     }
   }, [applied]);
 
+
+  const getAlumniUsername = async (iid) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:9000/alumniinternship/api/username/${internship.iid}`
+      );
+      console.log(res.data);
+      const username = res.data.username;
+      alumniId=res.data.aid_fk;
+      setusername(username);
+    } catch (error) {
+      console.error("Error in fetching alumni username", error);
+    }
+  };
+  
+  useEffect(() => {
+    getAlumniUsername(internship.iid);
+  }, [internship.iid]);
+
+  const userInfo = useRouteLoaderData('studentData');
+  const sid=userInfo.data.sid;
   const handleApply = () => {
-    onApply(internship.iid);
+    onApply(internship.iid,alumniId);
     setRegistrationMessage("You have already applied for this internship.");
     setApply(true);
-  };
+  }
+    useEffect(() => {
+      const getStudentApplicationStatus = async () => {
+        try {
+          const res = await axios.get(
+            `http://localhost:9000/apply/api/student/application/${internship.iid}?sid=${sid}`
+          );
+          const { acceptance } = res.data;
+          if (acceptance === true) {
+            setRegistrationMessage("Application accepted");
+          } else if (acceptance === false) {
+            setRegistrationMessage("Application rejected");
+          }
+        } catch (error) {
+          console.error("Error fetching student application status:", error);
+        }
+      };      
+      getStudentApplicationStatus();
+    }, [internship.iid]);
 
   return (
+
     <div className={`event-card ${apply ? "apply" : ""}`}>
+
       <h3>{internship.title}</h3>
+      <h4>Alumni creating this internship:{username}</h4>
       <p>Role: {internship.roles}</p>
       <p>Domain: {internship.domain_t}</p>
       <p>Applications: {internship.applications}</p>
@@ -50,6 +94,7 @@ function InternshipPage() {
   const [showModal, setShowModal] = useState(false);
   const userInfo = useRouteLoaderData('studentData');
   const sid=userInfo.data.sid;
+  const [alumniId,setAlumniId]=useState(false);
   const checkUserApplications = async (iinternships) => {
     try {
       const response = await axios.get("http://localhost:9000/apply/api/userapplications");
@@ -94,7 +139,7 @@ function InternshipPage() {
   };
   const [registrationInternshipId, setRegistrationInternshipId] =useState("");
 
-  const handleApplyInternship = async (internshipId) => {
+  const handleApplyInternship = async (internshipId,aid) => {
     try {
       const internshipss = await checkUserApplications(internships);
       const internship = internshipss.find(internship => internship.iid === internshipId);
@@ -102,8 +147,9 @@ function InternshipPage() {
       //   setRegistrationMessage("You have already applied for this internship.");
       //   return;
       // }
+      const aidd=aid;
       const res = await axios.put(
-        `http://localhost:9000/internship/api/internships/${internshipId}`,{sid:sid}
+        `http://localhost:9000/internship/api/internships/${internshipId}`,{sid:sid,aid:aidd}
       );
       console.log(res);
       // fetchData();
@@ -116,7 +162,7 @@ function InternshipPage() {
   };
 
   return (
-    <div>
+   <div className="page-container" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "cover", minHeight: "100vh" }}>
       <div className={classes.container}>
         <h2>Internships</h2>
         <div className="event-cards">
