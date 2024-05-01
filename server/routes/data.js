@@ -42,7 +42,7 @@ router.get("/alumni/aid/:aid", async (req, res) => {
   console.log(aid);
   try {
     const { rows } = await db.query(
-      "SELECT users.uid,username,email,role,aid FROM users JOIN alumnus ON alumnus.uid = users.uid WHERE alumnus.aid = $1",
+      "SELECT users.uid,username,email,role,aid,users.github,users.linkedin,instagram,X FROM users JOIN alumnus ON alumnus.uid = users.uid WHERE alumnus.aid = $1",
       [aid]
     );
     if (rows.length === 0) {
@@ -60,7 +60,7 @@ router.get("/student/sid/:sid", async (req, res) => {
   const sid = req.params.sid;
   try {
     const { rows } = await db.query(
-      "SELECT users.uid,username,email,role,sid FROM users JOIN student ON student.uid = users.uid WHERE student.sid = $1",
+      "SELECT users.uid,username,email,role,sid,users.github,users.linkedin,instagram,X FROM users JOIN student ON student.uid = users.uid WHERE student.sid = $1",
       [sid]
     );
     if (rows.length === 0) {

@@ -5,13 +5,13 @@ import axios from "axios";
 import {
   Link,
   redirect,
-  useNavigate,
+  useNavigate,  
   useRouteLoaderData,
 } from "react-router-dom";
 import backgroundImage from "./bg.jpg";
 import profileIcon from "./profile-icon.jpg"; // Adjust the path to match the location of your image
 import { CircularProgressbar } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
+// import "react-circular-progressbar/dist/styles.css";
 
 // function EventCard({ event, onRegister, onCancel}) {
 //   function formatDate(dateString) {
