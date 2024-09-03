@@ -148,7 +148,11 @@ export async function studentDataLoader() {
     const email = decodedToken.email;
 
     try {
-      const response = await axios.get(`http://localhost:9000/data/student/${email}`);
+      const response = await axios.get(`http://localhost:9000/data/student/${email}`,{
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      });
       const data = response.data;
       console.log(data);
       return { data };

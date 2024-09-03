@@ -8,6 +8,6 @@ export function createJSONToken(user) {
     return sign({ email:user.email , role:user.role }, KEY, { expiresIn: '1h' });
 }
 
-function validateJSONToken(token) {
+export default function validateJSONToken(token) {
   return verify(token, KEY);
 } 
