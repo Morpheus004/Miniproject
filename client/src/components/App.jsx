@@ -18,14 +18,26 @@ import Logout from './Logout.js';
 import AlumniInvites from './AlumniInvites.js';
 import AlumniProfilePublic,{publicAlumniLoader} from './AlumniProfilePublic.js'
 import StudentProfilePublic,{publicStudentLoader} from './StudentProfilePublic.js'
+import OAuthCallback from './OAuthCallback.js';
+import RoleSelection from './roleSelection.js';
+
+
 const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />
   },
   {
+    path:"/oauth-callback" ,
+    element:<OAuthCallback />
+  },
+  {
     path:'/logout',
     element:<Logout/>
+  },
+  {
+    path: '/role-selection',
+    element: <RoleSelection />,
   },
   {
     path:'/alumni',

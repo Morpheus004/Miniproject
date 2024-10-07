@@ -150,11 +150,18 @@ export async function alumniDataLoader() {
     const email = decodedToken.email;
 
     try {
-      const response = await axios.get(`http://localhost:9000/data/alumni/${email}`);
+      const response = await axios.get(`http://localhost:9000/data/alumni/${email}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       const data = response.data;
       return { data };
     } catch (error) {
       console.error('Error fetching alumni data:', error);
+      if (error.response && error.response.status === 401) {
+        throw new Error('Your session has expired. Please log in again.');
+      }
       throw new Error('Failed to fetch alumni data');
     }
   } catch (error) {

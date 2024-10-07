@@ -4,6 +4,9 @@ import classes from './CSS/login.module.css'; // Import CSS module for styling
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import image1 from './nice.jpeg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+
 function Login() {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [username, setUsername] = useState("");
@@ -46,6 +49,9 @@ function Login() {
     } catch (error) {
       console.error("login failed:", error);
     }
+  };
+  const handleGoogleLogin = () => {
+    window.location.href = 'http://localhost:9000/auth/google';
   };
 
   const handleSignupSubmit = async (e) => {
@@ -169,8 +175,12 @@ function Login() {
                   ? "Don't have an account?"
                   : "Already have an account?"}
               </p>
+
               <button onClick={toggleMode}>
                 {isLoginMode ? "Sign Up" : "Log In"}
+              </button>
+              <button type="button" onClick={handleGoogleLogin} className={classes['btnSecondary']}>
+                    <FontAwesomeIcon icon={faGoogle} /> Sign in with Google
               </button>
             </div>
           </div>

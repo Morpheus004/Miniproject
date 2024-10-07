@@ -22,6 +22,7 @@ router.get("/student/:email", async (req, res) => {
 
 router.get("/alumni/:email", async (req, res) => {
   const userEmail = req.params.email;
+  console.log(userEmail);
   try {
     const { rows } = await db.query(
       "SELECT users.uid,username,email,role,aid,users.github,users.linkedin,instagram,X FROM users JOIN alumnus ON alumnus.uid = users.uid WHERE users.email = $1",
@@ -30,6 +31,7 @@ router.get("/alumni/:email", async (req, res) => {
     if (rows.length === 0) {
       return res.status(404).json({ message: "User not found" });
     }
+    console.log(rows);
     res.json(rows[0]);
   } catch (error) {
     console.error("Error fetching user information:", error);

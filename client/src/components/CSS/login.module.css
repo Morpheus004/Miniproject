@@ -197,8 +197,9 @@
 }
 
 .login-option {
-  margin-top: 20px;
+  margin-top: 30px;
   text-align: center;
+  padding: 0 20px;
 }
 
 .login-option p {
@@ -211,8 +212,11 @@
   color: black;
   cursor: pointer;
   text-decoration: underline;
-  font-size: 16px;
-  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  margin: 5px;
+  transition: all 0.3s ease;
 }
 
 .login-option button:hover {
@@ -273,6 +277,33 @@
   line-height: 1.4; /* Adjusted line height for better spacing */
 }
 
+.btnSecondary{
+  width: 100%;
+  max-width: 280px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.2px;
+  border: 1px solid #e0e0e0;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #2d2d2d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px auto 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background-color: #f8f8f8;
+}
+
+.btnSecondary:hover {
+  background-color: #f8f8f8;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
 
 @keyframes slideInFromLeft {
   0% {
