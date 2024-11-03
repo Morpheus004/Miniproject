@@ -6,9 +6,9 @@ const db = new pg.Client({
     host: process.env.PG_HOST,
     database: process.env.PG_DATABASE,
     password: process.env.PG_PASSWORD,
-    port: process.env.PG_PORT,
+    port: parseInt(process.env.PG_PORT),
   });
   db.connect()
   .then(() => console.log("Connected to the database"))
-  .catch((err) => console.error("Error connecting to the database:", err));
+  .catch((err) => console.error("Port number is "+process.env.PG_PORT+"Error connecting to the database:", err));
 export default db;
