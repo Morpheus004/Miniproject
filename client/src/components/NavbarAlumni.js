@@ -130,6 +130,11 @@ function NavbarAlumni() {
               </NavLink>
             </li>
             <li className="nav-item pullRight">
+              <NavLink to="/alumni/chat" className="nav-link">
+                Chat
+              </NavLink>
+            </li>
+            <li className="nav-item pullRight">
               <NavLink to="/logout" className="nav-link">
                 Logout
               </NavLink>

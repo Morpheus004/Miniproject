@@ -17,7 +17,10 @@ import manageeventsRoute from "./routes/manageevents.js";
 import fileuploadsRoute from "./routes/fileuploads.js";
 import linksRoute from "./routes/link.js";
 import completeRegistrationRoute from "./routes/completeRegistration.js";
+import friendsRoute from "./routes/friends.js";
+import chatRoute from "./routes/chat.js"
 import { createGoogleToken } from './util/auth.js';
+import { Server } from "socket.io";
 
 
 const app = express();
@@ -96,6 +99,32 @@ app.get('/auth/google/callback',
   }
 );
 
+const server=app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+});
+
+const io = new Server(server, {
+  cors: {
+      origin: "http://localhost:5173", // Your frontend URL
+      methods: ["GET", "POST"]
+  }
+});
+
+io.on('connection', (socket) => {
+  console.log('User connected:', socket.id);
+  
+  socket.on('join', (userId) => {
+      socket.join(userId.toString());
+      console.log(`User ${userId} joined their room`);
+  });
+  
+  socket.on('disconnect', () => {
+      console.log('User disconnected:', socket.id);
+  });
+});
+
+global.io = io; // Make io accessible in routes
+
 // Existing routes
 app.use("/signup", signupRoute);
 app.use("/login", loginRoute);
@@ -109,6 +138,6 @@ app.use("/manageevents",manageeventsRoute);
 app.use("/file",fileuploadsRoute);
 app.use("/links",linksRoute);
 app.use("/complete-registration", completeRegistrationRoute);
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+app.use("/friends", friendsRoute);
+app.use("/chat",chatRoute)
+

@@ -172,4 +172,48 @@ alter table users add column instagram text;
 alter table users add column X text;
 
 
+--latest queries by prasham mehta 
+CREATE TABLE friend_requests (
+    sender_id INT,
+    receiver_id INT,
+    status VARCHAR(20) CHECK (status IN ('pending', 'accepted', 'rejected')),
+    request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (sender_id, receiver_id),
+    FOREIGN KEY (sender_id) REFERENCES users(uid) ON DELETE CASCADE,
+    FOREIGN KEY (receiver_id) REFERENCES users(uid) ON DELETE CASCADE,
+    CONSTRAINT no_self_friendship CHECK (sender_id != receiver_id)
+);
+
+CREATE INDEX idx_friend_requests_status ON friend_requests(status);
+CREATE INDEX idx_friend_requests_receiver ON friend_requests(receiver_id);
+
+-- Create messages table
+CREATE TABLE messages (
+    message_id SERIAL PRIMARY KEY,
+    conversation_id VARCHAR(50),  -- Unique identifier for each conversation
+    sender_id INT REFERENCES users(uid),
+    receiver_id INT REFERENCES users(uid),
+    content TEXT NOT NULL,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    read_at TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES users(uid) ON DELETE CASCADE,
+    FOREIGN KEY (receiver_id) REFERENCES users(uid) ON DELETE CASCADE
+);
+
+-- Create index for faster message retrieval
+CREATE INDEX idx_messages_conversation ON messages(conversation_id);
+CREATE INDEX idx_messages_sender_receiver ON messages(sender_id, receiver_id);
+
+-- Create conversations table to track active conversations
+CREATE TABLE conversations (
+    conversation_id VARCHAR(50) PRIMARY KEY,
+    user1_id INT REFERENCES users(uid),
+    user2_id INT REFERENCES users(uid),
+    last_message_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user1_id) REFERENCES users(uid) ON DELETE CASCADE,
+    FOREIGN KEY (user2_id) REFERENCES users(uid) ON DELETE CASCADE,
+    CONSTRAINT unique_conversation UNIQUE(user1_id, user2_id)
+);
+
 
