@@ -5,6 +5,7 @@ import { useRouteLoaderData } from 'react-router-dom';
 import AddFriendDialog from './AddFriendDialog';
 import TabButtons from './TabButtons';
 import FriendsContent from './FriendsContent';
+import {BACKEND_URL} from '../../../../config.js'
 
 const FriendRequestsSidebar = () => {
   const [activeTab, setActiveTab] = useState('requests');
@@ -24,7 +25,7 @@ const FriendRequestsSidebar = () => {
 
   const fetchRequests = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:9000/friends/requests/${currentUserId}`);
+      const { data } = await axios.get(`${BACKEND_URL}/friends/requests/${currentUserId}`);
       const incomingRequests = data.filter(req => req.receiver_id === currentUserId);
       setRequests(incomingRequests);
     } catch (error) {
@@ -41,7 +42,7 @@ const FriendRequestsSidebar = () => {
 
   const fetchFriends = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:9000/friends/list/${currentUserId}`);
+      const { data } = await axios.get(`${BACKEND_URL}/friends/list/${currentUserId}`);
       setFriends(data);
     } catch (error) {
       toast({
@@ -71,7 +72,7 @@ const FriendRequestsSidebar = () => {
   const handleRequest = async (senderId, action) => {
     try {
       const status = action === 'accept' ? 'accepted' : 'rejected';
-      await axios.put(`http://localhost:9000/friends/request/${senderId}/${currentUserId}`, {
+      await axios.put(`${BACKEND_URL}/friends/request/${senderId}/${currentUserId}`, {
         status
       });
 

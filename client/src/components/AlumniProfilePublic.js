@@ -3,6 +3,7 @@ import backgroundImage from "./bg.jpg";
 import { useParams,useLoaderData} from "react-router-dom";
 import axios from "axios";
 import FileUpload from "./FileUpload";
+import {BACKEND_URL} from '../config.js';
 function AlumniProfile() {
   const userInfo = useLoaderData('alumniData');
 
@@ -172,7 +173,7 @@ export default AlumniProfile;
 export async function publicAlumniLoader({params}) {
   try {
     const response = await axios.get(
-      `http://localhost:9000/data/alumni/aid/${params.aid}`
+      `${BACKEND_URL}/data/alumni/aid/${params.aid}`
     );
     const data = response.data;
     return { data };

@@ -4,10 +4,9 @@ WORKDIR /app
 
 COPY ./package*.json ./
 
-RUN npm install
-
+RUN npm install 
 COPY . .
 
 EXPOSE 9000
 
-CMD ["node","index.js"]
+CMD ["nodemon","index.js"]

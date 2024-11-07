@@ -12,6 +12,7 @@ import {
   AlertDialogTitle,
 } from "../../ui/alert-dialog";
 import axios from 'axios';
+import { BACKEND_URL } from '../../../config';
 
 const ChatSettingsMenu = ({ 
   selectedConversation, 
@@ -46,7 +47,7 @@ const ChatSettingsMenu = ({
     setError(null);
     try {
       // First delete the conversation
-      const clearChatResponse = await axios.delete('http://localhost:9000/chat/conversation', {
+      const clearChatResponse = await axios.delete(BACKEND_URL+'/chat/conversation', {
         data: {
           userId: currentUserId,
           friendId: selectedConversation.id
@@ -58,7 +59,7 @@ const ChatSettingsMenu = ({
       }
 
       // Then remove the friend relationship
-      const removeFriendResponse = await axios.delete('http://localhost:9000/friends/remove', {
+      const removeFriendResponse = await axios.delete(BACKEND_URL+'/friends/remove', {
         data: {
           userId: currentUserId,
           friendId: selectedConversation.id
@@ -91,7 +92,7 @@ const ChatSettingsMenu = ({
       
       const conversationId = `conv_${user1Id}_${user2Id}`;
       console.log(conversationId);
-      const response = await axios.delete('http://localhost:9000/chat/messages', {
+      const response = await axios.delete(BACKEND_URL+'/chat/messages', {
         data: {
           conversationId
         }

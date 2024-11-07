@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { github, instagram, linkedin } from "fontawesome";
 import axios from "axios";
+import {BACKEND_URL} from '../config.js'
 
 function ProfilePage() {
   const [showModal, setShowModal] = useState(false);
@@ -68,7 +69,7 @@ function ProfilePage() {
     }
     setUpdatedUserInfo(updatedUserData);
     try {
-      const response = await axios.put(`http://localhost:9000/links/api/${uid}`, updatedUserData);
+      const response = await axios.put(`${BACKEND_URL}/links/api/${uid}`, updatedUserData);
       if (response.status === 200) {
         setShowModal(false);
         console.log(updatedUserData);

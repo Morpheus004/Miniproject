@@ -3,6 +3,7 @@ import { useLoaderData } from "react-router-dom";
 import backgroundImage from "./bg.jpg";
 import axios from "axios";
 import FileUpload from "./FileUpload";
+import {BACKEND_URL} from '../config.js'
 
 function ProfilePage() {
     const userInfo = useLoaderData();
@@ -173,7 +174,7 @@ export default ProfilePage;
 export async function publicStudentLoader({params}) {
   try {
     const response = await axios.get(
-      `http://localhost:9000/data/student/sid/${params.sid}`
+      `${BACKEND_URL}/data/student/sid/${params.sid}`
     );
     const data = response.data;
     return { data };

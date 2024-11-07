@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button } from '../../ui/buttons';
 import { useSocket } from '../hooks/useSocket';
 import NewConversationDialog from './NewConversationDialog';
+import {BACKEND_URL} from '../../../config.js'
 
 const ConversationSidebar = ({ setSelectedConversation, currentUserId }) => {
     const [conversations, setConversations] = useState([]);
@@ -29,7 +30,7 @@ const ConversationSidebar = ({ setSelectedConversation, currentUserId }) => {
 
     const fetchConversations = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:9000/chat/conversations/${currentUserId}`);
+            const { data } = await axios.get(`${BACKEND_URL}/chat/conversations/${currentUserId}`);
             setConversations(data);
         } catch (error) {
             console.error('Error fetching conversations:', error);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./alumniInvites.css"; 
 import { useRouteLoaderData } from "react-router-dom";
 import axios from "axios";
-
+import {BACKEND_URL} from '../config.js'
 function EventCard({ event, handleAcceptInvitation, handleCancelInvitation }) {
   function formatDate(dateString) {
         const date = new Date(dateString);
@@ -62,7 +62,7 @@ function AlumniInvites() {
   useEffect(() => {
     const data = async () => {
       try {
-        const response = await axios.get("http://localhost:9000/manageevents/api/requests/a/"+aid);
+        const response = await axios.get(BACKEND_URL+"/manageevents/api/requests/a/"+aid);
         setEvents(response.data);
       } catch (error) {
         console.error("Error fetching event requests:", error);
@@ -79,7 +79,7 @@ function AlumniInvites() {
 
   const confirmAcceptInvitation = async() => {
     try {
-      await axios.put(`http://localhost:9000/manageevents/api/requests/${eventToAccept.eid}`, { acceptance: true,aid:aid });
+      await axios.put(`${BACKEND_URL}/manageevents/api/requests/${eventToAccept.eid}`, { acceptance: true,aid:aid });
       
       setEvents(events.map(event => {
         if (event.eid === eventToAccept.eid) {
@@ -105,7 +105,7 @@ function AlumniInvites() {
 
   const confirmCancelInvitation = async() => {
     try {
-      await axios.put(`http://localhost:9000/manageevents/api/requests/${eventToCancel.eid}`, { acceptance: false,aid:aid });
+      await axios.put(`${BACKEND_URL}/manageevents/api/requests/${eventToCancel.eid}`, { acceptance: false,aid:aid });
         setEvents(events.filter(event => event.eid !== eventToCancel.eid));
         setShowCancelModal(false);
       } catch (error) {

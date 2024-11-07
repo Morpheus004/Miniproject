@@ -21,7 +21,7 @@ import friendsRoute from "./routes/friends.js";
 import chatRoute from "./routes/chat.js"
 import { createGoogleToken } from './util/auth.js';
 import { Server } from "socket.io";
-
+import 'dotenv/config'
 
 const app = express();
 const port = 9000;
@@ -81,7 +81,7 @@ app.get('/auth/google/callback',
 
         if (userData.isNewUser) {
           // For new users, redirect to role selection page with email
-          const redirectUrl = new URL('http://localhost:3000/role-selection');
+          const redirectUrl = new URL(process.env.FRONTEND_URL+'/role-selection');
           redirectUrl.searchParams.set('email', userData.email);
           redirectUrl.searchParams.set('name', userData.username);
           return res.redirect(redirectUrl.toString());
@@ -89,12 +89,12 @@ app.get('/auth/google/callback',
           
          // For existing users, create JWT and redirect to appropriate dashboard
       const token = await createGoogleToken(userData);
-      const redirectUrl = new URL('http://localhost:3000/oauth-callback');
+      const redirectUrl = new URL(process.env.FRONTEND_URL+'/oauth-callback');
       redirectUrl.searchParams.set('token', token);
       res.redirect(redirectUrl.toString());
     } catch (error) {
       console.error('Google OAuth callback error:', error);
-      res.redirect('http://localhost:3000/login?error=' + encodeURIComponent(error.message));
+      res.redirect(process.env.FRONTEND_URL+'/login?error=' + encodeURIComponent(error.message));
     }
   }
 );
@@ -105,7 +105,7 @@ const server=app.listen(port, () => {
 
 const io = new Server(server, {
   cors: {
-      origin: "http://localhost:5173", // Your frontend URL
+      origin: process.env.FRONTEND_URL, // Your frontend URL
       methods: ["GET", "POST"]
   }
 });

@@ -10,7 +10,13 @@ services:
     depends_on:
       - db  # Add this to ensure database starts first
     environment:
-      - NODE_ENV=development  # Optional, but good practice
+      - PG_USER=${POSTGRES_USER}
+      - PG_PASSWORD=${POSTGRES_PASSWORD}
+      - PG_HOST=db
+      - PG_DATABASE=miniproject
+      - PG_PORT=5432
+      - FRONTEND_URL="http://localhost:3000"
+      - BACKEND_URL="http://localhost:9000"
   db:
     image: postgres
     volumes:
@@ -27,6 +33,6 @@ services:
       context: ./client
       dockerfile: Dockerfile  
     ports: 
-      - "5000:3000"
+      - "3000:3000"
 volumes: 
   postgres_data:

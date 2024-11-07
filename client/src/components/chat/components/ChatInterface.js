@@ -11,6 +11,7 @@ import { useSocket } from '../hooks/useSocket';
 import  ChatMessage  from './ChatMessage';
 import ChatSettingsMenu from './ChatSettingsMenu';
 import './chat.css';
+import {BACKEND_URL} from '../../../config.js'
 
 const ChatInterface = () => {
     const [selectedConversation, setSelectedConversation] = useState(null);
@@ -53,7 +54,7 @@ const ChatInterface = () => {
     const fetchMessages = async () => {
         try {
             const { data } = await axios.get(
-                `http://localhost:9000/chat/messages/${currentUserId}/${selectedConversation.id}`
+                `${BACKEND_URL}/chat/messages/${currentUserId}/${selectedConversation.id}`
             );
             setMessages(data);
         } catch (error) {
@@ -64,7 +65,7 @@ const ChatInterface = () => {
     const handleSendMessage = async () => {
         if (message.trim() && selectedConversation) {
             try {
-                await axios.post('http://localhost:9000/chat/message', {
+                await axios.post(BACKEND_URL+'/chat/message', {
                     senderId: currentUserId,
                     receiverId: selectedConversation.id,
                     content: message.trim()

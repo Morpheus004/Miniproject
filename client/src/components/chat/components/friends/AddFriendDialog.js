@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../../ui/di
 import { Input } from '../../../ui/input';
 import { Alert, AlertDescription } from '../../../ui/alert';
 import { useToast } from '../../../ui/toast';
-
+import {BACKEND_URL} from '../../../../config.js'
 const AddFriendDialog = ({ currentUserId }) => {
     const [open, setOpen] = useState(false);
     const [email, setEmail] = useState('');
@@ -39,7 +39,7 @@ const AddFriendDialog = ({ currentUserId }) => {
 
         try {
             // Check if user exists
-            const { data: userData } = await axios.post('http://localhost:9000/friends/check-user', { 
+            const { data: userData } = await axios.post(BACKEND_URL+'/friends/check-user', { 
                 email 
             });
 
@@ -56,7 +56,7 @@ const AddFriendDialog = ({ currentUserId }) => {
             }
 
             // Check if a friend request already exists
-            const { data: requestData } = await axios.post('http://localhost:9000/friends/check-friend-request', {
+            const { data: requestData } = await axios.post(BACKEND_URL+'/friends/check-friend-request', {
                 senderId: currentUserId,
                 receiverId: userData.uid
             });
@@ -72,7 +72,7 @@ const AddFriendDialog = ({ currentUserId }) => {
             }
 
             // Send the friend request
-            const { status } = await axios.post('http://localhost:9000/friends/send-friend-request', {
+            const { status } = await axios.post(BACKEND_URL+'/friends/send-friend-request', {
                 senderId: currentUserId,
                 receiverId: userData.uid
             });

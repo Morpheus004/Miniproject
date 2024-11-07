@@ -7,6 +7,7 @@ import { useToast } from '../../ui/toast';
 import { Search } from 'lucide-react';
 import { Input } from '../../ui/input';
 import { Plus } from 'lucide-react';
+import {BACKEND_URL} from '../../../config.js'
 
 const NewConversationDialog = ({ currentUserId, setSelectedConversation }) => {
     const [open, setOpen] = useState(false);
@@ -25,7 +26,7 @@ const NewConversationDialog = ({ currentUserId, setSelectedConversation }) => {
     const fetchFriends = async () => {
         setIsLoading(true);
         try {
-            const { data } = await axios.get(`http://localhost:9000/friends/list/${currentUserId}`);
+            const { data } = await axios.get(`${BACKEND_URL}/friends/list/${currentUserId}`);
             setFriends(data);
         } catch (err) {
             setError('Failed to fetch friends list');
