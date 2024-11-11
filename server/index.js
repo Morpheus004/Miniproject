@@ -19,6 +19,7 @@ import linksRoute from "./routes/link.js";
 import completeRegistrationRoute from "./routes/completeRegistration.js";
 import friendsRoute from "./routes/friends.js";
 import chatRoute from "./routes/chat.js"
+import newsRoute from "./routes/news.js"
 import { createGoogleToken } from './util/auth.js';
 import { Server } from "socket.io";
 import 'dotenv/config'
@@ -140,4 +141,5 @@ app.use("/links",linksRoute);
 app.use("/complete-registration", completeRegistrationRoute);
 app.use("/friends", friendsRoute);
 app.use("/chat",chatRoute)
+app.use("/news",newsRoute)
 

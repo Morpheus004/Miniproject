@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './News.module.css';
+import {BACKEND_URL} from '../../config'
 
 const NewsComponent = () => {
   const [news, setNews] = useState([]);
@@ -10,9 +11,8 @@ const NewsComponent = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const apiKey = '1b35039736ad40e19f8c0372a495a0bc';
-        const response = await axios.get(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`);
-        setNews(response.data.articles);
+        const response = await axios.get(`${BACKEND_URL}/news`);
+        setNews(response.data);
         setLoading(false);
       } catch (err) {
         setError(err.message);
