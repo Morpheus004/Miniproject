@@ -133,6 +133,11 @@ function NavbarStudent() {
               </NavLink>
             </li>
             <li className="nav-item pullRight">
+              <NavLink to="/student/news" className="nav-link">
+                News
+              </NavLink>
+            </li>
+            <li className="nav-item pullRight">
               <NavLink to="/logout" className="nav-link">
                 Logout
               </NavLink>

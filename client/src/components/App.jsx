@@ -22,6 +22,7 @@ import OAuthCallback from './OAuthCallback.js';
 import RoleSelection from './roleSelection.js';
 import ChatPage from './chat/pages/ChatPage.js';
 import FriendsPage from './chat/pages/FriendsPage.js';
+import NewsPage from './news/NewsPage.js';
 import { ToastProvider } from './ui/toast.jsx';
 
 const router = createBrowserRouter([
@@ -58,6 +59,7 @@ const router = createBrowserRouter([
           { path: 'profile', element: <AlumniProfile /> },
           { path: 'invites', element: <AlumniInvites /> },
           { path: 'chat', element: <ChatPage /> },
+          { path: 'news', element: <NewsPage /> },
           { path: 'friends', element: <FriendsPage /> }
         ]
       },
@@ -89,6 +91,7 @@ const router = createBrowserRouter([
           { path: 'internship', element: <InternshipPage /> },
           { path: 'profile', element: <ProfilePages /> },
           { path: 'chat', element: <ChatPage /> },
+          { path: 'news', element: <NewsPage /> },
           { path: 'friends', element: <FriendsPage /> }
         ]
       }

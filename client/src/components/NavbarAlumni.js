@@ -136,6 +136,11 @@ function NavbarAlumni() {
               </NavLink>
             </li>
             <li className="nav-item pullRight">
+              <NavLink to="/alumni/news" className="nav-link">
+                News
+              </NavLink>
+            </li>
+            <li className="nav-item pullRight">
               <NavLink to="/logout" className="nav-link">
                 Logout
               </NavLink>
