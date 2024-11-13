@@ -6,8 +6,9 @@
   margin: 0;
   padding: 0;
 } */
+
 .LOGINPAGE {
-  background-image: linear-gradient(90deg, #c7c5f4, #776bcc);
+  background-color: #c7c5f4;
   margin: 0;
   padding: 0;
   font-family: Raleway, sans-serif;
@@ -18,6 +19,7 @@
   overflow-y: hidden;
   box-sizing: border-box;
 }
+
 .container {
   display: flex;
   align-items: center;
@@ -26,7 +28,6 @@
   margin-right: 20%;
 }
 
-/* Apply styles only to elements within the login page */
 .login-page {
   font-family: Arial, sans-serif;
   background: linear-gradient(90deg, #c7c5f4, #776bcc);
@@ -41,9 +42,8 @@
   position: relative;
   height: 600px;
   width: 360px;
-  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.3); /* Removed shadow from left side */
+  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.3);
 }
-
 
 .screen__content {
   z-index: 1;
@@ -105,8 +105,8 @@
 
 .login {
   width: 320px;
-  padding: 30px;
-  padding-top: 156px;
+  padding: 20px;
+  padding-top: 90px;
 }
 
 .login__field {
@@ -196,6 +196,7 @@
   transform: scale(1.5);
 }
 
+/* Updated login-option styles */
 .login-option {
   margin-top: 30px;
   text-align: center;
@@ -204,27 +205,57 @@
 
 .login-option p {
   color: #000000;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
 .login-option button {
-  background-color: transparent;
-  border: none;
-  color: black;
+  background-color: #ffffff;
+  border: 1px solid #6c63ac;
+  color: #4c489d;
   cursor: pointer;
-  text-decoration: underline;
   font-size: 14px;
   font-weight: 600;
-  padding: 8px 16px;
-  margin: 5px;
+  padding: 10px 16px;
+  margin: 10px auto;
   transition: all 0.3s ease;
+  width: 100%;
+  max-width: 250px;
+  display: block;
 }
 
-.login-option button:hover {
+.login-option button:first-of-type {
+  border-radius: 25px;
+}
+
+/* .login-option button:hover {
   text-decoration: none;
+} */
+
+/* Updated btnSecondary styles */
+.btnSecondary {
+  background-color: #ffffff;
+  border: 1px solid #4285F4;
+  color: #4285F4;
+  font-weight: 600;
+  padding: 12px 20px;
+  font-size: 14px;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  max-width: 250px;
 }
 
+.btnSecondary:hover {
+  background-color: #f8f8f8;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-/* Animation */
+/* Animation keyframes remain unchanged */
 @keyframes move1 {
   0% { transform: translate(-50%, -50%); }
   25% { transform: translate(-50%, -50%) rotate(90deg); }
@@ -256,28 +287,377 @@
   75% { transform: translate(-50%, -50%) rotate(270deg); }
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
-/* login.module.css */
-
 
 .animated-text-container {
   position: absolute;
   top: 83%;
   left: 37%;
   transform: translate(-50%, -50%);
-  z-index: 1; /* Ensure the animation is above the login container */
+  z-index: 1;
 }
 
 .animated-text {
   animation: slideInFromLeft 2s ease forwards;
-  font-family: 'Poppins', sans-serif; /* Example stylish font */
-  font-size: 24px; /* Increased font size */
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
   color: #363434;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  letter-spacing: 1px; /* Added letter spacing for better readability */
-  line-height: 1.4; /* Adjusted line height for better spacing */
+  letter-spacing: 1px;
+  line-height: 1.4;
 }
 
-.btnSecondary{
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animated-image-container {
+  position: absolute;
+  top: 9.5%;
+  left: 19%;
+  width: 60%;
+  height: 90%;
+  overflow: hidden;
+}
+
+.animated-image {
+  width: 60%;
+  height: 90%;
+  object-fit: cover;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+
+
+
+/* Rest of the CSS remains the same */
+
+/*.LOGINPAGE {
+  background-image: linear-gradient(90deg, #c7c5f4, #776bcc);
+  margin: 0;
+  padding: 0;
+  font-family: Raleway, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  overflow-x: hidden;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; 
+  height: 100vh;
+  margin-right: 5%;
+  position: relative;
+  z-index: 2;
+}*/
+
+/* Apply styles only to elements within the login page */
+/*.login-page {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(90deg, #c7c5f4, #776bcc);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; 
+  min-height: 100vh;
+}
+
+.screen {
+  background: linear-gradient(90deg, #5d54a4, #7c78b8);
+  position: relative;
+  height: 600px;
+  width: 360px;
+  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.3); 
+  border-radius: 15px;
+}
+
+.animated-text-container {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  transform: none;
+  z-index: 2;
+  width: 40%;
+}
+
+.animated-text {
+  animation: slideInFromLeft 2s ease forwards;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.5vw;
+  color: #363434;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+  line-height: 1.4;
+}
+
+.animated-image-container {
+  position: absolute;
+  top: 20%;
+  left: 5%;
+  width: 45%;
+  height: 60%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.animated-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.screen__content {
+  z-index: 1;
+  position: relative;
+  height: 100%;
+}
+
+.screen__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  -webkit-clip-path: inset(0 0 0 0);
+  clip-path: inset(0 0 0 0);
+}
+
+.screen__background__shape {
+  transform: rotate(45deg);
+  position: absolute;
+}
+
+.screen__background__shape1 {
+  height: 520px;
+  width: 520px;
+  background: #fff;
+  top: -50px;
+  right: 120px;
+  border-radius: 0 72px 0 0;
+}
+
+.screen__background__shape2 {
+  height: 220px;
+  width: 220px;
+  background: #6c63ac;
+  top: -172px;
+  right: 0;
+  border-radius: 32px;
+}
+
+.screen__background__shape3 {
+  height: 540px;
+  width: 190px;
+  background: linear-gradient(270deg, #5d54a4, #6a679e);
+  top: -24px;
+  right: 0;
+  border-radius: 32px;
+}
+
+.screen__background__shape4 {
+  height: 400px;
+  width: 200px;
+  background: #7e7bb9;
+  top: 420px;
+  right: 50px;
+  border-radius: 60px;
+}
+
+.login {
+  width: 100%;
+  padding: 30px;
+  padding-top: 100px;
+  box-sizing: border-box;
+}
+
+.login__field {
+  padding: 12px 0px;
+  position: relative;
+  width: 100%;
+}
+
+.login__icon {
+  position: absolute;
+  top: 30px;
+  color: #7875b5;
+}
+
+.login__input {
+  border: none;
+  border-bottom: 2px solid #d1d1d4;
+  background: none;
+  padding: 10px;
+  padding-left: 24px;
+  font-weight: 700;
+  width: 75%;
+  transition: 0.2s;
+}
+
+.login__input:active,
+.login__input:focus,
+.login__input:hover {
+  outline: none;
+  border-bottom-color: #6a679e;
+}
+
+.login__submit {
+  background: #fff;
+  font-size: 14px;
+  margin-top: 30px;
+  padding: 16px 20px;
+  border-radius: 26px;
+  border: 1px solid #d4d3e8;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: #4c489d;
+  box-shadow: 0px 2px 2px #5c5696;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.login__submit:active,
+.login__submit:focus,
+.login__submit:hover {
+  border-color: #6a679e;
+  outline: none;
+}
+
+.button__icon {
+  font-size: 24px;
+  margin-left: auto;
+  color: #7875b5;
+}
+
+.social-login {
+  position: absolute;
+  height: 140px;
+  width: 160px;
+  text-align: center;
+  bottom: 0px;
+  right: 0px;
+  color: #fff;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-login__icon {
+  padding: 20px 10px;
+  color: #fff;
+  text-decoration: none;
+  text-shadow: 0px 0px 8px #7875b5;
+}
+
+.social-login__icon:hover {
+  transform: scale(1.5);
+}
+
+.login-option {
+  margin-top: 30px;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.login-option p {
+  color: #000000;
+}
+
+.login-option button {
+  background-color: transparent;
+  border: none;
+  color: black;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  margin: 5px;
+  transition: all 0.3s ease;
+}
+
+.login-option button:hover {
+  text-decoration: none;
+}*/
+
+
+/* Animation */
+/*@keyframes move1 {
+  0% { transform: translate(-50%, -50%); }
+  25% { transform: translate(-50%, -50%) rotate(90deg); }
+  50% { transform: translate(-50%, -50%) rotate(180deg); }
+  75% { transform: translate(-50%, -50%) rotate(270deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes move2 {
+  0% { transform: translate(-50%, -50%); }
+  25% { transform: translate(-50%, -50%) rotate(90deg); }
+  50% { transform: translate(-50%, -50%) rotate(180deg); }
+  75% { transform: translate(-50%, -50%) rotate(270deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes move3 {
+  0% { transform: translate(-50%, -50%); }
+  25% { transform: translate(-50%, -50%) rotate(90deg); }
+  50% { transform: translate(-50%, -50%) rotate(180deg); }
+  75% { transform: translate(-50%, -50%) rotate(270deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes move4 {
+  0% { transform: translate(-50%, -50%); }
+  25% { transform: translate(-50%, -50%) rotate(90deg); }
+  50% { transform: translate(-50%, -50%) rotate(180deg); }
+  75% { transform: translate(-50%, -50%) rotate(270deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}*/
+/* login.module.css */
+
+
+/*.animated-text-container {
+  position: absolute;
+  top: 83%;
+  left: 37%;
+  transform: translate(-50%, -50%);
+  z-index: 1; /* Ensure the animation is above the login container*/
+/*}*/
+
+/*.animated-text {
+  animation: slideInFromLeft 2s ease forwards;
+  font-family: 'Poppins', sans-serif; /* Example stylish font */
+  /*font-size: 24px; /* Increased font size */
+  /*color: #363434;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px; /* Added letter spacing for better readability */
+  /*line-height: 1.4; /* Adjusted line height for better spacing */
+/*}*/
+
+/* .btnSecondary{
   width: 100%;
   max-width: 280px;
   padding: 12px 20px;
@@ -296,10 +676,11 @@
   gap: 10px;
   margin: 15px auto 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  background-color: #f8f8f8;
-}
+  background-color: #ffffff;
+}*/
 
-.btnSecondary:hover {
+/* Rest of the CSS remains the same */
+/*.btnSecondary:hover {
   background-color: #f8f8f8;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transform: translateY(-1px);
@@ -319,15 +700,14 @@
   position: absolute;
   top: 9.5%;
   left: 19%; /* Adjusted left position */
-  width: 60%; /* Increased width */
-  height: 90%; /* Take up the entire height of the viewport */
-  overflow: hidden; /* Hide any overflow */
-}
+  /*width: 60%; /* Increased width */
+  /*height: 90%; /* Take up the entire height of the viewport */
+  /*overflow: hidden; /* Hide any overflow */
+/*}
 
 .animated-image {
   width: 60%; /* Make the image fill the container horizontally */
-  height: 90%; /* Make the image fill the container vertically */
-  object-fit: cover; /* Maintain aspect ratio and cover the entire container */
-}
-
+  /*height: 90%; /* Make the image fill the container vertically */
+  /*object-fit: cover; /* Maintain aspect ratio and cover the entire container */
+/*} */
 
