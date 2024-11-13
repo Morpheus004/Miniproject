@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import styles from './RoleSelection.module.css';
-
+import {BACKEND_URL} from '../config.js'
 function RoleSelection() {
   const [searchParams] = useSearchParams();
   const [selectedRole, setSelectedRole] = useState('');
@@ -16,7 +16,7 @@ function RoleSelection() {
     e.preventDefault();
 
     try {
-      const response = await axios.patch('http://localhost:9000/complete-registration', {
+      const response = await axios.patch(BACKEND_URL+'/complete-registration', {
         email,
         displayName: name,
         role: selectedRole

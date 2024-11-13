@@ -5,6 +5,7 @@ import axios from "axios";
 import { Link, redirect, useNavigate, useRouteLoaderData } from "react-router-dom";
 import backgroundImage from "./bg.jpg";
 import profileIcon from "./profile-icon.jpg"; // Adjust the path to match the location of your image
+import {BACKEND_URL} from '../config.js'
 
 // function EventCard({ event, onRegister, onCancel}) {
 //   function formatDate(dateString) {
@@ -70,7 +71,7 @@ function EventPage() {
   const checkUserRegistrations = async (eevents) => {
     try {
       const response = await axios.get(
-        "http://localhost:9000/register/api/userregistrations"
+        BACKEND_URL+"/register/api/userregistrations"
       );
       const userRegistrations = response.data;
       // console.log(userRegistrations);
@@ -92,7 +93,7 @@ function EventPage() {
   };
   const updateData = async () => {
     try {
-      const res = await axios.get("http://localhost:9000/event/api/events");
+      const res = await axios.get(BACKEND_URL+"/event/api/events");
       const upcomingEvents = res.data.filter(
         (event) => new Date(event.date) > new Date()
       );
@@ -100,7 +101,7 @@ function EventPage() {
 
       try {
         const res = await axios.get(
-          `http://localhost:9000/manageevents/api/allalumni`
+          `${BACKEND_URL}/manageevents/api/allalumni`
         );
         setAlumniList(res.data);
         console.log(res.data);
@@ -123,7 +124,7 @@ function EventPage() {
         if (invitingEventId === null) return;
         else {
           const res = await axios.get(
-            "http://localhost:9000/manageevents/api/requests/e/" +
+            BACKEND_URL+"/manageevents/api/requests/e/" +
             invitingEventId
           );
           //from the above step we will get the alumni to whom request has already been sent
@@ -150,7 +151,7 @@ function EventPage() {
         return;
       }
       const res = await axios.put(
-        `http://localhost:9000/event/api/events/${eventId}/register`,
+        `${BACKEND_URL}/event/api/events/${eventId}/register`,
         { sid: sid }
       );
       console.log(res);
@@ -192,7 +193,7 @@ function EventPage() {
   const handleSaveEvent = async () => {
     //Sending newEvent object to Backend
     const res = await axios.post(
-      "http://localhost:9000/event/api/events",
+      BACKEND_URL+"/event/api/events",
       newEvent
     );
     console.log(res);
@@ -243,7 +244,7 @@ function EventPage() {
     try {
       const selectedAlumniIds = selectedAlumni.map((alumni) => alumni.aid);
       const res = await axios.post(
-        `http://localhost:9000/manageevents/api/requests/${invitingEventId}`,
+        `${BACKEND_URL}/manageevents/api/requests/${invitingEventId}`,
         { alumniIds: selectedAlumniIds, sid: sid }
       );
       console.log(res);

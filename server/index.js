@@ -17,8 +17,12 @@ import manageeventsRoute from "./routes/manageevents.js";
 import fileuploadsRoute from "./routes/fileuploads.js";
 import linksRoute from "./routes/link.js";
 import completeRegistrationRoute from "./routes/completeRegistration.js";
+import friendsRoute from "./routes/friends.js";
+import chatRoute from "./routes/chat.js"
+import newsRoute from "./routes/news.js"
 import { createGoogleToken } from './util/auth.js';
-
+import { Server } from "socket.io";
+import 'dotenv/config'
 
 const app = express();
 const port = 9000;
@@ -78,7 +82,7 @@ app.get('/auth/google/callback',
 
         if (userData.isNewUser) {
           // For new users, redirect to role selection page with email
-          const redirectUrl = new URL('http://localhost:3000/role-selection');
+          const redirectUrl = new URL(process.env.FRONTEND_URL+'/role-selection');
           redirectUrl.searchParams.set('email', userData.email);
           redirectUrl.searchParams.set('name', userData.username);
           return res.redirect(redirectUrl.toString());
@@ -86,15 +90,41 @@ app.get('/auth/google/callback',
           
          // For existing users, create JWT and redirect to appropriate dashboard
       const token = await createGoogleToken(userData);
-      const redirectUrl = new URL('http://localhost:3000/oauth-callback');
+      const redirectUrl = new URL(process.env.FRONTEND_URL+'/oauth-callback');
       redirectUrl.searchParams.set('token', token);
       res.redirect(redirectUrl.toString());
     } catch (error) {
       console.error('Google OAuth callback error:', error);
-      res.redirect('http://localhost:3000/login?error=' + encodeURIComponent(error.message));
+      res.redirect(process.env.FRONTEND_URL+'/login?error=' + encodeURIComponent(error.message));
     }
   }
 );
+
+const server=app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+});
+
+const io = new Server(server, {
+  cors: {
+      origin: process.env.FRONTEND_URL, // Your frontend URL
+      methods: ["GET", "POST"]
+  }
+});
+
+io.on('connection', (socket) => {
+  console.log('User connected:', socket.id);
+  
+  socket.on('join', (userId) => {
+      socket.join(userId.toString());
+      console.log(`User ${userId} joined their room`);
+  });
+  
+  socket.on('disconnect', () => {
+      console.log('User disconnected:', socket.id);
+  });
+});
+
+global.io = io; // Make io accessible in routes
 
 // Existing routes
 app.use("/signup", signupRoute);
@@ -109,6 +139,7 @@ app.use("/manageevents",manageeventsRoute);
 app.use("/file",fileuploadsRoute);
 app.use("/links",linksRoute);
 app.use("/complete-registration", completeRegistrationRoute);
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+app.use("/friends", friendsRoute);
+app.use("/chat",chatRoute)
+app.use("/news",newsRoute)
+

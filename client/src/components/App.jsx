@@ -20,7 +20,10 @@ import AlumniProfilePublic,{publicAlumniLoader} from './AlumniProfilePublic.js'
 import StudentProfilePublic,{publicStudentLoader} from './StudentProfilePublic.js'
 import OAuthCallback from './OAuthCallback.js';
 import RoleSelection from './roleSelection.js';
-
+import ChatPage from './chat/pages/ChatPage.js';
+import FriendsPage from './chat/pages/FriendsPage.js';
+import NewsPage from './news/NewsPage.js';
+import { ToastProvider } from './ui/toast.jsx';
 
 const router = createBrowserRouter([
   {
@@ -54,7 +57,10 @@ const router = createBrowserRouter([
           { path: 'event', element: <AlumniEvent /> },
           { path: 'internship', element: <AlumniInternship /> },
           { path: 'profile', element: <AlumniProfile /> },
-          { path: 'invites', element: <AlumniInvites /> }
+          { path: 'invites', element: <AlumniInvites /> },
+          { path: 'chat', element: <ChatPage /> },
+          { path: 'news', element: <NewsPage /> },
+          { path: 'friends', element: <FriendsPage /> }
         ]
       },
     ]
@@ -83,7 +89,10 @@ const router = createBrowserRouter([
           { path: 'home', element: <StudentPage /> },
           { path: 'event', element: <EventPage /> },
           { path: 'internship', element: <InternshipPage /> },
-          { path: 'profile', element: <ProfilePages /> }
+          { path: 'profile', element: <ProfilePages /> },
+          { path: 'chat', element: <ChatPage /> },
+          { path: 'news', element: <NewsPage /> },
+          { path: 'friends', element: <FriendsPage /> }
         ]
       }
     ]
@@ -92,7 +101,12 @@ const router = createBrowserRouter([
 );
 
 function App() {
- return <RouterProvider router={router}/>
+  
+ return (
+  <ToastProvider>
+      <RouterProvider router={router}/>
+  </ToastProvider>
+ );
 }
 
 export default App;

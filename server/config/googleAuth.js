@@ -1,8 +1,7 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import db from "../config/database.js";
-import env from "dotenv";
-env.config();
+import 'dotenv/config'
 
 // console.log('Client ID:', process.env.GOOGLE_CLIENT_ID);
 // console.log('Client Secret:', process.env.GOOGLE_CLIENT_SECRET);
@@ -11,7 +10,7 @@ passport.use(new GoogleStrategy({
     // clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     clientID: "1004589852320-4g2iq868u1cqr16qn8bk7m5nsm3tjhfs.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "http://localhost:9000/auth/google/callback"
+    callbackURL: process.env.BACKEND_URL+"/auth/google/callback"
   },
   async (accessToken, refreshToken, profile, done) => {
     try {

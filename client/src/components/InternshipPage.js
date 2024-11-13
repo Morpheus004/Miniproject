@@ -4,7 +4,7 @@ import classes from "./CSS/eventcard.module.css";
 import axios from "axios";
 import backgroundImage from './bg.jpg'
 import { useRouteLoaderData } from "react-router-dom";
-
+import {BACKEND_URL} from '../config.js'
 function InternshipCard({ internship, onApply, formatDate, applied }) {
   const [registrationMessage, setRegistrationMessage] = useState("");
   const[username,setusername]=useState(false);
@@ -24,7 +24,7 @@ function InternshipCard({ internship, onApply, formatDate, applied }) {
   const getAlumniUsername = async (iid) => {
     try {
       const res = await axios.get(
-        `http://localhost:9000/alumniinternship/api/username/${internship.iid}`
+        `${BACKEND_URL}/alumniinternship/api/username/${internship.iid}`
       );
       console.log(res.data);
       const username = res.data.username;
@@ -50,7 +50,7 @@ function InternshipCard({ internship, onApply, formatDate, applied }) {
       const getStudentApplicationStatus = async () => {
         try {
           const res = await axios.get(
-            `http://localhost:9000/apply/api/student/application/${internship.iid}?sid=${sid}`
+            `${BACKEND_URL}/apply/api/student/application/${internship.iid}?sid=${sid}`
           );
           const { acceptance } = res.data;
           if (acceptance === true) {
@@ -97,7 +97,7 @@ function InternshipPage() {
   const [alumniId,setAlumniId]=useState(false);
   const checkUserApplications = async (iinternships) => {
     try {
-      const response = await axios.get("http://localhost:9000/apply/api/userapplications");
+      const response = await axios.get(BACKEND_URL+"/apply/api/userapplications");
       const userApplications = response.data;
       console.log(userApplications);
       // Check if user has applied for each internship and update state accordingly
@@ -113,7 +113,7 @@ function InternshipPage() {
   const fetchData = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:9000/internship/api/internships"
+        BACKEND_URL+"/internship/api/internships"
       );
       const upcomingInternships = res.data.filter(
         (internship) => new Date(internship.date) > new Date()
@@ -149,7 +149,7 @@ function InternshipPage() {
       // }
       const aidd=aid;
       const res = await axios.put(
-        `http://localhost:9000/internship/api/internships/${internshipId}`,{sid:sid,aid:aidd}
+        `${BACKEND_URL}/internship/api/internships/${internshipId}`,{sid:sid,aid:aidd}
       );
       console.log(res);
       // fetchData();

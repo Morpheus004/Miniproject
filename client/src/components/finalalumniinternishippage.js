@@ -6,6 +6,7 @@ import axios from "axios";
 import backgroundImage from './bg.jpg';
 import Modal from 'react-modal'; 
 import profileIcon from "./profile-icon.jpg";
+import {BACKEND_URL} from '../config.js'
 function InternshipCard({ internship, onCancel, formatDate }) {
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -33,7 +34,7 @@ function InternshipCard({ internship, onCancel, formatDate }) {
   const getAlumniUsername = async (iid) => {
     try {
       const res = await axios.get(
-        `http://localhost:9000/alumniinternship/api/username/${internship.iid}`
+        `${BACKEND_URL}/alumniinternship/api/username/${internship.iid}`
       );
       console.log(res.data);
       const username = res.data.username;
@@ -51,7 +52,7 @@ function InternshipCard({ internship, onCancel, formatDate }) {
     const currentIid=internship.iid;
     try {
     const res = await axios.get(
-      `http://localhost:9000/apply/api/allapplied/`+currentIid
+      `${BACKEND_URL}/apply/api/allapplied/`+currentIid
     );
     setAppliedStudents(res.data);
     console.log(res.data);
@@ -82,7 +83,7 @@ useEffect(() => {
   const handleAcceptApplication = async (studentId) => {
     console.log("Accepting application for student:", studentId);
     try {
-      await axios.put(`http://localhost:9000/apply/api/internshipapplications/${internship.iid}`, { acceptance: true, sid: studentId });
+      await axios.put(`${BACKEND_URL}/apply/api/internshipapplications/${internship.iid}`, { acceptance: true, sid: studentId });
       
       setInternships(internships.map(iinternship => {
         if (internship.iid === internship.iid) {
@@ -99,7 +100,7 @@ useEffect(() => {
   const handleDeclineApplication = async(studentId) => {
     console.log(`Declined application for student ${studentId}`);
     try {
-      await axios.put(`http://localhost:9000/apply/api/internshipapplications/${internship.iid}`, { acceptance: false, sid: studentId });
+      await axios.put(`${BACKEND_URL}/apply/api/internshipapplications/${internship.iid}`, { acceptance: false, sid: studentId });
       
       setInternships(internships.map(iinternship => {
         if (internship.iid === internship.iid) {
@@ -182,9 +183,9 @@ function InternshipPage() {
     async function updateData() {
       try {
         const res = await axios.get(
-          "http://localhost:9000/alumniinternship/api/alumni/internship"
+          BACKEND_URL+"/alumniinternship/api/alumni/internship"
         );
-        const upcomingInternships = res.data.filter(
+          const upcomingInternships = res.data.filter(
           (event) => new Date(event.date) > new Date()
         );
         setInternships(upcomingInternships);
@@ -211,7 +212,7 @@ function InternshipPage() {
       internships.filter((internship) => internship.iid !== internshipId)
     );
     try {
-      const res = await axios.delete(`http://localhost:9000/alumniinternship/api/alumni/internship/${internshipId}`);
+      const res = await axios.delete(`${BACKEND_URL}/alumniinternship/api/alumni/internship/${internshipId}`);
       console.log("successfully deleted event with id $1",internships.iid);
       console.log(res);
     } catch (error) {
@@ -228,7 +229,7 @@ function InternshipPage() {
   const handleSaveInternship = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:9000/alumniinternship/api/alumni/internship",
+        BACKEND_URL+"/alumniinternship/api/alumni/internship",
         {...newInternship,aid:aid}
       );
       console.log(res);

@@ -5,6 +5,7 @@ import classes from './CSS/eventcard.module.css';
 import axios from 'axios';
 import { getAuthToken } from "../utils/auth";
 import { jwtDecode } from "jwt-decode";
+import {BACKEND_URL} from '../config.js'
 
 function NavbarStudent() {
   const data=useLoaderData();
@@ -127,6 +128,16 @@ function NavbarStudent() {
               </NavLink>
             </li>
             <li className="nav-item pullRight">
+              <NavLink to="/student/chat" className="nav-link">
+                Chat
+              </NavLink>
+            </li>
+            <li className="nav-item pullRight">
+              <NavLink to="/student/news" className="nav-link">
+                News
+              </NavLink>
+            </li>
+            <li className="nav-item pullRight">
               <NavLink to="/logout" className="nav-link">
                 Logout
               </NavLink>
@@ -148,7 +159,7 @@ export async function studentDataLoader() {
     const email = decodedToken.email;
 
     try {
-      const response = await axios.get(`http://localhost:9000/data/student/${email}`,{
+      const response = await axios.get(`${BACKEND_URL}/data/student/${email}`,{
         headers:{
           Authorization: `Bearer ${token}`
         }

@@ -1,0 +1,235 @@
+/* News.module.css */
+.newsContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  
+  .newsHeader {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px 0;
+  }
+  
+  .newsTitle {
+    font-size: 36px;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  .newsSubtitle {
+    color: #666;
+    font-size: 18px;
+  }
+  
+  .newsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    padding: 20px 0;
+  }
+  
+  .newsCard {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid #eee;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .newsCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .newsCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #3b82f6;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .newsCard:hover::before {
+    opacity: 1;
+  }
+  
+  .cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  
+  .cardTitle {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+    flex: 1;
+    margin-right: 15px;
+  }
+  
+  .cardCategory {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    background: #f3f4f6;
+    color: #4b5563;
+    white-space: nowrap;
+  }
+  
+  .cardCategory[data-category='Events'] {
+    background: #ecfdf5;
+    color: #047857;
+  }
+  
+  .cardCategory[data-category='Opportunities'] {
+    background: #eff6ff;
+    color: #1d4ed8;
+  }
+  
+  .cardCategory[data-category='Academic'] {
+    background: #fff7ed;
+    color: #c2410c;
+  }
+  
+  .cardMeta {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    color: #6b7280;
+    font-size: 14px;
+  }
+  
+  .cardDate,
+  .cardTime {
+    display: flex;
+    align-items: center;
+  }
+  
+  .cardDescription {
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-size: 15px;
+  }
+  
+  .readMoreButton {
+    background: none;
+    border: none;
+    color: #3b82f6;
+    font-weight: 500;
+    padding: 0;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .readMoreButton:hover {
+    color: #2563eb;
+  }
+  
+  .readMoreButton::after {
+    content: '→';
+    margin-left: 4px;
+    transition: transform 0.2s ease;
+  }
+  
+  .readMoreButton:hover::after {
+    transform: translateX(4px);
+  }
+  
+  /* Animation for card entrance */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .newsCard {
+    animation: fadeInUp 0.5s ease forwards;
+    animation-delay: calc(var(--index) * 0.1s);
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .newsContainer {
+      padding: 16px;
+    }
+  
+    .newsTitle {
+      font-size: 28px;
+    }
+  
+    .newsSubtitle {
+      font-size: 16px;
+    }
+  
+    .newsGrid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  
+    .newsCard {
+      padding: 20px;
+    }
+  
+    .cardTitle {
+      font-size: 18px;
+    }
+  }
+  
+  /* Loading state styles */
+  .newsCardSkeleton {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  /* Empty state styles */
+  .newsEmpty {
+    text-align: center;
+    padding: 40px;
+    color: #6b7280;
+  }
+  
+  .newsEmpty h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .newsEmpty p {
+    font-size: 16px;
+  }

@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import axios from "axios"; // Import Axios
 
+import {BACKEND_URL} from '../config.js';
 function FileUpload({userInfo,all}) {
   const [file, setFile] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null); // New state to track the uploaded file
@@ -9,7 +10,7 @@ function FileUpload({userInfo,all}) {
     const fetchExistingFile = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:9000/file/check-file/${userInfo.data.uid}`
+          `${BACKEND_URL}/file/check-file/${userInfo.data.uid}`
         );
         if (response.data.fileExists) {
           setUploadedFile(response.data.file);
@@ -38,7 +39,7 @@ function FileUpload({userInfo,all}) {
 
     try {
       const response = await axios.post(
-        "http://localhost:9000/file/upload/single",
+        BACKEND_URL+"/file/upload/single",
         formData,
         {
           headers: {
@@ -60,7 +61,7 @@ function FileUpload({userInfo,all}) {
 
     try {
       const response = await axios.get(
-        `http://localhost:9000/file/download/${userInfo.data.uid}`,
+        `${BACKEND_URL}/file/download/${userInfo.data.uid}`,
         {
           responseType: "blob",
         }

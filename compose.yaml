@@ -1,0 +1,38 @@
+services:
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    command: >
+      sh -c "npm rebuild bcrypt --build-from-source && node index.js"
+    ports:
+      - "9000:9000"  # Add this if you need to access the backend from your host
+    depends_on:
+      - db  # Add this to ensure database starts first
+    environment:
+      - PG_USER=${POSTGRES_USER}
+      - PG_PASSWORD=${POSTGRES_PASSWORD}
+      - PG_HOST=db
+      - PG_DATABASE=miniproject
+      - PG_PORT=5432
+      - FRONTEND_URL="http://localhost:3000"
+      - BACKEND_URL="http://localhost:9000"
+  db:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./server/config:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+    ports:
+      - 5432:5432
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile  
+    ports: 
+      - "3000:3000"
+volumes: 
+  postgres_data:

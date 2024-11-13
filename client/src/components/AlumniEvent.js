@@ -6,6 +6,7 @@ import backgroundImage from './bg.jpg';
 import {Link} from 'react-router-dom'
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import {BACKEND_URL,FRONTEND_URL} from '../config.js'
 function EventCard({ event, onRegister, onCancel }) {
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -49,7 +50,7 @@ function AlumniEvent() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get("http://localhost:9000/event/api/events");
+        const res = await axios.get(BACKEND_URL+"/event/api/events");
         const upcomingEvents = res.data.filter((event) => new Date(event.date) > new Date());
         setEvents(upcomingEvents);
       } catch (error) {
@@ -75,7 +76,7 @@ function AlumniEvent() {
   //   setEvents(events.filter((event) => event.eid !== eventId)); // Update UI first (optimistic)
 
   //   try {
-  //     const res = await axios.delete(`http://localhost:9000/event/api/events/${eventId}`);
+  //     const res = await axios.delete(`${BACKEND_URL}/event/api/events/${eventId}`);
   //     console.log(res);
   //   } catch (error) {
   //     console.error("Error removing from the database:", error);
@@ -109,7 +110,7 @@ function AlumniEvent() {
                       ? event.acceptedAlumni.map((alumni) => {
                         return (
                           <Link
-                            to={`http://localhost:3000/alumni/profile/${alumni.aid}`}
+                            to={`${FRONTEND_URL}/alumni/profile/${alumni.aid}`}
                             target="_blank"
                             rel="noopener noreferrer"
                           >
