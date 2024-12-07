@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import image1 from './nice.jpeg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import {BACKEND_URL,FRONTEND_URL} from '../config.js'
 
 function Login() {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -27,7 +28,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:9000/login", {
+      const response = await axios.post(BACKEND_URL+"/login", {
         username,
         password,
       });
@@ -56,14 +57,14 @@ function Login() {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:9000/auth/google';
+    window.location.href = BACKEND_URL+'/auth/google';
   };
 
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:9000/signup", {
+      const response = await axios.post(BACKEND_URL+"/signup", {
         username,
         email,
         password,
